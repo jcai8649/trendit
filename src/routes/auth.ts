@@ -1,8 +1,11 @@
 import bcrypt from "bcrypt";
 import { Request, Response, Router } from "express";
 import { validate, isEmpty } from "class-validator";
+import jwt from "jsonwebtoken";
+import cookie from "cookie";
 
 import { User } from "../entities/User";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -57,7 +60,19 @@ const login = async (req: Request, res: Response) => {
       return res.status(401).json({ password: "Password is incorrect" });
     }
 
-    return res.json(user);
+    const token = jwt.sign({ username }, process.env.JWT_SECRET);
+
+    res.set(
+      "Set-Cookie",
+      cookie.serialize("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 3600,
+        path: "/",
+      })
+    );
+    return res.json({ user, token });
   } catch (err) {}
 };
 
