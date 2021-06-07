@@ -5,11 +5,13 @@ import {
   BeforeInsert,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 
 import Entity from "./Entity";
 import User from "./User";
 import Sub from "./Sub";
+import Comment from "./Comment";
 import { makeId, slugify } from "../util/helpers";
 
 @TOEntity("posts")
@@ -21,7 +23,7 @@ export default class Post extends Entity {
 
   @Index()
   @Column()
-  identifer: string; // 7 Character Id
+  identifier: string; // 7 Character Id
 
   @Column()
   title: string;
@@ -44,9 +46,12 @@ export default class Post extends Entity {
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Sub;
 
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
+
   @BeforeInsert()
   makeIdAndSlug() {
-    this.identifer = makeId(7);
+    this.identifier = makeId(7);
     this.slug = slugify(this.title);
   }
 }
