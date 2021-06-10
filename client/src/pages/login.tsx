@@ -27,7 +27,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-white">
       <Head>
         <title>Login</title>
       </Head>
@@ -63,8 +63,8 @@ export default function Register() {
           </form>
           <small>
             New to Trendit?
-            <Link href="/login">
-              <a className="ml-1 text-blue-500 uppercase">Log in</a>
+            <Link href="/register">
+              <a className="ml-1 text-blue-500 uppercase">Sign Up</a>
             </Link>
           </small>
         </div>
