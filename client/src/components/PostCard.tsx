@@ -86,10 +86,12 @@ export default function PostCard({
                 width={24}
                 height={24}
               />
-              <a className="ml-1 text-xs font-bold cursor-pointer hover:underline">
-                /r/{subName}
-              </a>
             </Fragment>
+          </Link>
+          <Link passHref href={`/r/${subName}`}>
+            <a className="ml-1 text-xs font-bold cursor-pointer hover:underline">
+              /r/{subName}
+            </a>
           </Link>
           <p className="text-xs text-gray-500">
             <span className="mx-1">•</span>
