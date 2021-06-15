@@ -1,4 +1,7 @@
 module.exports = {
+  images: {
+    domains: ["www.gravatar.com", "localhost"],
+  },
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
@@ -15,7 +18,7 @@ module.exports = {
           },
         },
       ],
-    })
-    return config
+    });
+    return config;
   },
-}
+};

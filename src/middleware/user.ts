@@ -14,6 +14,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOne({ username });
 
     res.locals.user = user;
+
     return next();
   } catch (err) {
     console.log(err);
