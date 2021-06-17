@@ -10,6 +10,7 @@ import classNames from "classnames";
 
 interface PostCardProps {
   post: Post;
+  revalidate: Function;
 }
 
 dayjs.extend(relativeTime);
@@ -36,6 +37,7 @@ export default function PostCard({
     commentCount,
     url,
   },
+  revalidate,
 }: PostCardProps) {
   const vote = async (value) => {
     try {
@@ -45,7 +47,7 @@ export default function PostCard({
         value,
       });
 
-      console.log(res.data);
+      revalidate();
     } catch (err) {
       console.log(err);
     }
@@ -77,8 +79,8 @@ export default function PostCard({
       {/* Post data Section */}
       <div className="w-full p-2">
         <div className="flex items-center">
-          <Link passHref href={`/r/${subName}`}>
-            <Fragment>
+          <Link href={`/r/${subName}`}>
+            <div>
               <Image
                 src={defaultAvatar}
                 className="w-6 h-6 rounded-full cursor-pointer"
@@ -86,9 +88,9 @@ export default function PostCard({
                 width={24}
                 height={24}
               />
-            </Fragment>
+            </div>
           </Link>
-          <Link passHref href={`/r/${subName}`}>
+          <Link href={`/r/${subName}`}>
             <a className="ml-1 text-xs font-bold cursor-pointer hover:underline">
               /r/{subName}
             </a>

@@ -13,7 +13,7 @@ import { Sub } from "../types";
 dayjs.extend(relativeTime);
 
 export default function Home() {
-  const { data: posts } = useSWR("/posts");
+  const { data: posts, revalidate } = useSWR("/posts");
   const { data: topSubs } = useSWR("/misc/top-subs");
 
   return (
@@ -25,7 +25,11 @@ export default function Home() {
         {/* Posts Feed */}
         <div className="w-160">
           {posts?.map((post) => (
-            <PostCard post={post} key={post.identifier} />
+            <PostCard
+              post={post}
+              key={post.identifier}
+              revalidate={revalidate}
+            />
           ))}
         </div>
         {/* Sidebar */}
@@ -36,26 +40,33 @@ export default function Home() {
                 Top Communities
               </p>
             </div>
-            {topSubs?.map((sub: Sub) => (
-              <div className="flex items-center px-4 py-2 text-xs border-b">
-                <div className="mr-2 overflow-hidden rounded-full cursor-pointer">
-                  <Link href={`/r${sub.name}`}>
-                    <Image
-                      src={sub.imageUrl}
-                      alt="Sub"
-                      width={(6 * 16) / 4}
-                      height={(6 * 16) / 4}
-                    />
+            <div>
+              {topSubs?.map((sub: Sub) => (
+                <div
+                  key={sub.name}
+                  className="flex items-center px-4 py-2 text-xs border-b"
+                >
+                  <div className="mr-2 overflow-hidden rounded-full cursor-pointer">
+                    <Link passHref href={`/r/${sub.name}`}>
+                      <div>
+                        <Image
+                          src={sub.imageUrl}
+                          alt="Sub"
+                          width={(6 * 16) / 4}
+                          height={(6 * 16) / 4}
+                        />
+                      </div>
+                    </Link>
+                  </div>
+                  <Link href={`/r/${sub.name}`}>
+                    <a className="font-bold hover:cursor-pointer">
+                      /r/{sub.name}
+                    </a>
                   </Link>
+                  <p className="ml-auto font-med">{sub.postCount}</p>
                 </div>
-                <Link href={`/r${sub.name}`}>
-                  <a className="font-bold cursor-pointer hover:">
-                    /r/{sub.name}
-                  </a>
-                </Link>
-                <p className="ml-auto font-med">{sub.postCount}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
