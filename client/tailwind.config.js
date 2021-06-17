@@ -27,7 +27,11 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ["disabled"],
+      borderColor: ["disabled"],
+      cursor: ["disabled"],
+    },
   },
   plugins: [
     function ({ addComponents }) {
