@@ -80,7 +80,7 @@ export default function PostCard({
       <div className="w-full p-2">
         <div className="flex items-center">
           <Link href={`/r/${subName}`}>
-            <div>
+            <a>
               <Image
                 src={defaultAvatar}
                 className="w-6 h-6 rounded-full cursor-pointer"
@@ -88,7 +88,7 @@ export default function PostCard({
                 width={24}
                 height={24}
               />
-            </div>
+            </a>
           </Link>
           <Link href={`/r/${subName}`}>
             <a className="ml-1 text-xs font-bold cursor-pointer hover:underline">
