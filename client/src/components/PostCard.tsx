@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/Image";
 import dayjs from "dayjs";
-import defaultAvatar from "../images/defaultAvatar.png";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Axios from "axios";
 import { Post } from "../types";
@@ -38,6 +37,7 @@ export default function PostCard({
     username,
     commentCount,
     url,
+    sub,
   },
   revalidate,
 }: PostCardProps) {
@@ -95,7 +95,7 @@ export default function PostCard({
           <Link href={`/r/${subName}`}>
             <a>
               <Image
-                src={defaultAvatar}
+                src={sub.imageUrl}
                 className="w-6 h-6 rounded-full cursor-pointer"
                 alt="default avatar"
                 width={24}
