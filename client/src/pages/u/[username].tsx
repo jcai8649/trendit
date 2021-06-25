@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/Image";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
 import { Post, Comment } from "../../types";
 
-export default function user() {
+export default function User() {
   const router = useRouter();
   const username = router.query.username;
 
@@ -72,12 +73,16 @@ export default function user() {
           </div>
           <div className="ml-6 w-80">
             <div className="bg-white rounded">
-              <div className="p-3 bg-blue-500 rounded-t">
-                <img
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                  alt="user profile"
-                  className="w-16 h-16 mx-auto border-2 border-white rounded-full"
-                />
+              <div className="p-3 mx-auto bg-blue-500 rounded-t">
+                <div className="w-16 h-16 mx-auto border-4 border-white rounded-full ">
+                  <Image
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                    alt="user profile"
+                    className="rounded-full"
+                    width="60"
+                    height="60"
+                  />
+                </div>
               </div>
               <div className="p-3 text-center">
                 <h1 className="mb-3 text-xl">{data.user.username}</h1>

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useCallback, useMemo } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR, { useSWRInfinite } from "swr";
@@ -35,9 +35,24 @@ export default function Home() {
   } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
 
   const isInitialLoading = !data && !error;
-  const posts: Post[] = data ? [].concat(...data) : [];
+  const posts: Post[] = useMemo(() => (data ? [].concat(...data) : []), [data]);
 
   useEffect(() => {
+    const observerElement = (element: HTMLElement) => {
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting === true) {
+            setPage(page + 1);
+            observer.unobserve(element);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(element);
+    };
+
     if (!posts || posts.length === 0) return;
 
     const id = posts[posts.length - 1].identifier;
@@ -46,22 +61,7 @@ export default function Home() {
       setObservedPost(id);
       observerElement(document.getElementById(id));
     }
-  }, [posts]);
-
-  const observerElement = (element: HTMLElement) => {
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting === true) {
-          setPage(page + 1);
-          observer.unobserve(element);
-        }
-      },
-      { threshold: 1 }
-    );
-    observer.observe(element);
-  };
+  }, [page, setPage, posts, observedPost]);
 
   return (
     <Fragment>

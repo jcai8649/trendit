@@ -108,6 +108,7 @@ export default function PostPage() {
                     src={post.sub.imageUrl}
                     height={(8 * 16) / 4}
                     width={(8 * 16) / 4}
+                    alt="sub image"
                   />
                 </div>
               )}

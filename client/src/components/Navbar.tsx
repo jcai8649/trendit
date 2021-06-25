@@ -26,29 +26,29 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
+    const searchSubs = async () => {
+      clearTimeout(timer);
+      setTimer(
+        setTimeout(async () => {
+          try {
+            const { data } = await Axios.get(`/subs/search/${name}`);
+            setSubs(data);
+
+            console.log(data);
+          } catch (err) {
+            console.log(err);
+          }
+        }, 250)
+      );
+    };
+
     if (name.trim() === "") {
       clearTimeout(timer);
       setSubs([]);
       return;
     }
     searchSubs();
-  }, [name]);
-
-  const searchSubs = async () => {
-    clearTimeout(timer);
-    setTimer(
-      setTimeout(async () => {
-        try {
-          const { data } = await Axios.get(`/subs/search/${name}`);
-          setSubs(data);
-
-          console.log(data);
-        } catch (err) {
-          console.log(err);
-        }
-      }, 250)
-    );
-  };
+  }, [name, timer]);
 
   const goToSub = (subName: string) => {
     router.push(`/r/${subName}`);
@@ -86,6 +86,7 @@ const Navbar: React.FC = () => {
             {subs?.map((sub) => (
               <div
                 className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200"
+                key={sub.name}
                 onClick={() => goToSub(sub.name)}
               >
                 <Image

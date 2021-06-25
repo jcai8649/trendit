@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
+import Head from "next/head";
 import Axios from "axios";
 
 import { AuthProvider } from "../context/auth";
@@ -9,6 +10,7 @@ import "../styles/tailwind.css";
 import "../styles/icons.css";
 
 import Navbar from "../components/Navbar";
+import { Fragment } from "react";
 
 Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
 Axios.defaults.withCredentials = true;
@@ -27,19 +29,24 @@ function App({ Component, pageProps }: AppProps) {
   const authRoutes = ["/register", "/login"];
   const authRoute = authRoutes.includes(pathname);
   return (
-    <SWRConfig
-      value={{
-        fetcher,
-        dedupingInterval: 5000,
-      }}
-    >
-      <AuthProvider>
-        {!authRoute && <Navbar />}
-        <div className={authRoute ? "" : "pt-12"}>
-          <Component {...pageProps} />
-        </div>
-      </AuthProvider>
-    </SWRConfig>
+    <Fragment>
+      <Head>
+        <title>Trendit</title>
+      </Head>
+      <SWRConfig
+        value={{
+          fetcher,
+          dedupingInterval: 5000,
+        }}
+      >
+        <AuthProvider>
+          {!authRoute && <Navbar />}
+          <div className={authRoute ? "" : "pt-12"}>
+            <Component {...pageProps} />
+          </div>
+        </AuthProvider>
+      </SWRConfig>
+    </Fragment>
   );
 }
 

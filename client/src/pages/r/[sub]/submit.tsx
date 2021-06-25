@@ -7,7 +7,7 @@ import Sidebar from "../../../components/Sidebar";
 import { Post, Sub } from "../../../types";
 import { GetServerSideProps } from "next";
 
-export default function submit() {
+export default function Submit() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 

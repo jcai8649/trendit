@@ -5,7 +5,7 @@ import { FormEvent, useState } from "react";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 
-export default function create() {
+export default function Create() {
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
