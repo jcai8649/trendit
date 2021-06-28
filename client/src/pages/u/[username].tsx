@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/Image";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";

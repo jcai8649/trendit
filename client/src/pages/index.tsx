@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState, useCallback, useMemo } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR, { useSWRInfinite } from "swr";
-import Image from "next/Image";
+import Image from "next/image";
 import Link from "next/link";
 
 import PostCard from "../components/PostCard";

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Axios from "axios";
 import RedditLogo from "../images/reddit.svg";
 import { useAuthState, useAuthDispatch } from "../context/auth";
-import Image from "next/Image";
+import Image from "next/image";
 import { Sub } from "../types";
 import { useRouter } from "next/router";
 

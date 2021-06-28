@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import Image from "next/Image";
+import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import classNames from "classnames";
@@ -27,11 +27,9 @@ export default function PostPage() {
   const router = useRouter();
   const { identifier, sub, slug } = router.query;
 
-  const {
-    data: post,
-    error,
-    revalidate: postRevalidate,
-  } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
+  const { data: post, error, revalidate: postRevalidate } = useSWR<Post>(
+    identifier && slug ? `/posts/${identifier}/${slug}` : null
+  );
 
   const { data: comments, revalidate: commentRevalidate } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null

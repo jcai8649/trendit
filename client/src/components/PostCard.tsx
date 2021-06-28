@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import Image from "next/Image";
+import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Axios from "axios";
