@@ -13,6 +13,7 @@ export interface Post {
   voteScore?: number;
   commentCount?: number;
   userVote?: number;
+  revalidate?: any;
 }
 
 export interface User {

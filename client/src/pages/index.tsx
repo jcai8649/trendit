@@ -76,9 +76,7 @@ export default function Home() {
       <div className="container flex pt-4">
         {/* Posts Feed */}
         <div className="w-full px-4 md:w-160 md:p-0">
-          {isInitialLoading && posts.length > 0 && (
-            <p className="text-lg text-center">Loading More...</p>
-          )}
+          {isInitialLoading && <p className="text-lg text-center">Loading..</p>}
           {posts?.map((post) => (
             <PostCard
               post={post}
@@ -86,6 +84,9 @@ export default function Home() {
               revalidate={revalidate}
             />
           ))}
+          {isValidating && posts.length > 0 && (
+            <p className="text-lg text-center">Loading More..</p>
+          )}
         </div>
         {/* Sidebar */}
         <div className="hidden ml-6 md:block w-80">

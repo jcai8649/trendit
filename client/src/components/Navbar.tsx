@@ -25,30 +25,30 @@ const Navbar: React.FC = () => {
       .catch((err) => console.log(err));
   };
 
+  const searchSubs = async () => {
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(async () => {
+        try {
+          const { data } = await Axios.get(`/subs/search/${name}`);
+          setSubs(data);
+
+          console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+      }, 250)
+    );
+  };
+
   useEffect(() => {
-    const searchSubs = async () => {
-      clearTimeout(timer);
-      setTimer(
-        setTimeout(async () => {
-          try {
-            const { data } = await Axios.get(`/subs/search/${name}`);
-            setSubs(data);
-
-            console.log(data);
-          } catch (err) {
-            console.log(err);
-          }
-        }, 250)
-      );
-    };
-
     if (name.trim() === "") {
       clearTimeout(timer);
       setSubs([]);
       return;
     }
     searchSubs();
-  }, [name, timer]);
+  }, [name]);
 
   const goToSub = (subName: string) => {
     router.push(`/r/${subName}`);
