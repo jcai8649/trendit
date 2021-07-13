@@ -16,7 +16,6 @@ jobs:
             git pull
             npm install
             npx tsc
-            npm start
             cd client
             npm run build
             pm2 restart server client
