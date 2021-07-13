@@ -6,6 +6,8 @@ import Document, {
   DocumentContext,
 } from "next/document";
 
+import redditLogo from "../images/reddit.svg";
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -17,7 +19,6 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-          <link rel="icon" type="image/png" href="favicon.png" />
           <meta property="og:site_name" content="trendit" />
           {/* <meta property="twitter:site" content="@trendit" /> */}
           <meta property="twitter:card" content="summary" />
