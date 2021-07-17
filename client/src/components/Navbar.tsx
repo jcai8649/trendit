@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
   const [name, setName] = useState("");
   const [subs, setSubs] = useState<Sub[]>([]);
   const [timer, setTimer] = useState(null);
-  const { authenticated, loading } = useAuthState();
+  const { authenticated, user, loading } = useAuthState();
   const dispatch = useAuthDispatch();
 
   const router = useRouter();
@@ -32,8 +32,6 @@ const Navbar: React.FC = () => {
         try {
           const { data } = await Axios.get(`/subs/search/${name}`);
           setSubs(data);
-
-          console.log(data);
         } catch (err) {
           console.log(err);
         }
@@ -109,13 +107,27 @@ const Navbar: React.FC = () => {
       <div className="flex">
         {!loading &&
           (authenticated ? (
-            //Show logout
-            <button
-              className="hidden py-1 mr-2 leading-5 w-30 sm:block lg:w-32 hollow blue button"
-              onClick={logoutHandler}
-            >
-              Logout
-            </button>
+            // Show user and logout
+            <Fragment>
+              <Link href={`/u/${user.username}`}>
+                <a className="hidden w-20 py-1 mr-2 leading-5 sm:flex sm:space-x-0">
+                  <p className="mr-1">{user.username}</p>
+                  <Image
+                    src={user.imageUrl}
+                    className="rounded-full"
+                    alt="User"
+                    height={(6 * 16) / 4}
+                    width={(6 * 16) / 4}
+                  />
+                </a>
+              </Link>
+              <button
+                className="hidden py-1 mr-2 leading-5 w-30 sm:block lg:w-32 hollow blue button"
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
+            </Fragment>
           ) : (
             <Fragment>
               <Link href="/login">

@@ -11,6 +11,7 @@ import { Exclude } from "class-transformer";
 import Entity from "./Entity";
 import Post from "./Post";
 import Vote from "./Vote";
+import { Expose } from "class-transformer";
 
 @TOEntity("users")
 export default class User extends Entity {
@@ -35,11 +36,21 @@ export default class User extends Entity {
   @Length(6, 255, { message: "Must be at least 6 characters long" })
   password: string;
 
+  @Column({ nullable: true })
+  imageUrn: string;
+
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
   @OneToMany(() => Vote, (vote) => vote.user)
   votes: Vote[];
+
+  @Expose()
+  get imageUrl(): string {
+    return this.imageUrn
+      ? `${process.env.APP_URL}/images/${this.imageUrn}`
+      : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+  }
 
   @BeforeInsert()
   async hashPassword() {
