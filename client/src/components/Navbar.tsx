@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
             <Fragment>
               <Link href={`/u/${user.username}`}>
                 <a className="hidden w-20 py-1 mr-2 leading-5 sm:flex sm:space-x-0">
-                  <p className="mr-1">{user.username}</p>
+                  <p className="mr-2">{user.username}</p>
                   <Image
                     src={user.imageUrl}
                     className="rounded-full"

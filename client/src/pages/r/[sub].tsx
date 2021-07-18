@@ -146,8 +146,15 @@ export default function SubPage() {
                   <div className="flex items-center">
                     <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
                   </div>
-                  <p className="text-sm font-bold text-gray-500">
-                    /r/{sub.name}
+                  <p className="flex text-sm font-bold text-gray-500">
+                    /r/{sub.name}{" "}
+                    {ownSub ? (
+                      <p className="w-24 ml-2 text-xs text-center text-blue-500 border-2 border-blue-500 rounded-full">
+                        sub moderator
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </p>
                 </div>
               </div>

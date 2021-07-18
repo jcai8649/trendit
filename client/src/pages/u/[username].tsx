@@ -5,23 +5,69 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
+import { User } from "../../types";
+import Axios from "axios";
 import { Post, Comment } from "../../types";
+import { useAuthState } from "../../context/auth";
+import { ChangeEvent, createRef, useState, useEffect } from "react";
 
-export default function User() {
+export default function UserProfile() {
+  // Local state
+  const [ownUserProfile, setOwnUserProfile] = useState(false);
+
+  // Global state
+  const { authenticated, user } = useAuthState();
+  // Utils
+
   const router = useRouter();
   const username = router.query.username;
+  const fileInputRef = createRef<HTMLInputElement>();
 
   const { data, error, revalidate } = useSWR<any>(
     username ? `/users/${username}` : null
   );
-  if (error) router.push("/");
 
-  if (data) console.log(data);
+  console.log(data);
+
+  useEffect(() => {
+    if (!user) return;
+    setOwnUserProfile(authenticated && user.username === username);
+  }, [authenticated, user]);
+
+  const openFileInput = (type: string) => {
+    if (!ownUserProfile) return;
+    fileInputRef.current.name = type;
+    fileInputRef.current.click();
+  };
+
+  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("type", fileInputRef.current.name);
+
+    try {
+      await Axios.post<User>(`/users/${user.username}/image`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      revalidate();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (error) router.push("/");
 
   return (
     <>
       <Head>
-        <title>{data?.user.username}</title>
+        <title>
+          {data
+            ? `${data.user.username} (u/${data.user.username}) - Trendit`
+            : "Loading"}
+        </title>
       </Head>
       {data && (
         <div className="container flex pt-5">
@@ -72,11 +118,17 @@ export default function User() {
             })}
           </div>
           <div className="ml-6 w-80">
+            <input
+              type="file"
+              hidden={true}
+              ref={fileInputRef}
+              onChange={uploadImage}
+            />
             <div className="bg-white rounded">
               <div className="p-3 mx-auto bg-blue-500 rounded-t">
                 <div className="w-16 h-16 mx-auto border-4 border-white rounded-full ">
                   <Image
-                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                    src={data.user.imageUrl}
                     alt="user profile"
                     className="rounded-full"
                     width="60"
