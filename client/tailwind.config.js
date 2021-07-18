@@ -20,6 +20,7 @@ module.exports = {
         },
       },
       spacing: {
+        18: "4.4rem",
         70: "17.5rem",
         160: "40rem",
       },
@@ -34,7 +35,7 @@ module.exports = {
     },
   },
   plugins: [
-    function ({ addComponents }) {
+    function({ addComponents }) {
       addComponents({
         ".container": {
           width: "100%",

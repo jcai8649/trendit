@@ -86,14 +86,25 @@ export default function SubPage() {
           <div>
             {/* Banner image */}
             <div
-              className={classNames("bg-blue-500", {
+              className={classNames("bg-blue-500 relative", {
                 "cursor-pointer": ownSub,
               })}
-              onClick={() => openFileInput("banner")}
             >
+              <div
+                className={classNames(
+                  "cursor-default opacity-0 pt-3 text-center absolute bg-black w-full h-full text-white",
+                  {
+                    "cursor-pointer block hover:opacity-70": ownSub,
+                  }
+                )}
+                style={{ top: -1, left: 0 }}
+                onClick={() => openFileInput("image")}
+              >
+                Update Banner
+              </div>
               {sub.bannerUrl ? (
                 <div
-                  className="h-56 bg-blue-500"
+                  className="h-56 bg-blue-500 "
                   style={{
                     backgroundImage: `url(${sub.bannerUrl})`,
                     backgroundRepeat: "no-repeat",
@@ -111,14 +122,25 @@ export default function SubPage() {
                 <div className="absolute" style={{ top: -15 }}>
                   <Image
                     src={sub.imageUrl}
-                    alt="Sub"
+                    alt="Sub Image"
                     className={classNames("rounded-full", {
-                      "cursor-pointer": ownSub,
+                      "cursor-point": ownSub,
                     })}
-                    onClick={() => openFileInput("image")}
                     width={70}
                     height={70}
                   />
+                  <div
+                    className={classNames(
+                      "cursor-default opacity-0 rounded-full pt-3 text-center absolute bg-black w-18 h-18 text-white",
+                      {
+                        "cursor-pointer block hover:opacity-70": ownSub,
+                      }
+                    )}
+                    style={{ top: -1, left: 0 }}
+                    onClick={() => openFileInput("image")}
+                  >
+                    Update Icon
+                  </div>
                 </div>
                 <div className="pt-1 pl-24">
                   <div className="flex items-center">
