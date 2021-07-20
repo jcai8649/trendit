@@ -27,8 +27,6 @@ export default function UserProfile() {
     username ? `/users/${username}` : null
   );
 
-  console.log(data);
-
   useEffect(() => {
     if (!user) return;
     setOwnUserProfile(authenticated && user.username === username);

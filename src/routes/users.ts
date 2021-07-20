@@ -4,10 +4,10 @@ import Post from "../entities/Post";
 import User from "../entities/User";
 import path from "path";
 import fs from "fs";
-import multer, { FileFilterCallback } from "multer";
+import upload from "../util/upload";
+
 import auth from "../middleware/auth";
 import user from "../middleware/user";
-import { makeId } from "../util/helpers";
 
 const getUserSubmissions = async (req: Request, res: Response) => {
   try {
@@ -74,28 +74,9 @@ const ownUserProfile = async (
   }
 };
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: "public/images",
-    filename: (_, file, callback) => {
-      const name = makeId(15);
-      callback(null, name + path.extname(file.originalname)); // e.g. jh34gh2v4y + .png
-    },
-  }),
-  fileFilter: (_, file: any, callback: FileFilterCallback) => {
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
-      callback(null, true);
-    } else {
-      callback(new Error("Not an image"));
-    }
-  },
-});
-
 const uploadUserImage = async (req: Request, res: Response) => {
   const user: User = res.locals.user;
   try {
-    console.log(req.file);
-
     let oldImageUrn: string = "";
     oldImageUrn = user.imageUrn || "";
     user.imageUrn = req.file.filename;

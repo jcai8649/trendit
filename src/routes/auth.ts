@@ -71,7 +71,7 @@ const login = async (req: Request, res: Response) => {
       return res.status(401).json({ password: "Invalid username or password" });
     }
 
-    const token = jwt.sign({ username }, process.env.JWT_SECRET!);
+    const token = jwt.sign({ username }, process.env.JWT_SECRET as string);
 
     res.set(
       "Set-Cookie",
