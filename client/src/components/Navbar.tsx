@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
   const [name, setName] = useState("");
   const [subs, setSubs] = useState<Sub[]>([]);
   const [timer, setTimer] = useState(null);
-  const { authenticated, user, loading } = useAuthState();
+  const { authenticated, user, loading, toggleRender } = useAuthState();
   const dispatch = useAuthDispatch();
 
   const router = useRouter();
@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
     Axios.get("/auth/logout")
       .then(() => {
         dispatch("LOGOUT");
-        window.location.reload();
+        router.push("/");
       })
       .catch((err) => console.log(err));
   };
@@ -47,6 +47,13 @@ const Navbar: React.FC = () => {
     }
     searchSubs();
   }, [name]);
+
+  useEffect(() => {
+    if (toggleRender) {
+      window.location.reload();
+      dispatch("RERENDER", false);
+    }
+  }, [toggleRender]);
 
   const goToSub = (subName: string) => {
     router.push(`/r/${subName}`);
@@ -90,7 +97,7 @@ const Navbar: React.FC = () => {
                 <Image
                   src={sub.imageUrl}
                   className="rounded-full"
-                  alt="Sub"
+                  alt="Sub Image"
                   height={(8 * 16) / 4}
                   width={(8 * 16) / 4}
                 />

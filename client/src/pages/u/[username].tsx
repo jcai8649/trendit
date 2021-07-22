@@ -8,7 +8,8 @@ import PostCard from "../../components/PostCard";
 import { User } from "../../types";
 import Axios from "axios";
 import { Post, Comment } from "../../types";
-import { useAuthState } from "../../context/auth";
+import classNames from "classnames";
+import { useAuthDispatch, useAuthState } from "../../context/auth";
 import { ChangeEvent, createRef, useState, useEffect } from "react";
 
 export default function UserProfile() {
@@ -17,6 +18,7 @@ export default function UserProfile() {
 
   // Global state
   const { authenticated, user } = useAuthState();
+  const dispatch = useAuthDispatch();
   // Utils
 
   const router = useRouter();
@@ -51,6 +53,7 @@ export default function UserProfile() {
       });
 
       revalidate();
+      dispatch("RERENDER", true);
     } catch (err) {
       console.log(err);
     }
@@ -115,7 +118,7 @@ export default function UserProfile() {
               }
             })}
           </div>
-          <div className="ml-6 w-80">
+          <div className="hidden ml-6 sm:block w-80">
             <input
               type="file"
               hidden={true}
@@ -133,11 +136,22 @@ export default function UserProfile() {
                     height="60"
                   />
                 </div>
+                {ownUserProfile && (
+                  <div className="m-3 text-center">
+                    <button
+                      className="p-2 text-sm text-white rounded-full bg-gradient-to-r from-red-500 to-yellow-400"
+                      onClick={() => openFileInput("image")}
+                    >
+                      Update Profile
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="p-3 text-center">
-                <h1 className="mb-3 text-xl">{data.user.username}</h1>
+                <h1 className="mb-3 text-xl">u/{data.user.username}</h1>
                 <hr />
                 <p className="mt-3">
+                  <i className="mr-2 fas fa-birthday-cake"></i>
                   Joined {dayjs(data.user.createdAt).format("MMM YYYY")}
                 </p>
               </div>

@@ -13,7 +13,6 @@ const getUserSubmissions = async (req: Request, res: Response) => {
   try {
     const user = await User.findOneOrFail({
       where: { username: req.params.username },
-      select: ["username", "createdAt", "imageUrn"],
     });
 
     const posts = await Post.find({

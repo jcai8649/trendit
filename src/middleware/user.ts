@@ -20,7 +20,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     return next();
   } catch (err) {
-    console.log(err);
     return res.status(401).json({ error: "Unauthenticated" });
   }
 };
