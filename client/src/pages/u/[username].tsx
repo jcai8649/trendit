@@ -8,7 +8,7 @@ import PostCard from "../../components/PostCard";
 import { User } from "../../types";
 import Axios from "axios";
 import { Post, Comment } from "../../types";
-import classNames from "classnames";
+import TopButton from "../../components/TopButton";
 import { useAuthDispatch, useAuthState } from "../../context/auth";
 import { ChangeEvent, createRef, useState, useEffect } from "react";
 
@@ -25,7 +25,7 @@ export default function UserProfile() {
   const username = router.query.username;
   const fileInputRef = createRef<HTMLInputElement>();
 
-  const { data, error, revalidate } = useSWR<any>(
+  const { data, error, mutate } = useSWR<any>(
     username ? `/users/${username}` : null
   );
 
@@ -52,7 +52,7 @@ export default function UserProfile() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      revalidate();
+      mutate();
       dispatch("RERENDER", true);
     } catch (err) {
       console.log(err);
@@ -77,11 +77,7 @@ export default function UserProfile() {
               if (submission.type === "Post") {
                 const post: Post = submission;
                 return (
-                  <PostCard
-                    key={post.identifier}
-                    post={post}
-                    revalidate={revalidate}
-                  />
+                  <PostCard key={post.identifier} post={post} mutate={mutate} />
                 );
               } else {
                 const comment: Comment = submission;
@@ -159,6 +155,9 @@ export default function UserProfile() {
           </div>
         </div>
       )}
+      <footer>
+        <TopButton />
+      </footer>
     </>
   );
 }

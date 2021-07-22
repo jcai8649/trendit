@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Fragment, useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR, { useSWRInfinite } from "swr";
@@ -16,8 +16,8 @@ dayjs.extend(relativeTime);
 
 export default function Home() {
   const [observedPost, setObservedPost] = useState("");
+  const [hitBottom, setHitBottom] = useState(false);
 
-  // const { data: posts, revalidate } = useSWR<Post[]>("/posts");
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
 
   const description =
@@ -32,14 +32,13 @@ export default function Home() {
     size: page,
     setSize: setPage,
     isValidating,
-    revalidate,
+    mutate,
   } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
 
   const isInitialLoading = !data && !error;
 
   const posts: Post[] = useMemo(() => (data ? [].concat(...data) : []), [data]);
 
-  console.log(posts);
   useEffect(() => {
     const observerElement = (element: HTMLElement) => {
       if (!element) return;
@@ -56,8 +55,9 @@ export default function Home() {
       observer.observe(element);
     };
 
-    if (!posts || posts.length === 0) return;
-
+    if (!posts || posts.length === 0) {
+      return;
+    }
     const id = posts[posts.length - 1].identifier;
 
     if (id !== observedPost) {
@@ -67,7 +67,7 @@ export default function Home() {
   }, [page, setPage, posts, observedPost]);
 
   return (
-    <Fragment>
+    <>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description}></meta>
@@ -80,18 +80,9 @@ export default function Home() {
         {/* Posts Feed */}
         <div className="w-full px-4 md:w-160 md:p-0">
           {isInitialLoading && <p className="text-lg text-center">Loading..</p>}
-          {posts?.map((post) => (
-            <PostCard
-              post={post}
-              key={post.identifier}
-              revalidate={revalidate}
-            />
+          {posts.map((post) => (
+            <PostCard post={post} key={post.identifier} mutate={mutate} />
           ))}
-          {isValidating && posts.length > 0 ? (
-            <p className="text-lg text-center">Loading More..</p>
-          ) : (
-            <TopButton />
-          )}
         </div>
         {/* Sidebar */}
         <div className="hidden ml-6 md:block w-80">
@@ -139,6 +130,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </Fragment>
+      <footer>
+        <TopButton />
+      </footer>
+    </>
   );
 }

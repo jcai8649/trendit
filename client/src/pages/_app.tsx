@@ -10,7 +10,6 @@ import "../styles/tailwind.css";
 import "../styles/icons.css";
 
 import Navbar from "../components/Navbar";
-import { Fragment } from "react";
 
 Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
 Axios.defaults.withCredentials = true;
@@ -29,7 +28,7 @@ function App({ Component, pageProps }: AppProps) {
   const authRoutes = ["/register", "/login"];
   const authRoute = authRoutes.includes(pathname);
   return (
-    <Fragment>
+    <>
       <Head>
         <title>Trendit</title>
       </Head>
@@ -46,7 +45,7 @@ function App({ Component, pageProps }: AppProps) {
           </div>
         </AuthProvider>
       </SWRConfig>
-    </Fragment>
+    </>
   );
 }
 

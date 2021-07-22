@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function TopButton() {
   const topFunction = () => {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    if (document) {
+      let rootElement = document.documentElement;
+      rootElement.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (

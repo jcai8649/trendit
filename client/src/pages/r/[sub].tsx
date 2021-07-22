@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { ChangeEvent, createRef, Fragment, useEffect, useState } from "react";
+import { ChangeEvent, createRef, useEffect, useState } from "react";
 import useSWR from "swr";
+import TopButton from "../../components/TopButton";
 import PostCard from "../../components/PostCard";
 import Image from "next/image";
 import classNames from "classnames";
@@ -22,7 +23,7 @@ export default function SubPage() {
 
   const subName = router.query.sub;
 
-  const { data: sub, error, revalidate } = useSWR<Sub>(
+  const { data: sub, error, mutate } = useSWR<Sub>(
     subName ? `/subs/${subName}` : null
   );
 
@@ -49,7 +50,7 @@ export default function SubPage() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      revalidate();
+      mutate();
     } catch (err) {
       console.log(err);
     }
@@ -64,109 +65,114 @@ export default function SubPage() {
     postsMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
   } else {
     postsMarkup = sub.posts.map((post) => (
-      <PostCard key={post.identifier} post={post} revalidate={revalidate} />
+      <PostCard key={post.identifier} post={post} mutate={mutate} />
     ));
   }
 
   return (
-    <div>
-      <Head>
-        <title>{sub?.title}</title>
-      </Head>
+    <>
+      <div>
+        <Head>
+          <title>{sub?.title}</title>
+        </Head>
 
-      {sub && (
-        <Fragment>
-          <input
-            type="file"
-            hidden={true}
-            ref={fileInputRef}
-            onChange={uploadImage}
-          />
-          {/* Sub info and images */}
-          <div>
-            {/* Banner image */}
-            <div
-              className={classNames("bg-blue-500 relative", {
-                "cursor-pointer": ownSub,
-              })}
-            >
+        {sub && (
+          <>
+            <input
+              type="file"
+              hidden={true}
+              ref={fileInputRef}
+              onChange={uploadImage}
+            />
+            {/* Sub info and images */}
+            <div>
+              {/* Banner image */}
               <div
-                className={classNames(
-                  "cursor-default opacity-0 pt-3 text-center absolute bg-black w-full h-full text-white",
-                  {
-                    "cursor-pointer block hover:opacity-70": ownSub,
-                  }
-                )}
-                style={{ top: -1, left: 0 }}
-                onClick={() => openFileInput("image")}
+                className={classNames("bg-blue-500 relative", {
+                  "cursor-pointer": ownSub,
+                })}
               >
-                Update Banner
-              </div>
-              {sub.bannerUrl ? (
                 <div
-                  className="h-56 bg-blue-500 "
-                  style={{
-                    backgroundImage: `url(${sub.bannerUrl})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                ></div>
-              ) : (
-                <div className="h-20 bg-blue-500"></div>
-              )}
-            </div>
-            {/* Sub meta data */}
-            <div className="h-20 bg-white">
-              <div className="container relative flex">
-                <div className="absolute" style={{ top: -15 }}>
-                  <Image
-                    src={sub.imageUrl}
-                    alt="Sub Image"
-                    className={classNames("rounded-full", {
-                      "cursor-point": ownSub,
-                    })}
-                    width={70}
-                    height={70}
-                  />
-                  <div
-                    className={classNames(
-                      "cursor-default opacity-0 rounded-full pt-3 text-center absolute bg-black w-18 h-18 text-white",
-                      {
-                        "cursor-pointer block hover:opacity-70": ownSub,
-                      }
-                    )}
-                    style={{ top: -1, left: 0 }}
-                    onClick={() => openFileInput("image")}
-                  >
-                    Update Icon
-                  </div>
+                  className={classNames(
+                    "cursor-default opacity-0 pt-3 text-center absolute bg-black w-full h-full text-white",
+                    {
+                      "cursor-pointer block hover:opacity-70": ownSub,
+                    }
+                  )}
+                  style={{ top: -1, left: 0 }}
+                  onClick={() => openFileInput("image")}
+                >
+                  Update Banner
                 </div>
-                <div className="pt-1 pl-24">
-                  <div className="flex items-center">
-                    <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
+                {sub.bannerUrl ? (
+                  <div
+                    className="h-56 bg-blue-500 "
+                    style={{
+                      backgroundImage: `url(${sub.bannerUrl})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  ></div>
+                ) : (
+                  <div className="h-20 bg-blue-500"></div>
+                )}
+              </div>
+              {/* Sub meta data */}
+              <div className="h-20 bg-white">
+                <div className="container relative flex">
+                  <div className="absolute" style={{ top: -15 }}>
+                    <Image
+                      src={sub.imageUrl}
+                      alt="Sub Image"
+                      className={classNames("rounded-full", {
+                        "cursor-point": ownSub,
+                      })}
+                      width={70}
+                      height={70}
+                    />
+                    <div
+                      className={classNames(
+                        "cursor-default opacity-0 rounded-full pt-3 text-center absolute bg-black w-18 h-18 text-white",
+                        {
+                          "cursor-pointer block hover:opacity-70": ownSub,
+                        }
+                      )}
+                      style={{ top: -1, left: 0 }}
+                      onClick={() => openFileInput("image")}
+                    >
+                      Update Icon
+                    </div>
                   </div>
-                  <p className="flex text-sm font-bold text-gray-500">
-                    /r/{sub.name}{" "}
-                    {ownSub ? (
-                      <p className="w-24 ml-2 text-xs text-center text-blue-500 border-2 border-blue-500 rounded-full">
-                        sub moderator
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                  </p>
+                  <div className="pt-1 pl-24">
+                    <div className="flex items-center">
+                      <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
+                    </div>
+                    <p className="flex text-sm font-bold text-gray-500">
+                      /r/{sub.name}{" "}
+                      {ownSub ? (
+                        <p className="w-24 ml-2 text-xs text-center text-blue-500 border-2 border-blue-500 rounded-full">
+                          sub moderator
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          {/* Posts & Sidebar */}
-          <div className="container flex pt-5">
-            <div className="w-160">{postsMarkup}</div>
-            <Sidebar sub={sub} />
-          </div>
-        </Fragment>
-      )}
-    </div>
+            {/* Posts & Sidebar */}
+            <div className="container flex pt-5">
+              <div className="w-160">{postsMarkup}</div>
+              <Sidebar sub={sub} />
+            </div>
+          </>
+        )}
+      </div>
+      <footer>
+        <TopButton />
+      </footer>
+    </>
   );
 }

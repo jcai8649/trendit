@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Axios from "axios";
 import RedditLogo from "../images/reddit.svg";
@@ -115,7 +115,7 @@ const Navbar: React.FC = () => {
         {!loading &&
           (authenticated ? (
             // Show user and logout
-            <Fragment>
+            <>
               <Link href={`/u/${user.username}`}>
                 <a className="hidden w-20 py-1 mr-2 leading-5 sm:flex sm:space-x-0">
                   <p className="mr-2">{user.username}</p>
@@ -129,14 +129,14 @@ const Navbar: React.FC = () => {
                 </a>
               </Link>
               <button
-                className="hidden py-1 mr-2 leading-5 w-30 sm:block lg:w-32 hollow blue button"
+                className="hidden p-2 mr-2 leading-5 sm:py-1 w-30 sm:block lg:w-32 hollow blue button"
                 onClick={logoutHandler}
               >
                 Logout
               </button>
-            </Fragment>
+            </>
           ) : (
-            <Fragment>
+            <>
               <Link href="/login">
                 <a className="hidden w-20 py-1 mr-2 leading-5 sm:block lg:w-32 hollow blue button ">
                   Login
@@ -147,7 +147,7 @@ const Navbar: React.FC = () => {
                   sign up
                 </a>
               </Link>
-            </Fragment>
+            </>
           ))}
       </div>
     </div>
