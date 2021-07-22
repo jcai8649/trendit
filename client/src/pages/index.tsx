@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import PostCard from "../components/PostCard";
+import TopButton from "../components/TopButton";
 
 import { Sub, Post } from "../types";
 import { useAuthState } from "../context/auth";
@@ -35,8 +36,10 @@ export default function Home() {
   } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
 
   const isInitialLoading = !data && !error;
+
   const posts: Post[] = useMemo(() => (data ? [].concat(...data) : []), [data]);
 
+  console.log(posts);
   useEffect(() => {
     const observerElement = (element: HTMLElement) => {
       if (!element) return;
@@ -84,8 +87,10 @@ export default function Home() {
               revalidate={revalidate}
             />
           ))}
-          {isValidating && posts.length > 0 && (
+          {isValidating && posts.length > 0 ? (
             <p className="text-lg text-center">Loading More..</p>
+          ) : (
+            <TopButton />
           )}
         </div>
         {/* Sidebar */}
