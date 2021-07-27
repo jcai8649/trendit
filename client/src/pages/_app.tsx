@@ -8,6 +8,7 @@ import { AuthProvider } from "../context/auth";
 
 import "../styles/tailwind.css";
 import "../styles/icons.css";
+import "../styles/revert.css";
 
 import Navbar from "../components/Navbar";
 

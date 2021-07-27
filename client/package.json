@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-decoupled-document": "^29.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
     "autoprefixer": "^10.2.6",
     "axios": "^0.21.1",
     "dayjs": "^1.10.5",
+    "html-react-parser": "^1.2.7",
     "next": "^10.2.3",
     "postcss": "^8.2.13",
     "react": "17.0.2",

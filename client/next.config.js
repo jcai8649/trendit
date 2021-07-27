@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["www.gravatar.com", process.env.APP_DOMAIN],
+    domains: ["www.gravatar.com", "i.imgur.com", process.env.APP_DOMAIN],
   },
   reactStrictMode: true,
   webpack(config) {
@@ -19,6 +19,7 @@ module.exports = {
         },
       ],
     });
+
     return config;
   },
 };

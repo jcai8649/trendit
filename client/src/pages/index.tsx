@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR, { useSWRInfinite } from "swr";
@@ -16,7 +16,6 @@ dayjs.extend(relativeTime);
 
 export default function Home() {
   const [observedPost, setObservedPost] = useState("");
-  const [hitBottom, setHitBottom] = useState(false);
 
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
 
@@ -64,6 +63,33 @@ export default function Home() {
       setObservedPost(id);
       observerElement(document.getElementById(id));
     }
+
+    return () => {
+      const observerElement = (element: HTMLElement) => {
+        if (!element) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting === true) {
+              setPage(page + 1);
+              observer.unobserve(element);
+            }
+          },
+          { threshold: 1 }
+        );
+        observer.observe(element);
+      };
+
+      if (!posts || posts.length === 0) {
+        return;
+      }
+      const id = posts[posts.length - 1].identifier;
+
+      if (id !== observedPost) {
+        setObservedPost(id);
+        observerElement(document.getElementById(id));
+      }
+    };
   }, [page, setPage, posts, observedPost]);
 
   return (

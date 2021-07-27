@@ -8,6 +8,7 @@ import classNames from "classnames";
 import ActionButton from "./ActionButton";
 import { useAuthState } from "../context/auth";
 import { useRouter } from "next/router";
+import parse from "html-react-parser";
 
 interface PostCardProps {
   post: Post;
@@ -122,7 +123,7 @@ export default function PostCard({
         <Link href={url}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
-        {body && <p className="my-1 text-sm">{body}</p>}
+        {body && <div className="my-1 text-sm ck-content">{parse(body)}</div>}
 
         <div className="flex">
           <Link href={url}>

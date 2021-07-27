@@ -71,6 +71,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     loadUser();
+
+    return () => {
+      async function loadUser() {
+        try {
+          const res = await Axios.get("/auth/me");
+          dispatch("LOGIN", res.data);
+        } catch (err) {
+          dispatch("ERROR", err);
+        } finally {
+          dispatch("STOP_LOADING");
+        }
+      }
+      loadUser();
+    };
   }, []);
 
   return (

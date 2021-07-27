@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import classNames from "classnames";
 
+import parse from "html-react-parser";
 import { Post, Comment } from "../../../../types";
 import Sidebar from "../../../../components/Sidebar";
 import Axios from "axios";
@@ -167,7 +168,9 @@ export default function PostPage() {
                     {/* Post title */}
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                     {/* Post body */}
-                    <p className="my-3 text-sm">{post.body}</p>
+                    <div className="my-3 text-sm ck-content">
+                      {parse(post.body)}
+                    </div>
                     {/* Actions */}
                     <div className="flex">
                       <Link href={post.url}>
