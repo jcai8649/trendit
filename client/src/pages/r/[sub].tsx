@@ -60,7 +60,7 @@ export default function SubPage() {
 
   let postsMarkup;
   if (!sub) {
-    postsMarkup = <p className="text-lg text-center">Loading..</p>;
+    postsMarkup = <p className="loader">Loading..</p>;
   } else if (sub.posts.length === 0) {
     postsMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
   } else {

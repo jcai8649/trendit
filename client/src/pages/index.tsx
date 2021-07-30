@@ -30,7 +30,7 @@ export default function Home() {
     error,
     size: page,
     setSize: setPage,
-    isValidating,
+
     mutate,
   } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
 
@@ -105,7 +105,7 @@ export default function Home() {
       <div className="container flex pt-4">
         {/* Posts Feed */}
         <div className="w-full px-4 md:w-160 md:p-0">
-          {isInitialLoading && <p className="text-lg text-center">Loading..</p>}
+          {isInitialLoading && <p className="loader">Loading..</p>}
           {posts.map((post) => (
             <PostCard post={post} key={post.identifier} mutate={mutate} />
           ))}

@@ -68,17 +68,15 @@ export default function Submit() {
                   {title.trim().length}/300
                 </div>
               </div>
-              <div className="w-full mb-2 border rounded focus:outline-none">
-                <Editor
-                  value=""
-                  name="body"
-                  onChange={(data) => {
-                    setBody(data);
-                    console.log(data);
-                  }}
-                  editorLoaded={editorLoaded}
-                />
-              </div>
+              <Editor
+                value=""
+                name="body"
+                onChange={(data) => {
+                  setBody(data);
+                  console.log(data);
+                }}
+                editorLoaded={editorLoaded}
+              />
               {/* <textarea
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
                 value={body}
