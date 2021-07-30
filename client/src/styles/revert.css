@@ -26,8 +26,23 @@
   color: #0079d3;
 }
 
-.ck-content > table {
-  border-collapse: revert;
+.ck-content .table {
+  margin: revert;
+}
+
+.ck-content .table table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px double #b3b3b3;
+}
+
+.ck-content .table table td,
+.ck-content .table table th {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #bfbfbf;
 }
 
 .ck-content > h1,

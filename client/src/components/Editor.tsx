@@ -24,6 +24,7 @@ function Editor({ onChange, editorLoaded, name, value }) {
         "heading",
         "bulletedList",
         "numberedList",
+        "insertTable",
         "blockQuote",
         "mediaEmbed",
       ],
