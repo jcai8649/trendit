@@ -26,10 +26,6 @@
   color: #0079d3;
 }
 
-.ck-content .table {
-  margin: revert;
-}
-
 .ck-content .table table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -53,4 +49,8 @@
 .ck-content > h6 {
   font-size: revert;
   font-weight: revert;
+}
+
+.ck-editor__editable {
+  height: 9rem;
 }

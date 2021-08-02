@@ -16,7 +16,7 @@ export default function Sidebar({ sub }: { sub: Sub }) {
         <div className="p-3">
           <p className="mb-3 text-md">{sub.description}</p>
           <p className="my-3">
-            <i className="mr-2 fas fa-birthday-cake"></i>
+            <i className="mr-2 fas fa-birthday-cake" />
             Created {dayjs(sub.createdAt).format("D MMM YYYY")}
           </p>
           {authenticated && (

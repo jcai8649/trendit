@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 
 function Editor({ onChange, editorLoaded, name, value }) {
   const editorRef = useRef<any>();
-  const { CKEditor, ClassicEditor, DocumentEditor } = editorRef.current || {};
+  const { CKEditor, DocumentEditor } = editorRef.current || {};
 
   useEffect(() => {
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, // v3+
-      // ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
       DocumentEditor: require("@ckeditor/ckeditor5-build-decoupled-document"),
     };
   }, []);
@@ -26,7 +25,6 @@ function Editor({ onChange, editorLoaded, name, value }) {
         "numberedList",
         "insertTable",
         "blockQuote",
-        "mediaEmbed",
       ],
     },
     link: {
@@ -47,6 +45,7 @@ function Editor({ onChange, editorLoaded, name, value }) {
         onReady={(editor) => {
           // You can store the "editor" and use when it is needed.
           console.log("Editor is ready to use!", editor);
+          console.log(editor.ui.view.editable.element);
           console.log(Array.from(editor.ui.componentFactory.names()));
           // Insert the toolbar before the editable area.
           editor.ui.view.editable.element.parentElement.insertBefore(
