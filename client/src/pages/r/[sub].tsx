@@ -4,6 +4,7 @@ import { ChangeEvent, createRef, useEffect, useState } from "react";
 import useSWR from "swr";
 import TopButton from "../../components/TopButton";
 import PostCard from "../../components/PostCard";
+import Link from "next/link";
 import Image from "next/image";
 import classNames from "classnames";
 
@@ -164,7 +165,32 @@ export default function SubPage() {
             </div>
             {/* Posts & Sidebar */}
             <div className="container flex pt-5 ">
-              <div className="w-full px-4 md:w-160 md:p-0">{postsMarkup}</div>
+              <div className="w-full px-4 md:w-160 md:p-0">
+                {" "}
+                {authenticated && (
+                  <div className="flex flex-row content-center w-full px-1 py-1 mb-4 bg-white rounded">
+                    <Link href={`/u/${user.username}`}>
+                      <a className="m-2 cursor-pointer">
+                        <Image
+                          src={user.imageUrl}
+                          className="rounded-full"
+                          alt="User"
+                          height={(6 * 16) / 2.5}
+                          width={(6 * 16) / 2.5}
+                        />
+                      </a>
+                    </Link>
+                    <Link href={`/r/${sub.name}/submit`}>
+                      <input
+                        type="text"
+                        className="w-full pl-2 m-2 text-sm bg-gray-100 rounded"
+                        placeholder="Create Post"
+                      />
+                    </Link>
+                  </div>
+                )}{" "}
+                {postsMarkup}
+              </div>
               <Sidebar sub={sub} />
             </div>
           </>
