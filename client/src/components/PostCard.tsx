@@ -59,7 +59,7 @@ export default function PostCard({
   return (
     <div
       key={identifier}
-      className="flex mb-4 bg-white rounded"
+      className="flex mb-4 overflow-auto bg-white rounded"
       id={identifier}
     >
       {/* Vote Section */}

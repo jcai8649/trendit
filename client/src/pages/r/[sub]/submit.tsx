@@ -2,16 +2,18 @@ import Axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Editor from "../../../components/Editor";
-import { FormEvent, useState, useEffect, useMemo } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import Sidebar from "../../../components/Sidebar";
 import { Post, Sub } from "../../../types";
+import classNames from "classnames";
 import { GetServerSideProps } from "next";
 
 export default function Submit() {
   const [title, setTitle] = useState("");
   const [editorLoaded, setEditorLoaded] = useState(false);
+  const [type, setType] = useState("post");
 
   const [body, setBody] = useState("");
 
@@ -111,13 +113,6 @@ export default function Submit() {
                   }}
                   editorLoaded={editorLoaded}
                 />
-                {/* <textarea
-                className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                placeholder="Text (optional)"
-                rows={4}
-              /> */}
                 <div className="flex justify-end">
                   <button
                     className="px-3 py-1 mr-4 hollow button"

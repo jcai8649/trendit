@@ -72,7 +72,7 @@ export default function UserProfile() {
       </Head>
       {data && (
         <div className="container flex pt-5">
-          <div className="w-160">
+          <div className="w-full px-4 md:w-160 md:p-0">
             {data.submissions.map((submission: any) => {
               if (submission.type === "Post") {
                 const post: Post = submission;
