@@ -6,7 +6,6 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  AfterLoad,
 } from "typeorm";
 
 import Entity from "./Entity";
@@ -37,6 +36,9 @@ export default class Post extends Entity {
 
   @Column({ nullable: true, type: "text" })
   body: string;
+
+  @Column()
+  inputType: string;
 
   @Column()
   subName: string;

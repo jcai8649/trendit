@@ -169,7 +169,7 @@ export default function PostPage() {
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                     {/* Post body */}
                     <div className="my-3 text-sm ck-content">
-                      {parse(post.body)}
+                      {post.body && parse(post.body)}
                     </div>
                     {/* Actions */}
                     <div className="flex">

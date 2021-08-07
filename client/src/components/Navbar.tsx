@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Axios from "axios";
-import RedditLogo from "../images/reddit.svg";
+import Logo from "../images/red_icon.svg";
 import { useAuthState, useAuthDispatch } from "../context/auth";
 import Image from "next/image";
 import { Sub } from "../types";
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
       <div className="flex items-center">
         <Link href="/">
           <a>
-            <RedditLogo className="w-8 h-8 mr-2" />
+            <Logo className="w-8 h-8 mr-2" />
           </a>
         </Link>
         <span className="hidden text-2xl font-semibold lg:block">

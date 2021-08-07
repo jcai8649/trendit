@@ -101,7 +101,7 @@ export default function SubPage() {
                     }
                   )}
                   style={{ top: -1, left: 0 }}
-                  onClick={() => openFileInput("image")}
+                  onClick={() => openFileInput("banner")}
                 >
                   Update Banner
                 </div>
@@ -152,7 +152,7 @@ export default function SubPage() {
                     <div className="flex items-center">
                       <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
                     </div>
-                    <p className="flex text-sm font-bold text-gray-500">
+                    <div className="flex text-sm font-bold text-gray-500">
                       /r/{sub.name}{" "}
                       {ownSub ? (
                         <p className="w-24 ml-2 text-xs text-center text-blue-500 border-2 border-blue-500 rounded-full">
@@ -161,7 +161,7 @@ export default function SubPage() {
                       ) : (
                         ""
                       )}
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>

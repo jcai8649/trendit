@@ -16,7 +16,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="icon" type="image/svg+xml" href="favicon.ico" />
           <link rel="icon" type="image/png" href="favicon.png" />
           <meta property="og:site_name" content="trendit" />
           {/* <meta property="twitter:site" content="@trendit" /> */}
@@ -24,11 +23,11 @@ class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta
             property="og:image"
-            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/reddit.svg`}
+            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/red_icon.svg`}
           />
           <meta
             property="twitter:image"
-            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/reddit.svg`}
+            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/red_icon.svg`}
           />
 
           <link rel="preconnect" href="https://fonts.gstatic.com" />

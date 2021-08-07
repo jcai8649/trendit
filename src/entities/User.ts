@@ -49,7 +49,7 @@ export default class User extends Entity {
   get imageUrl(): string {
     return this.imageUrn
       ? `${process.env.APP_URL}/images/${this.imageUrn}`
-      : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+      : `${process.env.APP_URL}/images/icon_transparent.png`;
   }
 
   @BeforeInsert()

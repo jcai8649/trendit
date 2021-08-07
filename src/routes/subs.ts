@@ -78,7 +78,7 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
     const sub = await Sub.findOneOrFail({ where: { name: req.params.name } });
 
     if (sub.username !== user.username) {
-      return res.status(403).json({ error: "You dont own this sub" });
+      return res.status(403).json({ error: "You do not own this sub" });
     }
 
     res.locals.sub = sub;
