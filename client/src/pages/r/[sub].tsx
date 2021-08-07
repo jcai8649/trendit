@@ -126,9 +126,12 @@ export default function SubPage() {
                     <Image
                       src={sub.imageUrl}
                       alt="Sub Image"
-                      className={classNames("rounded-full", {
-                        "cursor-point": ownSub,
-                      })}
+                      className={classNames(
+                        "rounded-full bg-white border-white",
+                        {
+                          "cursor-point": ownSub,
+                        }
+                      )}
                       width={70}
                       height={70}
                     />

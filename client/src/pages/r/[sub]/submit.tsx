@@ -14,8 +14,9 @@ export default function Submit() {
   const [title, setTitle] = useState("");
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [type, setType] = useState("post");
-
   const [body, setBody] = useState("");
+  const [url, setUrl] = useState("");
+  const [urlError, setUrlError] = useState(false);
 
   const router = useRouter();
   const { sub: subName } = router.query;
@@ -27,15 +28,28 @@ export default function Submit() {
     router.back();
   };
 
+  const handleUrlChange = (value: string) => {
+    setUrlError(false);
+
+    setUrl(value);
+
+    if (value.trim().includes(" ")) {
+      setUrlError(true);
+    }
+  };
+
   const submitPost = async (event: FormEvent) => {
     event.preventDefault();
 
     if (title.trim() === "") return;
 
+    if (urlError && type === "link") {
+      return;
+    }
     try {
       const { data: post } = await Axios.post<Post>("/posts", {
         title: title.trim(),
-        body: body.trim(),
+        body: type === "post" ? body.trim() : url.trim(),
         sub: sub.name,
       });
 
@@ -75,11 +89,29 @@ export default function Submit() {
           <div className="p-1 bg-white rounded">
             <div className="m-1 overflow-auto">
               <div className="flex flex-row items-center">
-                <button className="items-center flex-1 px-12 py-6 font-medium text-gray-400 border-b border-r cursor-pointer ">
+                <button
+                  className={classNames(
+                    "items-center flex-1 px-12 py-6 font-medium text-gray-400 border-b-2 border-gray-200 cursor-pointer hover:bg-gray-100",
+                    {
+                      "text-blue-500 border-b-4 border-blue-500":
+                        type === "post",
+                    }
+                  )}
+                  onClick={(e) => setType("post")}
+                >
                   <i className="mr-2 fas fa-edit" />
                   Post
                 </button>
-                <button className="items-center flex-1 px-12 py-6 font-medium text-gray-400 border-b cursor-pointer">
+                <button
+                  className={classNames(
+                    "items-center flex-1 px-12 py-6 font-medium text-gray-400 border-b-2 border-gray-200 cursor-pointer hover:bg-gray-100",
+                    {
+                      "text-blue-500 border-b-4 border-blue-500":
+                        type === "link",
+                    }
+                  )}
+                  onClick={(e) => setType("link")}
+                >
                   <i className="mr-2 fas fa-link" />
                   Link
                 </button>
@@ -90,7 +122,7 @@ export default function Submit() {
                 <div className="relative mb-2">
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
                     placeholder="Title"
                     maxLength={300}
                     value={title}
@@ -104,15 +136,34 @@ export default function Submit() {
                     {title.trim().length}/300
                   </div>
                 </div>
-                <Editor
-                  value=""
-                  name="body"
-                  onChange={(data) => {
-                    setBody(data);
-                    console.log(data);
-                  }}
-                  editorLoaded={editorLoaded}
-                />
+                <div
+                  className={classNames(
+                    "block w-full mb-2 border rounded focus-within:border-black focus-within:outline-none",
+                    { hidden: type === "link" }
+                  )}
+                >
+                  <Editor
+                    value=""
+                    name="body"
+                    onChange={(data) => {
+                      setBody(data);
+                      console.log(data);
+                    }}
+                    editorLoaded={editorLoaded}
+                  />
+                </div>
+                <div
+                  className={classNames("block", { hidden: type === "post" })}
+                >
+                  <input
+                    className="w-full px-3 py-2 mb-3 border border-gray-300 rounded focus:outline-none focus:border-black"
+                    type="text"
+                    placeholder="Url"
+                    value={url}
+                    onChange={(e) => handleUrlChange(e.target.value)}
+                  />
+                </div>
+
                 <div className="flex justify-end">
                   <button
                     className="px-3 py-1 mr-4 hollow button"
@@ -123,11 +174,16 @@ export default function Submit() {
                   <button
                     className="px-3 py-1 blue button"
                     type="submit"
-                    disabled={title.trim().length === 0}
+                    disabled={title.trim().length === 0 || urlError}
                   >
                     Post
                   </button>
                 </div>
+                {urlError && type === "link" && (
+                  <p className="mt-1 text-sm text-right text-red-500 ">
+                    a url is required
+                  </p>
+                )}
               </form>
             </div>
           </div>
