@@ -21,7 +21,7 @@
   padding: revert;
 }
 
-.ck-content > p > a {
+.ck-content a {
   text-decoration: revert;
   color: #0079d3;
 }

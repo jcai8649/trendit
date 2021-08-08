@@ -6,6 +6,7 @@ import Axios from "axios";
 import { Post } from "../types";
 import classNames from "classnames";
 import ActionButton from "./ActionButton";
+import LinkConverter from "./LinkConverter";
 import { useAuthState } from "../context/auth";
 import { useRouter } from "next/router";
 import parse from "html-react-parser";
@@ -23,6 +24,7 @@ export default function PostCard({
     slug,
     title,
     body,
+    inputType,
     subName,
     createdAt,
     voteScore,
@@ -123,7 +125,11 @@ export default function PostCard({
         <Link href={url}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
-        {body && <div className="my-1 text-sm ck-content">{parse(body)}</div>}
+        {body && (
+          <div className="my-1 text-sm ck-content">
+            {inputType === "post" ? parse(body) : <LinkConverter url={body} />}
+          </div>
+        )}
 
         <div className="flex">
           <Link href={url}>

@@ -50,6 +50,7 @@ export default function Submit() {
       const { data: post } = await Axios.post<Post>("/posts", {
         title: title.trim(),
         body: type === "post" ? body.trim() : url.trim(),
+        inputType: type,
         sub: sub.name,
       });
 

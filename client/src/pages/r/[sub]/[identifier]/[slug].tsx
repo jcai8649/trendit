@@ -14,6 +14,7 @@ import Axios from "axios";
 import { useAuthState } from "../../../../context/auth";
 import ActionButton from "../../../../components/ActionButton";
 import { FormEvent, useEffect, useState } from "react";
+import LinkConverter from "../../../../components/LinkConverter";
 
 dayjs.extend(relativeTime);
 
@@ -168,9 +169,16 @@ export default function PostPage() {
                     {/* Post title */}
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                     {/* Post body */}
-                    <div className="my-3 text-sm ck-content">
-                      {post.body && parse(post.body)}
-                    </div>
+                    {post.body && (
+                      <div className="my-3 text-sm ck-content">
+                        {post.inputType === "post" ? (
+                          parse(post.body)
+                        ) : (
+                          <LinkConverter url={post.body} />
+                        )}
+                      </div>
+                    )}
+
                     {/* Actions */}
                     <div className="flex">
                       <Link href={post.url}>

@@ -2,6 +2,7 @@ export interface Post {
   identifier: string;
   title: string;
   body?: string;
+  inputType: string;
   slug: string;
   subName: string;
   username: string;
