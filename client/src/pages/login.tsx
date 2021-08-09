@@ -45,7 +45,7 @@ export default function Register() {
         style={{
           backgroundImage: `url(${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/ocean.jpg)`,
         }}
-      ></div>
+      />
       <div className="flex flex-col justify-center pl-6">
         <div className="w-70">
           <h1 className="mb-2 text-lg font-medium">Login</h1>
@@ -66,9 +66,9 @@ export default function Register() {
               placeholder="Password"
               error={errors.password}
             />
-            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border rounded borde-blue-500">
+            <button className="w-full py-3 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border rounded-full borde-blue-500">
               {" "}
-              Login
+              Log In
             </button>
           </form>
           <small>

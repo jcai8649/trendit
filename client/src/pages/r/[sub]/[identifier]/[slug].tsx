@@ -150,7 +150,7 @@ export default function PostPage() {
                       ></i>
                     </div>
                   </div>
-                  <div className="py-2 pr-2">
+                  <div className="flex-1 py-2 pr-2">
                     <div className="flex items-center">
                       <p className="text-xs text-gray-500">
                         Posted by
@@ -237,8 +237,8 @@ export default function PostPage() {
                       </p>
                       <div>
                         <Link href="/login">
-                          <a className="px-4 py-1 mr-4 hollow blue button">
-                            Login
+                          <a className="px-4 py-1 mb-1 mr-4 hollow blue button">
+                            Log In
                           </a>
                         </Link>
                         <Link href="/register">

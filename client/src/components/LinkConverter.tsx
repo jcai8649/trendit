@@ -14,14 +14,13 @@ export default function LinkConverter({ url }: LinkProps) {
       const VIDEO_ID = url.slice(-11);
       return (
         <iframe
+          className="w-full mx-auto md:h-80"
           src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}`}
-          width="560"
-          height="315"
           allow="fullscreen"
         />
       );
     } else if (imageTypeList.includes(IMAGE_TYPE)) {
-      return <img src={url} alt="post image" />;
+      return <img className="mx-auto" src={url} alt="post image" />;
     }
     return (
       <a href={url} target="_blank" rel="noreferrer noopener">

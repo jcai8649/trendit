@@ -6,6 +6,7 @@ import useSWR, { useSWRInfinite } from "swr";
 import Image from "next/image";
 import Link from "next/link";
 
+import PostSorter from "../components/PostSorter";
 import PostCard from "../components/PostCard";
 import TopButton from "../components/TopButton";
 
@@ -21,7 +22,7 @@ export default function Home() {
 
   const description =
     "Trendit is a network of communities based on people's interests. Find communities you're interested in, and become part of an online community!";
-  const title = "trendit: the front page of the internet trends";
+  const title = "Trendit: Dive into the trends";
 
   const { authenticated } = useAuthState();
 
@@ -106,6 +107,7 @@ export default function Home() {
         {/* Posts Feed */}
         <div className="w-full px-4 md:w-160 md:p-0">
           {isInitialLoading && <p className="loader">Loading..</p>}
+          <PostSorter />
           {posts.map((post) => (
             <PostCard post={post} key={post.identifier} mutate={mutate} />
           ))}

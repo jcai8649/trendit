@@ -10,7 +10,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [agreement, setAgreement] = useState(false);
   const [errors, setErrors] = useState<any>({});
 
   const { authenticated } = useAuthState();
@@ -20,11 +19,6 @@ export default function Register() {
 
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
-
-    if (!agreement) {
-      setErrors({ ...errors, agreement: "You must agree to T&Cs" });
-      return;
-    }
 
     try {
       await Axios.post("/auth/register", {
@@ -50,7 +44,7 @@ export default function Register() {
         style={{
           backgroundImage: `url(${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/ocean.jpg)`,
         }}
-      ></div>
+      />
       <div className="flex flex-col justify-center pl-6">
         <div className="w-70">
           <h1 className="mb-2 text-lg font-medium">Sign Up</h1>
@@ -59,21 +53,6 @@ export default function Register() {
             By continuing, you agree to our User Agreement and Privacy Policy.
           </p>
           <form onSubmit={submitForm}>
-            <div className="mb-6">
-              <input
-                type="checkbox"
-                className="mr-1 cursor-pointer"
-                id="agreement"
-                checked={agreement}
-                onChange={(e) => setAgreement(e.target.checked)}
-              />
-              <label htmlFor="agreement" className="text-xs cursor-pointer">
-                I agree to get emails about trendy ideas on Trendit
-              </label>
-              <small className="block font-medium text-red-600">
-                {errors.agreement}
-              </small>
-            </div>
             <InputGroup
               className="mb-2"
               value={email}
@@ -98,7 +77,7 @@ export default function Register() {
               placeholder="Password"
               error={errors.password}
             />
-            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border rounded borde-blue-500">
+            <button className="w-full py-3 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border border-blue-500 rounded-full">
               {" "}
               Sign up
             </button>
@@ -106,7 +85,7 @@ export default function Register() {
           <small>
             Already a trenditor?
             <Link href="/login">
-              <a className="ml-1 text-blue-500 uppercase">Log in</a>
+              <a className="ml-1 text-blue-500 uppercase">Log In</a>
             </Link>
           </small>
         </div>
