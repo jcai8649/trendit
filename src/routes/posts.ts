@@ -39,6 +39,7 @@ const getPosts = async (req: Request, res: Response) => {
       skip: currentPage * postsPerPage,
       take: postsPerPage,
     });
+    console.log(posts);
 
     if (res.locals.user) {
       posts.forEach((p) => p.setUserVote(res.locals.user));

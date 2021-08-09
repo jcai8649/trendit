@@ -113,17 +113,18 @@ export default function Home() {
         {/* Sidebar */}
         <div className="hidden ml-6 md:block w-80">
           <div className="bg-white rounded">
-            <div className="p-4 border-b-2">
-              <p className="text-lg font-semibold text-center">
+            <div className="p-4 bg-blue-500 border-b-2 rounded-t">
+              <p className="text-lg font-semibold text-center text-white">
                 Top Communities
               </p>
             </div>
             <div>
-              {topSubs?.map((sub) => (
+              {topSubs?.map((sub, idx) => (
                 <div
                   key={sub.name}
                   className="flex items-center px-4 py-2 text-xs border-b"
                 >
+                  <p className="mr-2 font-bold">{idx + 1}.</p>
                   <Link passHref href={`/r/${sub.name}`}>
                     <a>
                       <Image
@@ -140,7 +141,6 @@ export default function Home() {
                       /r/{sub.name}
                     </a>
                   </Link>
-                  <p className="ml-auto font-med">{sub.postCount}</p>
                 </div>
               ))}
             </div>

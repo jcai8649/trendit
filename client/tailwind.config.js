@@ -42,7 +42,7 @@ module.exports = {
           marginLeft: "auto",
           marginRight: "auto",
           "@screen sm": { maxWidth: "640px" },
-          "@screen md": { maxWidth: "768px" },
+          "@screen md": { maxWidth: "850px" },
           "@screen lg": { maxWidth: "975px" },
         },
       });
