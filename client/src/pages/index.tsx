@@ -1,13 +1,12 @@
 import Head from "next/head";
-import { useEffect, useState, useMemo, useRef } from "react";
+
+import PostFeed from "../components/PostFeed";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 
-import PostSorter from "../components/PostSorter";
-import PostCard from "../components/PostCard";
 import TopButton from "../components/TopButton";
 
 import { Sub, Post } from "../types";
@@ -16,8 +15,6 @@ import { useAuthState } from "../context/auth";
 dayjs.extend(relativeTime);
 
 export default function Home() {
-  const [observedPost, setObservedPost] = useState("");
-
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
 
   const description =
@@ -25,73 +22,6 @@ export default function Home() {
   const title = "Trendit: Dive into the trends";
 
   const { authenticated } = useAuthState();
-
-  const {
-    data,
-    error,
-    size: page,
-    setSize: setPage,
-
-    mutate,
-  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
-
-  const isInitialLoading = !data && !error;
-
-  const posts: Post[] = useMemo(() => (data ? [].concat(...data) : []), [data]);
-
-  useEffect(() => {
-    const observerElement = (element: HTMLElement) => {
-      if (!element) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting === true) {
-            setPage(page + 1);
-            observer.unobserve(element);
-          }
-        },
-        { threshold: 1 }
-      );
-      observer.observe(element);
-    };
-
-    if (!posts || posts.length === 0) {
-      return;
-    }
-    const id = posts[posts.length - 1].identifier;
-
-    if (id !== observedPost) {
-      setObservedPost(id);
-      observerElement(document.getElementById(id));
-    }
-
-    return () => {
-      const observerElement = (element: HTMLElement) => {
-        if (!element) return;
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            if (entries[0].isIntersecting === true) {
-              setPage(page + 1);
-              observer.unobserve(element);
-            }
-          },
-          { threshold: 1 }
-        );
-        observer.observe(element);
-      };
-
-      if (!posts || posts.length === 0) {
-        return;
-      }
-      const id = posts[posts.length - 1].identifier;
-
-      if (id !== observedPost) {
-        setObservedPost(id);
-        observerElement(document.getElementById(id));
-      }
-    };
-  }, [page, setPage, posts, observedPost]);
 
   return (
     <>
@@ -105,13 +35,7 @@ export default function Home() {
       </Head>
       <div className="container flex pt-4">
         {/* Posts Feed */}
-        <div className="w-full px-4 md:w-160 md:p-0">
-          {isInitialLoading && <p className="loader">Loading..</p>}
-          <PostSorter />
-          {posts.map((post) => (
-            <PostCard post={post} key={post.identifier} mutate={mutate} />
-          ))}
-        </div>
+        <PostFeed />
         {/* Sidebar */}
         <div className="hidden ml-6 md:block w-80">
           <div className="bg-white rounded">
@@ -149,7 +73,7 @@ export default function Home() {
             {authenticated && (
               <div className="p-4 border-t-2">
                 <Link href="/subs/create">
-                  <a className="w-full px-2 py-1 blue button">
+                  <a className="w-full px-2 py-2 blue button">
                     Create Community
                   </a>
                 </Link>

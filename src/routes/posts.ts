@@ -1,8 +1,9 @@
+import { getRepository } from "typeorm";
 import { Router, Request, Response } from "express";
 import Comment from "../entities/Comment";
 import Post from "../entities/Post";
 import Sub from "../entities/Sub";
-
+import Vote from "../entities/Vote";
 import auth from "../middleware/auth";
 import user from "../middleware/user";
 
@@ -19,7 +20,13 @@ const createPost = async (req: Request, res: Response) => {
     //Find sub
     const subRecord = await Sub.findOneOrFail({ name: sub });
 
-    const post = new Post({ title, body, inputType, user, sub: subRecord });
+    const post = new Post({
+      title,
+      body,
+      inputType,
+      user,
+      sub: subRecord,
+    });
     await post.save();
 
     return res.json(post);
@@ -32,14 +39,63 @@ const createPost = async (req: Request, res: Response) => {
 const getPosts = async (req: Request, res: Response) => {
   const currentPage: number = (req.query.page || 0) as number;
   const postsPerPage: number = (req.query.count || 8) as number;
+  const queryType: string = (req.query.sort || "new") as string;
+
   try {
-    const posts = await Post.find({
-      order: { createdAt: "DESC" },
-      relations: ["comments", "votes", "sub"],
-      skip: currentPage * postsPerPage,
-      take: postsPerPage,
-    });
-    console.log(posts);
+    let sortBy;
+
+    switch (queryType) {
+      case "top":
+        sortBy = "posts.voteScore";
+        break;
+      case "new":
+        sortBy = "posts.createdAt";
+        break;
+      default:
+        sortBy = "posts.title";
+    }
+
+    // const posts = await Post.find({
+    //   order: { voteScore: "ASC" },
+    //   relations: ["comments", "votes", "sub"],
+    //   skip: currentPage * postsPerPage,
+    //   take: postsPerPage,
+    // });
+
+    // const postvotes = await getRepository(Post)
+    //   .createQueryBuilder("post")
+    // .select("post.id")
+    // .addSelect("post.votecount")
+    // .addSelect("SUM(votes.value)", "postc")
+    // .leftJoin("post.votes", "votes")
+    // .groupBy("post.id")
+    // .orderBy("postc", "DESC", "NULLS LAST")
+    //   .getRawMany();
+
+    const posts = await getRepository(Post)
+      .createQueryBuilder("posts")
+      .addSelect((sq) => {
+        return sq
+          .select("SUM(votes.value)", "post_votecount")
+          .from(Post, "post")
+          .leftJoin("post.votes", "votes")
+          .where("post.id = posts.id")
+          .groupBy("post.id");
+      }, "votecount")
+      .leftJoinAndSelect("posts.votes", "votes")
+      .leftJoinAndSelect("posts.comments", "comments")
+      .leftJoinAndSelect("posts.sub", "sub")
+      .orderBy("votecount", "DESC", "NULLS LAST")
+      .skip(currentPage * postsPerPage)
+      .take(postsPerPage)
+      .getMany();
+
+    console.log(
+      "test",
+      posts.forEach((p) => console.log(p))
+    );
+
+    // console.log(voteQb);
 
     if (res.locals.user) {
       posts.forEach((p) => p.setUserVote(res.locals.user));

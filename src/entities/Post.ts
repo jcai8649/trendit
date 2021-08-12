@@ -6,6 +6,10 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  BeforeUpdate,
+  AfterLoad,
+  AfterUpdate,
+  AfterInsert,
 } from "typeorm";
 
 import Entity from "./Entity";
@@ -46,6 +50,9 @@ export default class Post extends Entity {
   @Column()
   username: string;
 
+  @Column({ type: "int", select: false, nullable: true })
+  votecount: number;
+
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
@@ -70,7 +77,8 @@ export default class Post extends Entity {
     return this.comments?.length;
   }
 
-  @Expose() get voteScore(): number {
+  @Expose()
+  get voteScore(): number {
     return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
   }
 

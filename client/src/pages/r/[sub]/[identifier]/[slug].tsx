@@ -265,7 +265,10 @@ export default function PostPage() {
                           })}
                         ></i>
                       </div>
-                      <p className="text-xs font-bold"> {comment.voteScore}</p>
+                      <p className="text-xs font-bold">
+                        {" "}
+                        {comment.voteScore === 0 ? "Vote" : comment.voteScore}
+                      </p>
                       {/* Downvote */}
                       <div
                         className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-600"
