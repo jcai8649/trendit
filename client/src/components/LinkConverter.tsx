@@ -5,13 +5,25 @@ interface LinkProps {
 }
 
 export default function LinkConverter({ url }: LinkProps) {
-  const vidLink = "youtube.com/";
+  let searchTerm: string | undefined;
+
+  if (url.includes("youtube.com")) {
+    searchTerm = "watch?v=";
+  } else if (url.includes("youtu.be")) {
+    searchTerm = "youtu.be/";
+  }
+
   const imageTypeList = [".png", ".jpg", ".gif"];
   const IMAGE_TYPE = url.slice(-4);
 
   function renderLink(url: string) {
-    if (url.includes(vidLink)) {
-      const VIDEO_ID = url.slice(-11);
+    if (searchTerm) {
+      const VIDEO_ID_START_INDEX = url.indexOf(searchTerm) + searchTerm.length;
+      const VIDEO_ID = url.slice(
+        VIDEO_ID_START_INDEX,
+        //length of the video id
+        VIDEO_ID_START_INDEX + 11
+      );
       return (
         <iframe
           className="w-full mx-auto md:h-80"
