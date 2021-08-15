@@ -13,7 +13,7 @@ export default function LinkConverter({ url }: LinkProps) {
     searchTerm = "youtu.be/";
   }
 
-  const imageTypeList = [".png", ".jpg", ".gif"];
+  const imageTypeList = [".png", ".gif", ".jpg"];
   const IMAGE_TYPE = url.slice(-4);
 
   function renderLink(url: string) {
