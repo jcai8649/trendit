@@ -75,7 +75,12 @@ export default function PostCard({
             onClick={() => vote(1)}
           ></i>
         </div>
-        <p className="text-xs font-bold">
+        <p
+          className={classNames("text-xs font-bold", {
+            "text-red-500": userVote === 1,
+            "text-blue-600": userVote === -1,
+          })}
+        >
           {voteScore === 0 ? "Vote" : voteScore}
         </p>
         {/* Downvote */}

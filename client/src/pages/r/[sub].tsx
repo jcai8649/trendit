@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, createRef, useEffect, useState } from "react";
 import useSWR from "swr";
 
-import PostSorter from "../../components/PostSorter";
+import PostFeed from "../../components/PostFeed";
 import TopButton from "../../components/TopButton";
 import PostCard from "../../components/PostCard";
 import Link from "next/link";
@@ -60,17 +60,6 @@ export default function SubPage() {
   };
 
   if (error) router.push("/");
-
-  let postsMarkup;
-  if (!sub) {
-    postsMarkup = <p className="loader">Loading..</p>;
-  } else if (sub.posts.length === 0) {
-    postsMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
-  } else {
-    postsMarkup = sub.posts.map((post) => (
-      <PostCard key={post.identifier} post={post} mutate={mutate} />
-    ));
-  }
 
   return (
     <>
@@ -168,7 +157,7 @@ export default function SubPage() {
                 </div>
               </div>
             </div>
-            {/* Posts & Sidebar */}
+            {/* Create Post */}
             <div className="container flex pt-5 ">
               <div className="w-full px-4 md:w-160 md:p-0">
                 {authenticated && (
@@ -193,9 +182,10 @@ export default function SubPage() {
                     </Link>
                   </div>
                 )}
-                <PostSorter />
-                {postsMarkup}
+                {/* PostFeed */}
+                <PostFeed />
               </div>
+              {/* Sidebar */}
               <Sidebar sub={sub} />
             </div>
           </>

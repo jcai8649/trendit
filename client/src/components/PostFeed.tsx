@@ -1,26 +1,33 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { useEffect, useState, useMemo } from "react";
 import { useSWRInfinite } from "swr";
-import { Post } from "../types";
+import { Post, Sub } from "../types";
 import PostSorter from "../components/PostSorter";
 import PostCard from "../components/PostCard";
 
 export default function PostFeed() {
   const [observedPost, setObservedPost] = useState("");
+  const [paramType, setParamType] = useState("posts");
   const [sortBy, setSortBy] = useState("top");
 
-  const {
-    data,
-    error,
-    size: page,
-    setSize: setPage,
+  const router = useRouter();
 
-    mutate,
-  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}&sort=${sortBy}`);
+  const { data, error, size: page, setSize: setPage, mutate } = useSWRInfinite<
+    Post[]
+  >((index) => `/${paramType}?page=${index}&sort=${sortBy}`);
+
+  console.log(data);
 
   const isInitialLoading = !data && !error;
 
   const posts: Post[] = useMemo(() => (data ? [].concat(...data) : []), [data]);
+
+  useEffect(() => {
+    if (router.query.sub) {
+      setParamType(`subs/${router.query.sub}/posts`);
+    }
+  }, []);
 
   useEffect(() => {
     const observerElement = (element: HTMLElement) => {

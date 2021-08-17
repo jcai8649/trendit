@@ -95,12 +95,9 @@ const getPosts = async (req: Request, res: Response) => {
       .leftJoinAndSelect("posts.comments", "comments")
       .leftJoinAndSelect("posts.sub", "sub")
       .orderBy(sortBy, "DESC", "NULLS LAST")
-
       .skip(currentPage * postsPerPage)
       .take(postsPerPage)
       .getMany();
-
-    console.log(weekBeforeNow);
 
     if (res.locals.user) {
       posts.forEach((p) => p.setUserVote(res.locals.user));

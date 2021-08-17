@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import TopButton from "../components/TopButton";
 
-import { Sub, Post } from "../types";
+import { Sub } from "../types";
 import { useAuthState } from "../context/auth";
 
 dayjs.extend(relativeTime);
