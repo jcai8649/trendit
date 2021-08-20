@@ -37,7 +37,9 @@ export default function PostPage() {
   );
 
   const { data: comments, mutate: commentMutate } = useSWR<Comment[]>(
-    identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
+    identifier && slug
+      ? `/posts/${identifier}/${slug}/comments?sort=${sortBy}`
+      : null
   );
 
   const vote = async (value: number, comment?: Comment) => {
@@ -251,6 +253,7 @@ export default function PostPage() {
                     </div>
                   )}
                 </div>
+                {/* Comment Sorter */}
                 <CommentSorter sortBy={sortBy} setSortBy={setSortBy} />
                 <hr />
                 {/* Comments feed */}

@@ -37,7 +37,7 @@ function PostSorter({ sortBy, setSortBy }) {
         )}
       >
         <ul className="flex flex-col">
-          <button
+          {/* <button
             className={classNames(
               "capitalize font-bold p-2 text-left text-gray-400",
               {
@@ -47,7 +47,7 @@ function PostSorter({ sortBy, setSortBy }) {
             onClick={() => handleOnClick("best")}
           >
             <li>best</li>
-          </button>
+          </button> */}
           <button
             className={classNames(
               "capitalize font-bold p-2 text-left text-gray-400",
