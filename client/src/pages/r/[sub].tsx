@@ -157,9 +157,9 @@ export default function SubPage() {
                 </div>
               </div>
             </div>
-            {/* Create Post */}
-            <div className="container flex pt-5 ">
+            <div className="container flex pt-4">
               <div className="w-full px-4 md:w-160 md:p-0">
+                {/* Create Post */}
                 {authenticated && (
                   <div className="flex flex-row content-center w-full px-1 py-1 mb-4 bg-white rounded">
                     <Link href={`/u/${user.username}`}>

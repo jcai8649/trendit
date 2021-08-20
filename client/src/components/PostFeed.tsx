@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useMemo } from "react";
 import { useSWRInfinite } from "swr";
 import { Post, Sub } from "../types";
+import classNames from "classnames";
 import PostSorter from "../components/PostSorter";
 import PostCard from "../components/PostCard";
 
@@ -16,8 +17,6 @@ export default function PostFeed() {
   const { data, error, size: page, setSize: setPage, mutate } = useSWRInfinite<
     Post[]
   >((index) => `/${paramType}?page=${index}&sort=${sortBy}`);
-
-  console.log(data);
 
   const isInitialLoading = !data && !error;
 
@@ -85,7 +84,7 @@ export default function PostFeed() {
 
   return (
     <>
-      <div className="w-full px-4 md:w-160 md:p-0">
+      <div className="w-full px-4 md:w-140 md:p-0 lg:w-160 ">
         <PostSorter sortBy={sortBy} setSortBy={setSortBy} />
         {isInitialLoading && <p className="loader">Loading..</p>}
         {posts.map((post) => (
