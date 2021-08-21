@@ -12,6 +12,7 @@
 .ck-content > p,
 .ck-content > pre {
   margin: revert;
+  word-break: break-word;
 }
 
 .ck-content > ol,

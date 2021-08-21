@@ -5,7 +5,6 @@ import useSWR from "swr";
 import Axios from "axios";
 import Image from "next/image";
 import dayjs from "dayjs";
-import Editor from "../../../../components/Editor";
 import relativeTime from "dayjs/plugin/relativeTime";
 import CommentSorter from "../../../../components/CommentSorter";
 import classNames from "classnames";
@@ -26,7 +25,7 @@ export default function PostPage() {
   const [newComment, setNewComment] = useState("");
   const [description, setDescription] = useState("");
   const [sortBy, setSortBy] = useState("top");
-  const [editorLoaded, setEditorLoaded] = useState(false);
+  const [isOp, setIsOp] = useState(false);
   // Global state
   const { authenticated, user } = useAuthState();
 
@@ -110,7 +109,7 @@ export default function PostPage() {
           <div className="flex items-center w-full h-20 p-8 bg-blue-500">
             <div className="container flex">
               {post && (
-                <div className="w-8 h-8 mr-2 overflow-hidden rounded-full">
+                <div className="w-8 h-8 mr-2 overflow-hidden bg-white border-2 border-gray-200 rounded-full">
                   <Image
                     src={post.sub.imageUrl}
                     height={(8 * 16) / 4}
@@ -222,19 +221,11 @@ export default function PostPage() {
                         </Link>
                       </p>
                       <form onSubmit={submitComment}>
-                        {/* <textarea
+                        <textarea
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
                           onChange={(e) => setNewComment(e.target.value)}
                           value={newComment}
-                        ></textarea> */}
-                        <Editor
-                          value=""
-                          name="body"
-                          onChange={(data) => {
-                            setNewComment(data);
-                          }}
-                          editorLoaded={editorLoaded}
-                        />
+                        ></textarea>
                         <div className="flex justify-end">
                           <button
                             className="px-3 py-1 blue button"

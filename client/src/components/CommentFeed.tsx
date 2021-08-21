@@ -2,14 +2,15 @@ import React from "react";
 import Image from "next/image";
 import classNames from "classnames";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 export default function CommentFeed({ comments, vote, dayjs }) {
   return (
     <>
       <hr />
       {comments?.map((comment) => (
-        <div className="flex mt-3" key={comment.identifier}>
-          <div className="w-10 px-1 ml-2 text-center">
+        <div className="flex px-4 mt-4" key={comment.identifier}>
+          <div className="w-10 px-1 ml-2">
             <Image
               src={comment.user.imageUrl}
               className="rounded-full"
@@ -17,6 +18,7 @@ export default function CommentFeed({ comments, vote, dayjs }) {
               height={(8 * 16) / 4.5}
               width={(8 * 16) / 4.5}
             />
+            <div className="w-1/2 border-r-2 h-1/2"></div>
           </div>
           <div className="py-2 pr-2 ml-1">
             <p className="mb-1 text-xs leading-none">
@@ -29,7 +31,7 @@ export default function CommentFeed({ comments, vote, dayjs }) {
                 {`• ${dayjs(comment.createdAt).fromNow()}`}
               </span>
             </p>
-            <p className="">{comment.body}</p>
+            <p className="w-full text-sm break-all">{parse(comment.body)}</p>
             {/* Vote section */}
             <div className="flex flex-row flex-shrink-0 w-10 py-2 text-center rounded-l">
               {/* Upvote */}

@@ -113,16 +113,16 @@ export default function SubPage() {
               {/* Sub meta data */}
               <div className="pb-2 bg-white sm:h-20 sm:pb-0">
                 <div className="container relative flex">
-                  <div className="absolute" style={{ top: -15 }}>
+                  <div
+                    className="absolute border-4 border-white rounded-full"
+                    style={{ top: -15 }}
+                  >
                     <Image
                       src={sub.imageUrl}
                       alt="Sub Image"
-                      className={classNames(
-                        "rounded-full bg-white border-white",
-                        {
-                          "cursor-point": ownSub,
-                        }
-                      )}
+                      className={classNames("rounded-full bg-white ", {
+                        "cursor-point": ownSub,
+                      })}
                       width={70}
                       height={70}
                     />
