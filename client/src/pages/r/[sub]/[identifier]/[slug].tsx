@@ -5,6 +5,7 @@ import useSWR from "swr";
 import Axios from "axios";
 import Image from "next/image";
 import dayjs from "dayjs";
+import Editor from "../../../../components/Editor";
 import relativeTime from "dayjs/plugin/relativeTime";
 import CommentSorter from "../../../../components/CommentSorter";
 import classNames from "classnames";
@@ -25,6 +26,7 @@ export default function PostPage() {
   const [newComment, setNewComment] = useState("");
   const [description, setDescription] = useState("");
   const [sortBy, setSortBy] = useState("top");
+  const [editorLoaded, setEditorLoaded] = useState(false);
   // Global state
   const { authenticated, user } = useAuthState();
 
@@ -220,11 +222,19 @@ export default function PostPage() {
                         </Link>
                       </p>
                       <form onSubmit={submitComment}>
-                        <textarea
+                        {/* <textarea
                           className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
                           onChange={(e) => setNewComment(e.target.value)}
                           value={newComment}
-                        ></textarea>
+                        ></textarea> */}
+                        <Editor
+                          value=""
+                          name="body"
+                          onChange={(data) => {
+                            setNewComment(data);
+                          }}
+                          editorLoaded={editorLoaded}
+                        />
                         <div className="flex justify-end">
                           <button
                             className="px-3 py-1 blue button"

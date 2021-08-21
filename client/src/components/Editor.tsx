@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 function Editor({ onChange, editorLoaded, name, value }) {
   const editorRef = useRef<any>();
@@ -52,7 +52,7 @@ function Editor({ onChange, editorLoaded, name, value }) {
           editor.ui.view.editable.element
         );
       }}
-      onChange={(event, editor) => {
+      onChange={(_, editor) => {
         const data = editor.getData();
         onChange(data);
       }}

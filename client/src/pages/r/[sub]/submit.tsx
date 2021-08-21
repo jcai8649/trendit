@@ -148,7 +148,6 @@ export default function Submit() {
                     name="body"
                     onChange={(data) => {
                       setBody(data);
-                      console.log(data);
                     }}
                     editorLoaded={editorLoaded}
                   />
@@ -167,7 +166,7 @@ export default function Submit() {
 
                 <div className="flex justify-end">
                   <button
-                    className="px-3 py-1 mr-4 hollow button"
+                    className="px-3 py-1 mr-4 hollow button blue"
                     onClick={handleCancel}
                   >
                     Cancel
