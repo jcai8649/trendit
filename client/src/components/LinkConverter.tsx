@@ -5,7 +5,14 @@ interface LinkProps {
 }
 
 export default function LinkConverter({ url }: LinkProps) {
+  const IMAGE_TYPE_LIST = [".png", ".gif", ".jpg"];
+  const IMAGE_TYPE = url.slice(-4);
   let searchTerm: string | undefined;
+
+  //check for http protocol
+  if (url.slice(0, 8) !== "https://" || url.slice(0, 7) !== "http://") {
+    url = "http://" + url;
+  }
 
   if (url.includes("youtube.com")) {
     searchTerm = "watch?v=";
@@ -13,11 +20,8 @@ export default function LinkConverter({ url }: LinkProps) {
     searchTerm = "youtu.be/";
   }
 
-  const imageTypeList = [".png", ".gif", ".jpg"];
-  const IMAGE_TYPE = url.slice(-4);
-
   function renderLink(url: string) {
-    if (searchTerm) {
+    if (url.includes(searchTerm)) {
       const VIDEO_ID_START_INDEX = url.indexOf(searchTerm) + searchTerm.length;
       const VIDEO_ID = url.slice(
         VIDEO_ID_START_INDEX,
@@ -31,7 +35,7 @@ export default function LinkConverter({ url }: LinkProps) {
           allow="fullscreen"
         />
       );
-    } else if (imageTypeList.includes(IMAGE_TYPE)) {
+    } else if (IMAGE_TYPE_LIST.includes(IMAGE_TYPE)) {
       return <img className="mx-auto" src={url} alt="post image" />;
     }
     return (

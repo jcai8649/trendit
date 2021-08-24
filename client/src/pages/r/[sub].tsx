@@ -158,10 +158,10 @@ export default function SubPage() {
               </div>
             </div>
             <div className="container flex pt-4">
-              <div className="w-full px-4 md:w-160 md:p-0">
+              <div className="w-full md:w-160 md:p-0">
                 {/* Create Post */}
                 {authenticated && (
-                  <div className="flex flex-row py-1 mb-4 bg-white rounded">
+                  <div className="flex flex-row py-1 mx-4 mb-4 bg-white rounded md:mx-0">
                     <Link href={`/u/${user.username}`}>
                       <a className="m-2 cursor-pointer">
                         <Image

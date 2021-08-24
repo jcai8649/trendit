@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useEffect, useState, useMemo } from "react";
 import { useSWRInfinite } from "swr";
-import { Post, Sub } from "../types";
+import { Post } from "../types";
 import classNames from "classnames";
 import PostSorter from "../components/PostSorter";
 import PostCard from "../components/PostCard";
@@ -86,7 +86,17 @@ export default function PostFeed() {
     <>
       <div className="w-full px-4 md:w-140 md:p-0 lg:w-160 ">
         <PostSorter sortBy={sortBy} setSortBy={setSortBy} />
-        {isInitialLoading && <p className="loader">Loading..</p>}
+        {isInitialLoading ? (
+          <p className="loader">Loading..</p>
+        ) : (
+          <div
+            className={classNames("block mt-20 text-center", {
+              hidden: posts.length > 0,
+            })}
+          >
+            hmm... there are no posts for this sub yet
+          </div>
+        )}
         {posts.map((post) => (
           <PostCard post={post} key={post.identifier} mutate={mutate} />
         ))}

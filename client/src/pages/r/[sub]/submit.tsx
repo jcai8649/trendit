@@ -74,7 +74,7 @@ export default function Submit() {
         <h1 className="mb-3 text-lg">Create a post</h1>
         <hr className="border-white" />
         {sub && (
-          <div className="flex items-center px-4 py-3 ">
+          <div className="flex items-center px-4 py-3">
             <Image
               src={sub.imageUrl}
               className="rounded-full"

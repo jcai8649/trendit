@@ -112,7 +112,7 @@ export default function UserProfile() {
                           </Link>
                         </p>
                         <hr />
-                        <p>{comment.body}</p>
+                        <p className="break-all">{comment.body}</p>
                       </div>
                     </div>
                   );
