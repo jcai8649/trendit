@@ -18,7 +18,6 @@ class MyDocument extends Document {
         <Head>
           <link rel="icon" type="image/png" href="favicon.png" />
           <meta property="og:site_name" content="trendit" />
-          {/* <meta property="twitter:site" content="@trendit" /> */}
           <meta property="twitter:card" content="summary" />
           <meta property="og:type" content="website" />
           <meta

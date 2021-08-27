@@ -258,7 +258,7 @@ export default function PostPage() {
                 <CommentSorter sortBy={sortBy} setSortBy={setSortBy} />
                 <hr />
                 {/* Comments feed */}
-                <CommentFeed dayjs={dayjs} comments={comments} vote={vote} />
+                <CommentFeed comments={comments} vote={vote} />
               </>
             )}
           </div>
