@@ -10,7 +10,7 @@ export default function CommentFeed({ comments, vote }) {
           <CommentCard comment={comment} key={comment.identifier} vote={vote} />
         ))
       ) : (
-        <div className="p-20 mt-4 text-center text-gray-400">
+        <div className="p-20 my-4 text-center text-gray-400">
           <i className="h-10 text-blue-300 fa-2x far fa-comments" />
           <br />
           No Comments Yet

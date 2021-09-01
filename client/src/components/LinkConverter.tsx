@@ -10,7 +10,7 @@ export default function LinkConverter({ url }: LinkProps) {
   let searchTerm: string | undefined;
 
   //check for http protocol
-  if (url.slice(0, 8) !== "https://" || url.slice(0, 7) !== "http://") {
+  if (url.slice(0, 8) !== "https://" && url.slice(0, 7) !== "http://") {
     url = "http://" + url;
   }
 
