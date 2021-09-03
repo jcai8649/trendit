@@ -4,9 +4,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import Axios from "axios";
 import Image from "next/image";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import CommentSorter from "../../../../components/CommentSorter";
 import PostInfoCard from "../../../../components/PostInfoCard";
 import { Post, Comment } from "../../../../types";
 import Sidebar from "../../../../components/Sidebar";
@@ -14,8 +11,6 @@ import { useAuthState } from "../../../../context/auth";
 import { useEffect, useState } from "react";
 import CommentFeed from "../../../../components/CommentFeed";
 import CommentSubmissionForm from "../../../../components/CommentSubmissionForm";
-
-dayjs.extend(relativeTime);
 
 export default function PostPage() {
   // Local state
@@ -110,21 +105,20 @@ export default function PostPage() {
             {post && (
               <>
                 <PostInfoCard vote={vote} post={post} />
-                {/* Comment Input Area */}
                 <CommentSubmissionForm
                   commentMutate={commentMutate}
                   post={post}
                 />
-                {/* Comment Sorter */}
-                <CommentSorter sortBy={sortBy} setSortBy={setSortBy} />
-                <hr />
-                {/* Comments feed */}
-                <CommentFeed comments={comments} vote={vote} />
+                <CommentFeed
+                  comments={comments}
+                  vote={vote}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                />
               </>
             )}
           </div>
         </div>
-        {/* Sidebar */}
         {post && <Sidebar sub={post.sub} />}
       </div>
     </>

@@ -1,12 +1,8 @@
 import Head from "next/head";
 
 import PostFeed from "../components/PostFeed";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import TopCommunitiesSidebar from "../components/TopCommunitiesSidebar";
 import TopButton from "../components/TopButton";
-
-dayjs.extend(relativeTime);
 
 export default function Home() {
   const description =

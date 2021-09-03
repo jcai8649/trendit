@@ -6,7 +6,7 @@ import PostSubmissionForm from "../../../components/PostSubmissionForm";
 import useSWR from "swr";
 import Image from "next/image";
 import Sidebar from "../../../components/Sidebar";
-import { Post, Sub } from "../../../types";
+import { Sub } from "../../../types";
 import { GetServerSideProps } from "next";
 
 export default function Submit() {

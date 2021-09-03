@@ -51,7 +51,6 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     if (toggleRender) {
       window.location.reload();
-      dispatch("RERENDER", false);
     }
   }, [toggleRender]);
 

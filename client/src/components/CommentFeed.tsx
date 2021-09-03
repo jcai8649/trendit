@@ -1,9 +1,12 @@
 import React from "react";
+import useSWR from "swr";
+import CommentSorter from "../components/CommentSorter";
 import CommentCard from "./CommentCard";
 
-export default function CommentFeed({ comments, vote }) {
+export default function CommentFeed({ comments, vote, sortBy, setSortBy }) {
   return (
     <>
+      <CommentSorter sortBy={sortBy} setSortBy={setSortBy} />
       <hr />
       {comments && comments.length > 0 ? (
         comments.map((comment) => (
