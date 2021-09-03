@@ -51,6 +51,7 @@ const getSub = async (req: Request, res: Response) => {
 
   try {
     const sub = await Sub.findOneOrFail({ name });
+    console.log(sub);
 
     return res.json(sub);
   } catch (err) {
@@ -72,13 +73,7 @@ const getSubPosts = async (req: Request, res: Response) => {
   try {
     const sub = await Sub.findOneOrFail({ name });
 
-    // const posts = await Post.find({
-    //   where: { sub },
-    //   order: { createdAt: "DESC" },
-    //   relations: ["comments", "votes"],
-    // });
-
-    let sortBy;
+    let sortBy: string | undefined;
 
     switch (queryType) {
       case "top":

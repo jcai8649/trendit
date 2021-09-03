@@ -46,7 +46,7 @@ const getPosts = async (req: Request, res: Response) => {
   const weekBeforeNow = new Date(now.valueOf() - weekInMiliSec);
 
   try {
-    let sortBy;
+    let sortBy: string | undefined;
 
     switch (queryType) {
       case "top":
@@ -156,14 +156,49 @@ const commentOnPost = async (req: Request, res: Response) => {
 
 const getPostComments = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params;
+  const queryType: string = (req.query.sort || "top") as string;
   try {
     const post = await Post.findOneOrFail({ identifier, slug });
 
-    const comments = await Comment.find({
-      where: { post },
-      order: { createdAt: "DESC" },
-      relations: ["votes"],
-    });
+    let sortBy: string | undefined;
+    let orderDir: "ASC" | "DESC" | undefined;
+
+    switch (queryType) {
+      case "top":
+        sortBy = "votescore";
+        orderDir = "DESC";
+        break;
+      case "new":
+        sortBy = "comments.createdAt";
+        orderDir = "DESC";
+        break;
+      case "old":
+        sortBy = "comments.createdAt";
+        orderDir = "ASC";
+        break;
+      default:
+        sortBy = "votescore";
+        orderDir = "DESC";
+    }
+    const comments = await getRepository(Comment)
+      .createQueryBuilder("comments")
+      .addSelect((sq) => {
+        //sort subquery by top (upvotes - downvotes)
+        return sq
+          .select("SUM(votes.value)", "comment_votecount")
+          .from(Comment, "comment")
+          .leftJoin("comment.votes", "votes")
+          .where("comment.id = comments.id")
+          .andWhere("votes.value >= 0")
+          .groupBy("comment.id");
+      }, "votescore")
+      // .addSelect("user.imageUrn", "userImageUrl")
+      .leftJoinAndSelect("comments.user", "user")
+      .leftJoinAndSelect("comments.votes", "votes")
+      .leftJoin("comments.post", "post")
+      .where("comments.post = :postid", { postid: post.id })
+      .orderBy(sortBy, orderDir, "NULLS LAST")
+      .getMany();
 
     if (res.locals.user) {
       comments.forEach((c) => c.setUserVote(res.locals.user));

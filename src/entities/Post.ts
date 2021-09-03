@@ -6,10 +6,6 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  BeforeUpdate,
-  AfterLoad,
-  AfterUpdate,
-  AfterInsert,
 } from "typeorm";
 
 import Entity from "./Entity";
@@ -49,9 +45,6 @@ export default class Post extends Entity {
 
   @Column()
   username: string;
-
-  @Column({ type: "int", select: false, nullable: true })
-  votecount: number;
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })

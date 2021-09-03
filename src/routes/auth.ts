@@ -62,6 +62,7 @@ const login = async (req: Request, res: Response) => {
     }
 
     const user = await User.findOne({ username });
+
     if (!user)
       return res.status(404).json({ username: "Invalid username or password" });
 
