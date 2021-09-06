@@ -5,6 +5,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import Entity from "./Entity";
@@ -44,6 +46,10 @@ export default class Sub extends Entity {
 
   @OneToMany(() => Post, (post) => post.sub)
   posts: Post[];
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  joinUsers: User[];
 
   @Expose()
   get imageUrl(): string {

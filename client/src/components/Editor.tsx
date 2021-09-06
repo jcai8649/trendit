@@ -42,10 +42,6 @@ function Editor({ onChange, editorLoaded, name, value }) {
       name={name}
       data={value}
       onReady={(editor) => {
-        // You can store the "editor" and use when it is needed.
-        console.log("Editor is ready to use!", editor);
-        console.log(editor.ui.view.editable.element);
-        console.log(Array.from(editor.ui.componentFactory.names()));
         // Insert the toolbar before the editable area.
         editor.ui.view.editable.element.parentElement.insertBefore(
           editor.ui.view.toolbar.element,

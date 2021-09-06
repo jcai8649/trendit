@@ -50,8 +50,7 @@ const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
 
   try {
-    const sub = await Sub.findOneOrFail({ name });
-    console.log(sub);
+    const sub = await Sub.findOneOrFail({ name }, { relations: ["joinUsers"] });
 
     return res.json(sub);
   } catch (err) {
@@ -212,9 +211,58 @@ const searchSubs = async (req: Request, res: Response) => {
   }
 };
 
+const joinSub = async (req: Request, res: Response) => {
+  const name = req.params.name;
+  const user = res.locals.user;
+
+  try {
+    const subRecord = await Sub.findOneOrFail(
+      { name },
+      { relations: ["joinUsers"] }
+    );
+    if (subRecord.joinUsers.find((joinUser) => joinUser.id === user.id)) {
+      throw Error;
+    }
+
+    subRecord.joinUsers.push(user);
+    await subRecord.save();
+
+    return res.json(subRecord);
+  } catch (err) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const unJoinSub = async (req: Request, res: Response) => {
+  const name = req.params.name;
+  const user = res.locals.user;
+
+  try {
+    const subRecord = await Sub.findOneOrFail(
+      { name },
+      { relations: ["joinUsers"] }
+    );
+
+    if (!subRecord.joinUsers.find((joinUser) => joinUser.id === user.id)) {
+      throw Error;
+    }
+
+    subRecord.joinUsers = subRecord.joinUsers.filter(
+      (joinUser) => joinUser.id !== user.id
+    );
+
+    await subRecord.save();
+    return res.json(subRecord);
+  } catch (err) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 const router = Router();
 
 router.post("/", user, auth, createSub);
+router.post("/:name", user, auth, joinSub);
+router.delete("/:name", user, auth, unJoinSub);
 router.get("/:name", user, getSub);
 router.get("/:name/posts", user, getSubPosts);
 router.get("/search/:name", searchSubs);
