@@ -10,6 +10,6 @@
     @apply text-white bg-blue-500 border-blue-500 rounded-full hover:bg-blue-300 hover:border-blue-300 disabled:bg-blue-300 disabled:border-blue-300 disabled:cursor-not-allowed;
   }
   .button.blue.hollow {
-    @apply text-blue-500 bg-transparent border-blue-500 rounded-full;
+    @apply text-blue-500 bg-transparent border-blue-500 rounded-full hover:bg-blue-50;
   }
 }

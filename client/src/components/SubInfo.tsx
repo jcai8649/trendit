@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import classNames from "classnames";
 
 export default function SubInfo({ sub, ownSub, openFileInput }) {
+  const [isJoin, setIsJoin] = useState(false);
   return (
     <div className="pb-2 bg-white sm:h-20 sm:pb-0">
       <div className="container relative flex">
@@ -16,8 +17,8 @@ export default function SubInfo({ sub, ownSub, openFileInput }) {
             className={classNames("rounded-full bg-white ", {
               "cursor-point": ownSub,
             })}
-            width={70}
-            height={70}
+            width={65}
+            height={65}
           />
           <div
             className={classNames(
@@ -34,7 +35,23 @@ export default function SubInfo({ sub, ownSub, openFileInput }) {
         </div>
         <div className="pt-1 pl-24">
           <div className="flex items-center">
-            <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
+            <h1 className="mb-1 font-bold text-md sm:text-3xl">{sub.title}</h1>
+            <button
+              className={classNames(
+                "ml-6  capitalize group text-xs w-14 sm:text-md font-sans bold button blue sm:h-8 sm:w-24",
+                { hollow: isJoin }
+              )}
+              onClick={(e) => setIsJoin(!isJoin)}
+            >
+              {isJoin ? (
+                <span>
+                  <span className="group-hover:hidden">Joined</span>
+                  <span className="hidden group-hover:block">Leave</span>
+                </span>
+              ) : (
+                "Join"
+              )}
+            </button>
           </div>
           <div className="flex text-sm font-bold text-gray-500">
             /r/{sub.name}{" "}

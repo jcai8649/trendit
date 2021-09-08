@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       body: ["IBM Plex Sans"],
+      sans: ["Noto Sans"],
     },
     extend: {
       colors: {
@@ -32,6 +33,7 @@ module.exports = {
       backgroundColor: ["disabled"],
       borderColor: ["disabled"],
       cursor: ["disabled"],
+      display: ["group-hover"],
     },
   },
   plugins: [
