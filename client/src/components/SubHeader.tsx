@@ -42,7 +42,12 @@ export default function SubHeader({ sub, ownSub, mutate }) {
         {/* Banner image */}
         <SubBanner sub={sub} ownSub={ownSub} openFileInput={openFileInput} />
         {/* Sub meta data */}
-        <SubInfo sub={sub} ownSub={ownSub} openFileInput={openFileInput} />
+        <SubInfo
+          sub={sub}
+          mutate={mutate}
+          ownSub={ownSub}
+          openFileInput={openFileInput}
+        />
       </div>
     </>
   );
