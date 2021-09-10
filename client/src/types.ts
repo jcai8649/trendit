@@ -35,6 +35,7 @@ export interface Sub {
   bannerUrn: string;
   username: string;
   posts: Post[];
+  joinUsers: Array<Sub>;
   // Virtuals
   imageUrl: string;
   bannerUrl: string;

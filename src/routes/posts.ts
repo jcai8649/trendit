@@ -3,7 +3,6 @@ import { Router, Request, Response } from "express";
 import Comment from "../entities/Comment";
 import Post from "../entities/Post";
 import Sub from "../entities/Sub";
-import Vote from "../entities/Vote";
 import auth from "../middleware/auth";
 import user from "../middleware/user";
 
@@ -121,6 +120,7 @@ const getPost = async (req: Request, res: Response) => {
       { relations: ["sub", "votes", "comments"] }
     );
 
+    console.log(post);
     if (res.locals.user) {
       post.setUserVote(res.locals.user);
     }

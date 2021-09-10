@@ -9,7 +9,7 @@ import CreatePostLink from "../../components/CreatePostLink";
 
 import { Sub } from "../../types";
 import { useAuthState } from "../../context/auth";
-import Sidebar from "../../components/Sidebar";
+import SubSidebar from "../../components/SubSidebar";
 import SubHeader from "../../components/SubHeader";
 
 export default function SubPage() {
@@ -47,7 +47,7 @@ export default function SubPage() {
                 {authenticated && <CreatePostLink user={user} sub={sub} />}
                 <PostFeed />
               </div>
-              <Sidebar sub={sub} />
+              <SubSidebar />
             </div>
           </>
         )}

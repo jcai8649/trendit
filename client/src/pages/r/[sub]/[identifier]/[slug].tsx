@@ -6,7 +6,7 @@ import Axios from "axios";
 import Image from "next/image";
 import PostInfoCard from "../../../../components/PostInfoCard";
 import { Post, Comment } from "../../../../types";
-import Sidebar from "../../../../components/Sidebar";
+import SubSidebar from "../../../../components/SubSidebar";
 import { useAuthState } from "../../../../context/auth";
 import { useEffect, useState } from "react";
 import CommentFeed from "../../../../components/CommentFeed";
@@ -119,7 +119,7 @@ export default function PostPage() {
             )}
           </div>
         </div>
-        {post && <Sidebar sub={post.sub} />}
+        {post && <SubSidebar />}
       </div>
     </>
   );
