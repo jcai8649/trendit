@@ -39,6 +39,7 @@ const getPosts = async (req: Request, res: Response) => {
   const currentPage: number = (req.query.page || 0) as number;
   const postsPerPage: number = (req.query.count || 8) as number;
   const queryType: string = (req.query.sort || "top") as string;
+  const userId = (res.locals.user?.id as number) || undefined;
 
   const weekInMiliSec = 604800000 as number;
   const now = new Date() as Date;
@@ -93,7 +94,11 @@ const getPosts = async (req: Request, res: Response) => {
       .leftJoinAndSelect("posts.votes", "votes")
       .leftJoinAndSelect("posts.comments", "comments")
       .leftJoinAndSelect("posts.sub", "sub")
+      .leftJoinAndSelect("sub.joinUsers", "joinUsers")
       .orderBy(sortBy, "DESC", "NULLS LAST")
+      .where(userId ? "joinUsers.id = :userId" : "1=1", {
+        userId,
+      })
       .skip(currentPage * postsPerPage)
       .take(postsPerPage)
       .getMany();
@@ -101,6 +106,9 @@ const getPosts = async (req: Request, res: Response) => {
     if (res.locals.user) {
       posts.forEach((p) => p.setUserVote(res.locals.user));
     }
+
+    console.log(posts.forEach((post) => console.log(post.sub.joinUsers)));
+
     return res.json(posts);
   } catch (err) {
     console.log(err);
@@ -120,7 +128,6 @@ const getPost = async (req: Request, res: Response) => {
       { relations: ["sub", "votes", "comments"] }
     );
 
-    console.log(post);
     if (res.locals.user) {
       post.setUserVote(res.locals.user);
     }
