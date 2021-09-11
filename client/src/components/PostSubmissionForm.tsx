@@ -1,6 +1,7 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import { Post } from "../types";
 import classNames from "classnames";
+import { useRouter } from "next/router";
 import Axios from "axios";
 import router from "next/router";
 import Editor from "./Editor";
@@ -13,6 +14,7 @@ export default function PostSubmissionForm({ sub }) {
   const [type, setType] = useState("post");
   const [urlError, setUrlError] = useState(false);
 
+  const router = useRouter();
   const handleCancel = () => {
     router.back();
   };
@@ -27,8 +29,13 @@ export default function PostSubmissionForm({ sub }) {
     }
   };
 
+  console.log(router.query);
+
   useEffect(() => {
     setEditorLoaded(true);
+    if (router.query.hasOwnProperty("url")) {
+      setType("link");
+    }
   }, []);
 
   const submitPost = async (event: FormEvent) => {

@@ -23,6 +23,11 @@ export default function CreatePostLink({ user, sub }) {
           placeholder="Create Post"
         />
       </Link>
+      <Link href={`/r/${sub.name}/submit?url`}>
+        <div className="px-3 py-2 my-auto mr-2 rounded cursor-pointer hover:bg-gray-200">
+          <i className="text-gray-400 fas fa-link" />
+        </div>
+      </Link>
     </div>
   );
 }
