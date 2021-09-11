@@ -23,6 +23,7 @@ export default function PostFeed() {
   const posts: Post[] = useMemo(() => (data ? [].concat(...data) : []), [data]);
 
   useEffect(() => {
+    mutate();
     if (router.query.sub) {
       setParamType(`subs/${router.query.sub}/posts`);
     }

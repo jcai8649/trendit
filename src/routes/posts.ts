@@ -37,7 +37,7 @@ const createPost = async (req: Request, res: Response) => {
 
 const getPosts = async (req: Request, res: Response) => {
   const currentPage: number = (req.query.page || 0) as number;
-  const postsPerPage: number = (req.query.count || 8) as number;
+  const postsPerPage: number = (req.query.count || 5) as number;
   const queryType: string = (req.query.sort || "top") as string;
   const userId = (res.locals.user?.id as number) || undefined;
 
@@ -66,28 +66,24 @@ const getPosts = async (req: Request, res: Response) => {
       .createQueryBuilder("posts")
       .addSelect(
         (sq) => {
-          if (queryType === "top") {
-            //sort subquery by top (upvotes - downvotes)
-            return sq
-              .select("SUM(votes.value)", "post_votecount")
-              .from(Post, "post")
-              .leftJoin("post.votes", "votes")
-              .where("post.id = posts.id")
-              .groupBy("post.id");
-          } else {
-            return (
-              sq
-                //sort subquery by hot (high upvotes based on given week)
-                .select("SUM(votes.value)", "post_votecount")
-                .from(Post, "post")
-                .leftJoin("post.votes", "votes")
-                .where("post.id = posts.id")
-                .andWhere(`posts.createdAt > :before`, {
-                  before: weekBeforeNow.toISOString(),
-                })
-                .andWhere("votes.value >= 0")
-            );
+          //sort subquery by top (upvotes - downvotes)
+          const subquery = sq
+            .select("SUM(votes.value)", "post_votecount")
+            .from(Post, "post")
+            .leftJoin("post.votes", "votes")
+            .where("post.id = posts.id")
+            .groupBy("post.id");
+
+          //sort subquery by hot (high upvotes based on given week)
+          if (queryType === "hot") {
+            subquery
+              .andWhere(`posts.createdAt > :before`, {
+                before: weekBeforeNow.toISOString(),
+              })
+              .andWhere("votes.value >= 0");
           }
+
+          return subquery;
         },
         queryType === "top" ? "votescore" : "hotness"
       )
@@ -106,8 +102,6 @@ const getPosts = async (req: Request, res: Response) => {
     if (res.locals.user) {
       posts.forEach((p) => p.setUserVote(res.locals.user));
     }
-
-    console.log(posts.forEach((post) => console.log(post.sub.joinUsers)));
 
     return res.json(posts);
   } catch (err) {

@@ -92,28 +92,24 @@ const getSubPosts = async (req: Request, res: Response) => {
       .createQueryBuilder("posts")
       .addSelect(
         (sq) => {
-          if (queryType === "top") {
-            //sort subquery by top (upvotes - downvotes)
-            return sq
-              .select("SUM(votes.value)", "post_votecount")
-              .from(Post, "post")
-              .leftJoin("post.votes", "votes")
-              .where("post.id = posts.id")
-              .groupBy("post.id");
-          } else {
-            return (
-              sq
-                //sort subquery by hot (high upvotes based on given week)
-                .select("SUM(votes.value)", "post_votecount")
-                .from(Post, "post")
-                .leftJoin("post.votes", "votes")
-                .where("post.id = posts.id")
-                .andWhere(`posts.createdAt > :before`, {
-                  before: weekBeforeNow.toISOString(),
-                })
-                .andWhere("votes.value >= 0")
-            );
+          //sort subquery by top (upvotes - downvotes)
+          const subquery = sq
+            .select("SUM(votes.value)", "post_votecount")
+            .from(Post, "post")
+            .leftJoin("post.votes", "votes")
+            .where("post.id = posts.id")
+            .groupBy("post.id");
+
+          //sort subquery by hot (high upvotes based on given week)
+          if (queryType === "hot") {
+            subquery
+              .andWhere(`posts.createdAt > :before`, {
+                before: weekBeforeNow.toISOString(),
+              })
+              .andWhere("votes.value >= 0");
           }
+
+          return subquery;
         },
         queryType === "top" ? "votescore" : "hotness"
       )

@@ -56,7 +56,7 @@ export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
           />
           <div
             className={classNames(
-              "cursor-default opacity-0 rounded-full pt-3 text-center absolute bg-black w-18 h-18 text-white",
+              "cursor-default opacity-0 rounded-full py-2 text-center absolute bg-black w-auto h-auto text-white",
               {
                 "cursor-pointer block hover:opacity-70": ownSub,
               }
