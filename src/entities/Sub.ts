@@ -8,7 +8,7 @@ import {
   ManyToMany,
   JoinTable,
 } from "typeorm";
-
+import { Length } from "class-validator";
 import Entity from "./Entity";
 import User from "./User";
 import Post from "./Post";
@@ -22,10 +22,12 @@ export default class Sub extends Entity {
   }
 
   @Index()
+  @Length(3, 23, { message: "Must be between 3 to 23 characters long" })
   @Column({ unique: true })
   name: string;
 
   @Column()
+  @Length(3, 23, { message: "Must be between 3 to 23 characters long" })
   title: string;
 
   @Column({ type: "text", nullable: true })

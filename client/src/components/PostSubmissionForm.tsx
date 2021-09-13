@@ -3,7 +3,6 @@ import { Post } from "../types";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import Axios from "axios";
-import router from "next/router";
 import Editor from "./Editor";
 
 export default function PostSubmissionForm({ sub }) {

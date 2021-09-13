@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { isEmpty } from "class-validator";
+import { isEmpty, validate } from "class-validator";
 import { getRepository } from "typeorm";
 import path from "path";
 import fs from "fs";
 import upload from "../util/upload";
-
+import mapErrors from "../util/mapErrors";
 import User from "../entities/User";
 import Sub from "../entities/Sub";
 import auth from "../middleware/auth";
@@ -17,33 +17,46 @@ const createSub = async (req: Request, res: Response) => {
   const user: User = res.locals.user;
 
   try {
+    //Validate data
     let errors: any = {};
     if (isEmpty(name)) errors.name = "Name must not be empty";
     if (isEmpty(title)) errors.title = "Title must not be empty";
 
-    const sub = await getRepository(Sub)
+    const sameSub = await getRepository(Sub)
       .createQueryBuilder("sub")
       .where("lower(sub.name) = :name", { name: name.toLowerCase() })
       .getOne();
 
-    if (sub) errors.name = "Sub exists already";
+    if (sameSub) errors.name = "Sub exists already";
 
     if (Object.keys(errors).length > 0) {
-      throw errors;
+      return res.status(400).json(errors);
     }
-  } catch (err) {
-    return res.status(400).json(err);
-  }
 
-  try {
+    //Create new Sub
     const sub = new Sub({ name, description, title, user });
+    errors = await validate(sub);
+    if (errors.length > 0) {
+      return res.status(400).json(mapErrors(errors));
+    }
+
     await sub.save();
 
+    //return Sub
     return res.json(sub);
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ error: "Something went wrong" });
   }
+
+  // try {
+  //   const sub = new Sub({ name, description, title, user });
+  //   await sub.save();
+
+  //   return res.json(sub);
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.status(500).json({ error: "Something went wrong" });
+  // }
 };
 
 const getSub = async (req: Request, res: Response) => {
