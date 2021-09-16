@@ -21,7 +21,7 @@ function PostSorter({ sortBy, setSortBy }) {
   };
 
   return (
-    <div className="relative p-1 ml-8 text-xs">
+    <div ref={ref} className="relative p-1 ml-8 text-xs">
       <button
         className="font-bold text-blue-400 capitalize"
         onClick={handleToggle}
@@ -30,9 +30,8 @@ function PostSorter({ sortBy, setSortBy }) {
         <i className="mb-1 ml-1 text-sm text-gray-500 fas fa-sort-down" />
       </button>
       <div
-        ref={ref}
         className={classNames(
-          "block absolute w-20 p-1 ml-2 bg-white border border-gray-100 rounded shadow-md",
+          "block absolute w-20 z-10 p-1 ml-2 bg-white border border-gray-100 rounded shadow-md",
           { hidden: toggle === false }
         )}
       >

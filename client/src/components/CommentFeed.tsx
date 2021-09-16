@@ -1,5 +1,4 @@
 import React from "react";
-import useSWR from "swr";
 import CommentSorter from "../components/CommentSorter";
 import CommentCard from "./CommentCard";
 
