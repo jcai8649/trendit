@@ -6,8 +6,9 @@ import parse from "html-react-parser";
 import Link from "next/dist/client/link";
 import Image from "next/image";
 
-export default function CommentCard({ comment, vote }) {
+export default function CommentCard({ comment, vote, isOp }) {
   dayjs.extend(relativeTime);
+  console.log(isOp);
   return (
     <div className="flex px-3 my-4 " key={comment.identifier}>
       <div className="w-10 px-1 ml-2 ">
@@ -24,6 +25,7 @@ export default function CommentCard({ comment, vote }) {
           <Link href={`/u/${comment.username}`}>
             <a className="mr-1 font-bold hover:underline">{comment.username}</a>
           </Link>
+          {isOp && <span className="mr-1 text-blue-400">OP</span>}
           <span className="text-gray-600">
             {`• ${dayjs(comment.createdAt).fromNow()}`}
           </span>

@@ -16,7 +16,6 @@ export default function PostPage() {
   // Local state
   const [description, setDescription] = useState("");
   const [sortBy, setSortBy] = useState("top");
-  const [isOp, setIsOp] = useState(false);
   // Global state
   const { authenticated } = useAuthState();
 
@@ -114,6 +113,7 @@ export default function PostPage() {
                   vote={vote}
                   sortBy={sortBy}
                   setSortBy={setSortBy}
+                  postUser={post.username}
                 />
               </>
             )}
