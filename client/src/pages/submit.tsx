@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import PostSubmissionForm from "../../../components/PostSubmissionForm";
+import PostSubmissionForm from "../components/PostSubmissionForm";
 import useSWR from "swr";
 import Image from "next/image";
-import SubSidebar from "../../../components/SubSidebar";
-import { Sub } from "../../../types";
+import { Sub } from "../types";
 import { GetServerSideProps } from "next";
-import SubmissionRules from "../../../components/SubmissionRules";
 
 export default function Submit() {
   const router = useRouter();
-  const { sub: subName } = router.query;
+  const [subToSubmit, setSubToSubmit] = useState("");
 
   const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
   if (error) router.push("/");
@@ -20,10 +18,10 @@ export default function Submit() {
   return (
     <div className="container flex pt-5">
       <Head>
-        <title>{sub ? `Submit to ${sub.name}` : "Loading"}</title>
+        <title>Submit to Trendit</title>
       </Head>
 
-      <div className="flex flex-col w-full md:w-11/12">
+      <div className="flex flex-col ">
         <h1 className="mb-3 text-lg">Create a post</h1>
         <hr className="border-white" />
         {sub && (
@@ -40,10 +38,7 @@ export default function Submit() {
         )}
         <PostSubmissionForm sub={sub} />
       </div>
-      <div className="hidden w-3/6 ml-6 md:block">
-        {sub && <SubSidebar />}
-        <SubmissionRules />
-      </div>
+      {/* {sub && <SubSidebar />} */}
     </div>
   );
 }

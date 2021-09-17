@@ -75,7 +75,7 @@ export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
             {authenticated && (
               <button
                 className={classNames(
-                  "ml-6  capitalize group text-xs w-14 sm:text-md font-sans bold button blue sm:h-8 sm:w-24",
+                  "ml-2 sm:ml-6 capitalize group text-xs w-14 sm:text-md font-sans bold button blue sm:h-8 sm:w-24",
                   { hollow: joined }
                 )}
                 onClick={handleJoinClick}

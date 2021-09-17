@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function CommentCard({ comment, vote, isOp }) {
   dayjs.extend(relativeTime);
-  console.log(isOp);
+
   return (
     <div className="flex px-3 my-4 " key={comment.identifier}>
       <div className="w-10 px-1 ml-2 ">

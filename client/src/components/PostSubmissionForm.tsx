@@ -60,7 +60,7 @@ export default function PostSubmissionForm({ sub }) {
   };
 
   return (
-    <div className="w-160">
+    <div className="w-full md:w-11/12 lg:w-160">
       <div className="p-1 bg-white rounded">
         <div className="m-1 overflow-auto">
           <div className="flex flex-row items-center">

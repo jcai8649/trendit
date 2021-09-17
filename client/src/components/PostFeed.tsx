@@ -2,16 +2,20 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useEffect, useState, useMemo } from "react";
 import { useSWRInfinite } from "swr";
+import { useAuthState } from "../context/auth";
 import { Post } from "../types";
 import classNames from "classnames";
 import PostSorter from "../components/PostSorter";
 import PostCard from "../components/PostCard";
 
 export default function PostFeed() {
+  //Local state
   const [observedPost, setObservedPost] = useState("");
   const [paramType, setParamType] = useState("posts");
   const [sortBy, setSortBy] = useState("top");
 
+  // Global state
+  const { authenticated, user } = useAuthState();
   const router = useRouter();
 
   const { data, error, size: page, setSize: setPage, mutate } = useSWRInfinite<

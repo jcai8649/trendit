@@ -47,7 +47,9 @@ export default function SubPage() {
                 {authenticated && <CreatePostLink user={user} sub={sub} />}
                 <PostFeed />
               </div>
-              <SubSidebar />
+              <div className="hidden ml-6 md:block w-80">
+                <SubSidebar />
+              </div>
             </div>
           </>
         )}

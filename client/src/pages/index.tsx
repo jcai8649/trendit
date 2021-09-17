@@ -3,12 +3,15 @@ import Head from "next/head";
 import PostFeed from "../components/PostFeed";
 import TopCommunitiesSidebar from "../components/TopCommunitiesSidebar";
 import TopButton from "../components/TopButton";
+import CreatePostLink from "../components/CreatePostLink";
+import { useAuthState } from "../context/auth";
 
 export default function Home() {
   const description =
     "Trendit is a network of communities based on people's interests. Find communities you're interested in, and become part of an online community!";
   const title = "Trendit: Dive into the trends";
 
+  const { authenticated, user } = useAuthState();
   return (
     <>
       <Head>
@@ -20,6 +23,7 @@ export default function Home() {
         <meta property="twitter:title" content={title} />
       </Head>
       <div className="container flex pt-4">
+        {/* {authenticated && <CreatePostLink user={user} sub={sub} />} */}
         <PostFeed />
         <TopCommunitiesSidebar />
       </div>
