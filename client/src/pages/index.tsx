@@ -23,8 +23,10 @@ export default function Home() {
         <meta property="twitter:title" content={title} />
       </Head>
       <div className="container flex pt-4">
-        {/* {authenticated && <CreatePostLink user={user} sub={sub} />} */}
-        <PostFeed />
+        <div>
+          {authenticated && <CreatePostLink user={user} />}
+          <PostFeed />
+        </div>
         <TopCommunitiesSidebar />
       </div>
       <footer>

@@ -45,7 +45,7 @@ export default function SearchBar() {
         <i className="pl-4 pr-3 text-gray-500 fas fa-search"></i>
         <input
           type="text"
-          className="py-1 pr-3 bg-transparent rounded focus:outline-none"
+          className="w-full py-1 pr-3 bg-transparent rounded focus:outline-none"
           placeholder="Search"
           value={name}
           onChange={(e) => setName(e.target.value)}

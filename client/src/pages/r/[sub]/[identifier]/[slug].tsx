@@ -119,7 +119,9 @@ export default function PostPage() {
             )}
           </div>
         </div>
-        {post && <SubSidebar />}
+        <div className="hidden w-2/6 ml-6 md:block">
+          {post && <SubSidebar />}
+        </div>
       </div>
     </>
   );

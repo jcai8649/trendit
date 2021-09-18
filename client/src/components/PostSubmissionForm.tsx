@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Axios from "axios";
 import Editor from "./Editor";
 
-export default function PostSubmissionForm({ sub }) {
+export default function PostSubmissionForm({ sub = null }) {
   const [title, setTitle] = useState("");
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [body, setBody] = useState("");
@@ -144,7 +144,7 @@ export default function PostSubmissionForm({ sub }) {
               <button
                 className="px-3 py-1 blue button"
                 type="submit"
-                disabled={title.trim().length === 0 || urlError}
+                disabled={title.trim().length === 0 || urlError || !sub}
               >
                 Post
               </button>
