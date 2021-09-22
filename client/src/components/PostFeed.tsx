@@ -32,6 +32,8 @@ export default function PostFeed() {
     mutate();
     if (router.query.sub) {
       setParamType(`subs/${router.query.sub}/posts`);
+    } else if (router.asPath === "/r/all") {
+      setParamType(`posts/all`);
     }
   }, []);
 
@@ -60,33 +62,6 @@ export default function PostFeed() {
       setObservedPost(id);
       observerElement(document.getElementById(id));
     }
-
-    return () => {
-      const observerElement = (element: HTMLElement) => {
-        if (!element) return;
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            if (entries[0].isIntersecting === true) {
-              setPage(page + 1);
-              observer.unobserve(element);
-            }
-          },
-          { threshold: 1 }
-        );
-        observer.observe(element);
-      };
-
-      if (!posts || posts.length === 0) {
-        return;
-      }
-      const id = posts[posts.length - 1].identifier;
-
-      if (id !== observedPost) {
-        setObservedPost(id);
-        observerElement(document.getElementById(id));
-      }
-    };
   }, [page, setPage, posts, observedPost]);
 
   return (
@@ -123,7 +98,7 @@ export default function PostFeed() {
                     Trendit gets better when you join communities, so find some
                     that you’ll love!
                   </h2>
-                  <Link href="/">
+                  <Link href="/r/all">
                     <a className="w-40 py-1 text-sm capitalize md:py-2 md:w-56 blue button">
                       Browse Popular Posts
                     </a>
@@ -133,24 +108,20 @@ export default function PostFeed() {
                 <>
                   <h2 className="text-lg">There are no posts in this sub</h2>
                   <p className="text-sm">Be the first</p>
-                  <Link href="/">
-                    <a className="w-40 py-1 mt-3 text-sm capitalize md:py-2 md:w-56 blue button">
-                      Add a post
-                    </a>
-                  </Link>
+                  {authenticated && router.query.sub ? (
+                    <Link href={`/r/${router.query.sub}/submit`}>
+                      <a className="w-40 py-1 mt-3 text-sm capitalize md:py-2 md:w-56 blue button">
+                        Add a post
+                      </a>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </>
               )}
             </div>
           </div>
-        )
-        // <div
-        //   className={classNames("block mt-20 text-center", {
-        //     hidden: posts.length > 0,
-        //   })}
-        // >
-        //   "hmm... there are no posts for this sub yet"
-        // </div>
-        }
+        )}
         {posts.map((post) => (
           <PostCard post={post} key={post.identifier} mutate={mutate} />
         ))}

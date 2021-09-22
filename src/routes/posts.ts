@@ -36,9 +36,9 @@ const createPost = async (req: Request, res: Response) => {
 };
 
 const getPosts = async (req: Request, res: Response) => {
-  const currentPage: number = (req.query.page || 0) as number;
-  const postsPerPage: number = (req.query.count || 5) as number;
-  const queryType: string = (req.query.sort || "top") as string;
+  const currentPage = (req.query.page || 0) as number;
+  const postsPerPage = (req.query.count || 5) as number;
+  const queryType = (req.query.sort || "top") as string;
   const userId = (res.locals.user?.id as number) || undefined;
 
   const weekInMiliSec = 604800000 as number;
@@ -95,6 +95,77 @@ const getPosts = async (req: Request, res: Response) => {
       .where(userId ? "joinUsers.id = :userId" : "1=1", {
         userId,
       })
+      .skip(currentPage * postsPerPage)
+      .take(postsPerPage)
+      .getMany();
+
+    if (res.locals.user) {
+      posts.forEach((p) => p.setUserVote(res.locals.user));
+    }
+
+    return res.json(posts);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const getAllPosts = async (req: Request, res: Response) => {
+  const currentPage = (req.query.page || 0) as number;
+  const postsPerPage = (req.query.count || 5) as number;
+  const queryType = (req.query.sort || "top") as string;
+
+  const weekInMiliSec = 604800000 as number;
+  const now = new Date() as Date;
+  const weekBeforeNow = new Date(now.valueOf() - weekInMiliSec);
+
+  try {
+    let sortBy: string | undefined;
+
+    switch (queryType) {
+      case "top":
+        sortBy = "votescore";
+        break;
+      case "new":
+        sortBy = "posts.createdAt";
+        break;
+      case "hot":
+        sortBy = "hotness";
+        break;
+      default:
+        sortBy = "votescore";
+    }
+
+    const posts = await getRepository(Post)
+      .createQueryBuilder("posts")
+      .addSelect(
+        (sq) => {
+          //sort subquery by top (upvotes - downvotes)
+          const subquery = sq
+            .select("SUM(votes.value)", "post_votecount")
+            .from(Post, "post")
+            .leftJoin("post.votes", "votes")
+            .where("post.id = posts.id")
+            .groupBy("post.id");
+
+          //sort subquery by hot (high upvotes based on given week)
+          if (queryType === "hot") {
+            subquery
+              .andWhere(`posts.createdAt > :before`, {
+                before: weekBeforeNow.toISOString(),
+              })
+              .andWhere("votes.value >= 0");
+          }
+
+          return subquery;
+        },
+        queryType === "top" ? "votescore" : "hotness"
+      )
+      .leftJoinAndSelect("posts.votes", "votes")
+      .leftJoinAndSelect("posts.comments", "comments")
+      .leftJoinAndSelect("posts.sub", "sub")
+      .leftJoinAndSelect("sub.joinUsers", "joinUsers")
+      .orderBy(sortBy, "DESC", "NULLS LAST")
       .skip(currentPage * postsPerPage)
       .take(postsPerPage)
       .getMany();
@@ -216,6 +287,7 @@ const router = Router();
 
 router.post("/", user, auth, createPost);
 router.get("/", user, getPosts);
+router.get("/all", user, getAllPosts);
 router.get("/:identifier/:slug", user, getPost);
 router.post("/:identifier/:slug/comments", user, auth, commentOnPost);
 router.get("/:identifier/:slug/comments", user, getPostComments);

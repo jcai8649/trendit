@@ -47,16 +47,6 @@ const createSub = async (req: Request, res: Response) => {
   } catch (err) {
     return res.status(500).json({ error: "Something went wrong" });
   }
-
-  // try {
-  //   const sub = new Sub({ name, description, title, user });
-  //   await sub.save();
-
-  //   return res.json(sub);
-  // } catch (err) {
-  //   console.log(err);
-  //   return res.status(500).json({ error: "Something went wrong" });
-  // }
 };
 
 const getSub = async (req: Request, res: Response) => {
@@ -74,9 +64,9 @@ const getSub = async (req: Request, res: Response) => {
 
 const getSubPosts = async (req: Request, res: Response) => {
   const name = req.params.name;
-  const currentPage: number = (req.query.page || 0) as number;
-  const postsPerPage: number = (req.query.count || 8) as number;
-  const queryType: string = (req.query.sort || "top") as string;
+  const currentPage = (req.query.page || 0) as number;
+  const postsPerPage = (req.query.count || 8) as number;
+  const queryType = (req.query.sort || "top") as string;
 
   const weekInMiliSec = 604800000 as number;
   const now = new Date() as Date;
