@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function CreatePostLink({ user, sub = null }) {
   return (
-    <div className="flex flex-row py-1 mx-4 mb-4 bg-white rounded md:mx-0">
+    <div className="flex flex-row p-1 mx-4 mb-4 bg-white rounded md:mx-0">
       <Link href={`/u/${user.username}`}>
         <a className="m-2 cursor-pointer">
           <Image
@@ -24,7 +24,7 @@ export default function CreatePostLink({ user, sub = null }) {
         />
       </Link>
       <Link href={sub ? `/r/${sub.name}/submit?url` : "/submit?url"}>
-        <div className="px-3 py-2 my-auto mr-2 rounded cursor-pointer hover:bg-gray-200">
+        <div className="px-3 py-2 my-auto ml-1 rounded cursor-pointer hover:bg-gray-200">
           <i className="text-gray-400 fas fa-link" />
         </div>
       </Link>
