@@ -23,7 +23,7 @@ export default function Home() {
         <meta property="twitter:title" content={title} />
       </Head>
       <div className="container flex pt-4">
-        <div>
+        <div className="w-full md:p-0 lg:w-160 ">
           {authenticated && <CreatePostLink user={user} />}
           <PostFeed />
         </div>

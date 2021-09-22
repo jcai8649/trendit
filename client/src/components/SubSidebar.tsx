@@ -20,12 +20,10 @@ export default function SubSidebar() {
       </div>
       {sub && (
         <div className="p-3">
-          <p className="mb-3 text-center break-words text-md">
-            {sub.description}
-          </p>
+          <p className="mb-3 break-words text-md">{sub.description}</p>
           <div className="flex justify-center mb-3 text-sm font-medium">
-            <div>
-              <p className="text-center">{sub.joinUsers.length}</p>
+            <div className="text-center">
+              <p>{sub.joinUsers.length}</p>
               <p>members</p>
             </div>
           </div>
