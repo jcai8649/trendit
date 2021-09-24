@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Axios from "axios";
 import Logo from "../images/red_icon.svg";
 import { useAuthState } from "../context/auth";
-import { Sub } from "../types";
-import { useRouter } from "next/router";
 import useWindowSize from "../hooks/useWindowSize";
 import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
+import PageDropdown from "./PageDropdown";
 
 const Navbar: React.FC = () => {
   const { authenticated, user, loading, toggleRender } = useAuthState();
@@ -32,6 +30,7 @@ const Navbar: React.FC = () => {
         <span className="hidden text-2xl font-semibold lg:block">
           <Link href="/">trendit</Link>
         </span>
+        <PageDropdown />
       </div>
       {/* Search Input */}
       <SearchBar />

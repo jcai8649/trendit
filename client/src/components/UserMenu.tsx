@@ -31,7 +31,7 @@ export default function UserMenu({ user }) {
     <div ref={ref} className="relative flex flex-row w-max">
       <div
         onClick={() => setIsOpen((isOpen) => !isOpen)}
-        className="p-2 py-1 mr-2 leading-5 border border-gray-200 rounded cursor-pointer hover:border-gray-400 sm:flex sm:space-x-0"
+        className="p-2 py-1 mr-2 leading-5 border border-white rounded cursor-pointer hover:border-gray-200 sm:flex sm:space-x-0"
       >
         <Image
           src={user.imageUrl}
@@ -41,12 +41,12 @@ export default function UserMenu({ user }) {
           width={(6 * 16) / 4}
         />
 
-        <p className="hidden pl-2 md:block">u/{user.username}</p>
-        <i className="my-auto md-8 md:px-2 fas fa-angle-down" />
+        <p className="hidden pl-2 lg:block">u/{user.username}</p>
+        <i className="px-1 md:my-auto md:px-2 fas fa-angle-down" />
       </div>
       <div
         className={classNames(
-          "absolute w-32 md:w-30  p-1 right-3 top-8 z-10 flex flex-col bg-white border border-gray-100 rounded shadow-md",
+          "absolute w-32 md:w-30 p-1 right-2 top-8 z-10 flex flex-col bg-white border border-gray-100 rounded shadow-md",
           { hidden: isOpen === false }
         )}
       >
