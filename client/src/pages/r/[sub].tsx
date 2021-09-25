@@ -28,7 +28,7 @@ export default function SubPage() {
 
   useEffect(() => {
     if (!sub) return;
-    setOwnSub(authenticated && user.username === sub.username);
+    setOwnSub(authenticated && user.username === sub.moderator);
   }, [sub, authenticated, user]);
 
   if (error) router.push("/");

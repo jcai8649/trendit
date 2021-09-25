@@ -41,6 +41,9 @@ export default class User extends Entity {
   @Column({ nullable: true })
   imageUrn: string;
 
+  @OneToMany(() => Sub, (sub) => sub.user)
+  moddedSubs: Sub[];
+
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 

@@ -21,6 +21,7 @@ export interface User {
   email: string;
   createdAt: string;
   updatedAt: string;
+  moddedSubs: Array<Sub>;
   joinedSubs: Array<Sub>;
   // Virtuals
   imageUrl: string;
@@ -34,7 +35,7 @@ export interface Sub {
   description: string;
   imageUrn: string;
   bannerUrn: string;
-  username: string;
+  moderator: string;
   posts: Post[];
   joinedUsers: Array<User>;
   // Virtuals

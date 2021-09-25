@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import jwt from "jsonwebtoken";
-
+import Sub from "../entities/Sub";
 import User from "../entities/User";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +16,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     const user = await User.findOne(
       { username },
-      { relations: ["joinedSubs"] }
+      { relations: ["joinedSubs", "moddedSubs"] }
     );
 
     res.locals.user = user;

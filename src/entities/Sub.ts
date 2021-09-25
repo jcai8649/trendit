@@ -40,10 +40,10 @@ export default class Sub extends Entity {
   bannerUrn: string;
 
   @Column()
-  username: string;
+  moderator: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: "username", referencedColumnName: "username" })
+  @ManyToOne(() => User, (user) => user.moddedSubs)
+  @JoinColumn({ name: "moderator", referencedColumnName: "username" })
   user: User;
 
   @OneToMany(() => Post, (post) => post.sub)

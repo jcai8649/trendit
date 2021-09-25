@@ -97,6 +97,32 @@ export default function PageDropdown() {
           >
             <div className="py-4 overflow-auto bg-white rounded shadow-md w-60">
               <div className="flex flex-col">
+                {user && user.moddedSubs.length > 0 && (
+                  <>
+                    <p className="px-4 py-1 text-xs text-gray-400">
+                      Moderating
+                    </p>
+                    {user.moddedSubs.map(({ name, imageUrl }, idx) => {
+                      return (
+                        <Link key={idx} href={`/r/${name}`}>
+                          <a
+                            className="flex flex-row px-4 py-1 hover:bg-gray-200"
+                            onClick={() => handleToggleClick(`r/${name}`)}
+                          >
+                            <Image
+                              src={imageUrl}
+                              className="rounded-full"
+                              alt="User"
+                              height={(6 * 16) / 4}
+                              width={(6 * 16) / 4}
+                            ></Image>
+                            <p className="ml-2"> r/{name}</p>
+                          </a>
+                        </Link>
+                      );
+                    })}
+                  </>
+                )}
                 {user && user.joinedSubs.length > 0 && (
                   <>
                     <p className="px-4 py-1 text-xs text-gray-400">

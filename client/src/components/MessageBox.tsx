@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAuthState, useAuthDispatch } from "../context/auth";
 import className from "classnames";
 

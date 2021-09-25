@@ -145,7 +145,7 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const sub = await Sub.findOneOrFail({ where: { name: req.params.name } });
 
-    if (sub.username !== user.username) {
+    if (sub.moderator !== user.username) {
       return res.status(403).json({ error: "You do not own this sub" });
     }
 
