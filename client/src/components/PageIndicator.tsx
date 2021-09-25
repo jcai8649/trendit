@@ -6,7 +6,6 @@ import { useAuthState } from "../context/auth";
 export default function PageIndicator() {
   const router = useRouter();
 
-  console.log(router);
   const pageList = {
     "/r/all": {
       name: "r/all",
@@ -16,7 +15,7 @@ export default function PageIndicator() {
     "/": {
       name: "Home",
       desc:
-        "Your personal Reddit frontpage. Come here to check in with your favorite communities.",
+        "Your personal Trendit frontpage. Come here to check in with your favorite communities.",
     },
   };
 

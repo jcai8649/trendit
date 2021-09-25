@@ -10,8 +10,6 @@ export default function SubSidebar() {
   const router = useRouter();
   const { sub: subName } = router.query;
 
-  console.log(router);
-
   const { data: sub } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
   return (
     <div className="mb-4 bg-white rounded">
@@ -23,7 +21,7 @@ export default function SubSidebar() {
           <p className="mb-3 break-words text-md">{sub.description}</p>
           <div className="flex justify-center mb-3 text-sm font-medium">
             <div className="text-center">
-              <p>{sub.joinUsers.length}</p>
+              <p>{sub.joinedUsers.length}</p>
               <p>members</p>
             </div>
           </div>

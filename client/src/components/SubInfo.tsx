@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import classNames from "classnames";
 import Axios from "axios";
+import MessageBox from "./MessageBox";
 import { useAuthState } from "../context/auth";
+import { useAuthDispatch } from "../context/auth";
 import { useRouter } from "next/router";
 
 export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
@@ -10,6 +12,7 @@ export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
   const [joined, setJoined] = useState(false);
   // Global state
   const { authenticated, user } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   const router = useRouter();
   const subName = router.query.sub;
@@ -21,22 +24,27 @@ export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
       } else {
         await Axios.post(`/subs/${subName}`);
       }
-      setJoined(!joined);
+      setJoined((joined) => !joined);
       //update joinSub to render the join button properly
-      mutate();
+      await mutate();
+      dispatch("RERENDER");
+
+      joined
+        ? dispatch("OPEN_MESSAGE", `left r/${subName}`)
+        : dispatch("OPEN_MESSAGE", `joined r/${subName}`);
     } catch (err) {
-      console.log(err);
+      dispatch("ERROR_MESSAGE");
     }
   };
 
   useEffect(() => {
     if (
       authenticated &&
-      sub.joinUsers.find((joinUser) => joinUser.username === user.username)
+      sub.joinedUsers.find((joinUser) => joinUser.username === user.username)
     ) {
       setJoined(true);
     }
-  }, [authenticated, user, sub.joinUsers]);
+  }, [authenticated, user, sub.joinedUsers]);
 
   return (
     <div className="pb-2 bg-white sm:h-20 sm:pb-0">

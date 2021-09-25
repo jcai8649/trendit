@@ -35,7 +35,7 @@ export default function PostFeed() {
     } else if (router.asPath === "/r/all") {
       setParamType(`posts/all`);
     }
-  }, []);
+  }, [router.query.sub, user]);
 
   useEffect(() => {
     const observerElement = (element: HTMLElement) => {

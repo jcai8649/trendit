@@ -90,9 +90,9 @@ const getPosts = async (req: Request, res: Response) => {
       .leftJoinAndSelect("posts.votes", "votes")
       .leftJoinAndSelect("posts.comments", "comments")
       .leftJoinAndSelect("posts.sub", "sub")
-      .leftJoinAndSelect("sub.joinUsers", "joinUsers")
+      .leftJoinAndSelect("sub.joinedUsers", "joinedUsers")
       .orderBy(sortBy, "DESC", "NULLS LAST")
-      .where(userId ? "joinUsers.id = :userId" : "1=1", {
+      .where(userId ? "joinedUsers.id = :userId" : "1=1", {
         userId,
       })
       .skip(currentPage * postsPerPage)
@@ -164,7 +164,7 @@ const getAllPosts = async (req: Request, res: Response) => {
       .leftJoinAndSelect("posts.votes", "votes")
       .leftJoinAndSelect("posts.comments", "comments")
       .leftJoinAndSelect("posts.sub", "sub")
-      .leftJoinAndSelect("sub.joinUsers", "joinUsers")
+      .leftJoinAndSelect("sub.joinedUsers", "joinedUsers")
       .orderBy(sortBy, "DESC", "NULLS LAST")
       .skip(currentPage * postsPerPage)
       .take(postsPerPage)

@@ -5,12 +5,14 @@ import {
   Index,
   BeforeInsert,
   OneToMany,
+  ManyToMany,
 } from "typeorm";
 import bcrypt from "bcrypt";
 import { Exclude } from "class-transformer";
 import Entity from "./Entity";
 import Post from "./Post";
 import Vote from "./Vote";
+import Sub from "./Sub";
 import { Expose } from "class-transformer";
 
 @TOEntity("users")
@@ -44,6 +46,9 @@ export default class User extends Entity {
 
   @OneToMany(() => Vote, (vote) => vote.user)
   votes: Vote[];
+
+  @ManyToMany(() => Sub, (sub) => sub.joinedUsers)
+  joinedSubs: Sub[];
 
   @Expose()
   get imageUrl(): string {

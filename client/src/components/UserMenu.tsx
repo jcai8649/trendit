@@ -22,7 +22,8 @@ export default function UserMenu({ user }) {
     Axios.get("/auth/logout")
       .then(() => {
         dispatch("LOGOUT");
-        window.location.reload();
+        dispatch("RERENDER");
+        router.replace("/");
       })
       .catch((err) => console.log(err));
   };

@@ -53,7 +53,10 @@ const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
 
   try {
-    const sub = await Sub.findOneOrFail({ name }, { relations: ["joinUsers"] });
+    const sub = await Sub.findOneOrFail(
+      { name },
+      { relations: ["joinedUsers"] }
+    );
 
     return res.json(sub);
   } catch (err) {
@@ -217,13 +220,13 @@ const joinSub = async (req: Request, res: Response) => {
   try {
     const subRecord = await Sub.findOneOrFail(
       { name },
-      { relations: ["joinUsers"] }
+      { relations: ["joinedUsers"] }
     );
-    if (subRecord.joinUsers.find((joinUser) => joinUser.id === user.id)) {
+    if (subRecord.joinedUsers.find((joinedUser) => joinedUser.id === user.id)) {
       throw Error;
     }
 
-    subRecord.joinUsers.push(user);
+    subRecord.joinedUsers.push(user);
     await subRecord.save();
 
     return res.json(subRecord);
@@ -239,15 +242,17 @@ const unJoinSub = async (req: Request, res: Response) => {
   try {
     const subRecord = await Sub.findOneOrFail(
       { name },
-      { relations: ["joinUsers"] }
+      { relations: ["joinedUsers"] }
     );
 
-    if (!subRecord.joinUsers.find((joinUser) => joinUser.id === user.id)) {
+    if (
+      !subRecord.joinedUsers.find((joinedUser) => joinedUser.id === user.id)
+    ) {
       throw Error;
     }
 
-    subRecord.joinUsers = subRecord.joinUsers.filter(
-      (joinUser) => joinUser.id !== user.id
+    subRecord.joinedUsers = subRecord.joinedUsers.filter(
+      (joinedUser) => joinedUser.id !== user.id
     );
 
     await subRecord.save();

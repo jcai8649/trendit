@@ -28,8 +28,6 @@ export default function PostSubmissionForm({ sub = null }) {
     }
   };
 
-  console.log(router.query);
-
   useEffect(() => {
     setEditorLoaded(true);
     if (router.query.hasOwnProperty("url")) {

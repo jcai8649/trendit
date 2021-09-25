@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
+import MessageBox from "../components/MessageBox";
 import Head from "next/head";
 import Axios from "axios";
 
@@ -44,6 +45,7 @@ function App({ Component, pageProps }: AppProps) {
           {!authRoute && <Navbar />}
           <div className={authRoute ? "" : "pt-12"}>
             <Component {...pageProps} />
+            <MessageBox />
           </div>
         </AuthProvider>
       </SWRConfig>

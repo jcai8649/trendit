@@ -55,7 +55,10 @@ const login = async (req: Request, res: Response) => {
       return res.status(400).json(errors);
     }
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne(
+      { username },
+      { relations: ["joinedSubs"] }
+    );
 
     if (!user)
       return res.status(404).json({ username: "Invalid username or password" });
@@ -79,7 +82,6 @@ const login = async (req: Request, res: Response) => {
     );
     return res.json(user);
   } catch (err) {
-    console.log(err);
     return res.json({ error: "Something went wrong" });
   }
 };

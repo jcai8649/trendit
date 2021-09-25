@@ -14,7 +14,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       process.env.JWT_SECRET as string
     );
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne(
+      { username },
+      { relations: ["joinedSubs"] }
+    );
 
     res.locals.user = user;
 

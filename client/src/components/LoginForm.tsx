@@ -25,7 +25,7 @@ export default function LoginForm() {
       });
 
       dispatch("LOGIN", res.data);
-
+      dispatch("OPEN_MESSAGE", "logged In!");
       router.back();
     } catch (err) {
       setErrors(err.response.data);

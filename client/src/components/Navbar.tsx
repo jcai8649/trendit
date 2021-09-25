@@ -12,12 +12,6 @@ const Navbar: React.FC = () => {
   const { authenticated, user, loading, toggleRender } = useAuthState();
   const { width } = useWindowSize();
 
-  useEffect(() => {
-    if (toggleRender) {
-      window.location.reload();
-    }
-  }, [toggleRender]);
-
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white">
       {/* Logo and title */}

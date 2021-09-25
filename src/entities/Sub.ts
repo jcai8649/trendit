@@ -49,9 +49,9 @@ export default class Sub extends Entity {
   @OneToMany(() => Post, (post) => post.sub)
   posts: Post[];
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, (user) => user.joinedSubs)
   @JoinTable()
-  joinUsers: User[];
+  joinedUsers: User[];
 
   @Expose()
   get imageUrl(): string {

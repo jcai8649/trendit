@@ -8,6 +8,11 @@ interface State {
   loading: boolean;
   error?: string;
   toggleRender: boolean;
+  messageBox: {
+    isOpen: boolean;
+    action: string;
+    error?: boolean;
+  };
 }
 
 interface Action {
@@ -21,6 +26,11 @@ const StateContext = createContext<State>({
   loading: true,
   error: null,
   toggleRender: false,
+  messageBox: {
+    isOpen: false,
+    action: null,
+    error: null,
+  },
 });
 
 const DispatchContext = createContext(null);
@@ -41,7 +51,22 @@ const reducer = (state: State, { type, payload }: Action) => {
     case "ERROR":
       return { ...state, error: payload, authenticated: false };
     case "RERENDER":
-      return { ...state, toggleRender: payload };
+      return { ...state, toggleRender: !state.toggleRender };
+    case "OPEN_MESSAGE":
+      return {
+        ...state,
+        messageBox: { isOpen: true, action: payload, error: null },
+      };
+    case "CLOSE_MESSAGE":
+      return {
+        ...state,
+        messageBox: { isOpen: false, action: null, error: null },
+      };
+    case "ERROR_MESSAGE":
+      return {
+        ...state,
+        messageBox: { isOpen: true, action: null, error: true },
+      };
     default:
       throw new Error(`Unknown action type: ${type}`);
   }
@@ -54,6 +79,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loading: true,
     error: false,
     toggleRender: false,
+    messageBox: {
+      isOpen: false,
+      action: null,
+      error: null,
+    },
   });
 
   const dispatch = (type: string, payload?: any) =>
@@ -71,7 +101,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     loadUser();
-  }, []);
+  }, [state.toggleRender]);
 
   return (
     <DispatchContext.Provider value={dispatch}>

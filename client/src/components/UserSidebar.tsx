@@ -46,7 +46,7 @@ export default function UserSidebar({ data, mutate }) {
       });
 
       mutate();
-      dispatch("RERENDER", true);
+      dispatch("RERENDER");
     } catch (err) {
       console.log(err);
     }
