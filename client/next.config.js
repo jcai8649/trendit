@@ -1,6 +1,11 @@
 module.exports = {
   images: {
-    domains: ["www.pngkey.com", "i.imgur.com", process.env.APP_DOMAIN],
+    domains: [
+      "www.pngkey.com",
+      "i.imgur.com",
+      "img.icons8.com",
+      process.env.APP_DOMAIN,
+    ],
   },
   reactStrictMode: true,
   webpack(config) {

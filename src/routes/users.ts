@@ -13,6 +13,7 @@ const getUserSubmissions = async (req: Request, res: Response) => {
   try {
     const user = await User.findOneOrFail({
       where: { username: req.params.username },
+      relations: ["joinedSubs", "moddedSubs"],
     });
 
     const posts = await Post.find({

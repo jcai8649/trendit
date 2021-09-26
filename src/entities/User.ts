@@ -57,7 +57,7 @@ export default class User extends Entity {
   get imageUrl(): string {
     return this.imageUrn
       ? `${process.env.APP_URL}/images/${this.imageUrn}`
-      : `${process.env.APP_URL}/images/icon_transparent.png`;
+      : "https://img.icons8.com/ios/100/000000/test-account.png";
   }
 
   @BeforeInsert()

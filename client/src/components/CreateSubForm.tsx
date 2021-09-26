@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import Axios from "axios";
 import classNames from "classnames";
+import { useAuthDispatch } from "../context/auth";
 import { useRouter } from "next/router";
 
 export default function CreateSubForm() {
@@ -10,6 +11,7 @@ export default function CreateSubForm() {
   const [errors, setErrors] = useState<Partial<any>>({});
 
   const router = useRouter();
+  const dispatch = useAuthDispatch();
 
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
@@ -18,6 +20,7 @@ export default function CreateSubForm() {
       const res = await Axios.post("/subs", { name, title, description });
 
       router.push(`/r/${res.data.name}`);
+      dispatch("RERENDER");
     } catch (err) {
       console.log(err);
       setErrors(err.response.data);

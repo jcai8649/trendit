@@ -52,7 +52,7 @@ export default function UserSidebar({ data, mutate }) {
     }
   };
   return (
-    <div className="hidden ml-6 sm:block w-80">
+    <>
       <input
         type="file"
         hidden={true}
@@ -90,6 +90,6 @@ export default function UserSidebar({ data, mutate }) {
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }

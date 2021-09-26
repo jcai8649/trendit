@@ -42,7 +42,8 @@ export default function PageDropdown() {
     ) {
       setSelectedPage("Create Post");
     } else {
-      setSelectedPage(`r/${subName}`);
+      //either sub or user profile page
+      setSelectedPage(subName ? `r/${subName}` : `r/${router.query.username}`);
     }
   }, [router]);
 
