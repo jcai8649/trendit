@@ -2,11 +2,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-
 import PostFeed from "../../components/PostFeed";
 import TopButton from "../../components/TopButton";
 import CreatePostLink from "../../components/CreatePostLink";
-
 import { Sub } from "../../types";
 import { useAuthState } from "../../context/auth";
 import SubSidebar from "../../components/SubSidebar";

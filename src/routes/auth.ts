@@ -4,7 +4,6 @@ import { validate, isEmpty } from "class-validator";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
 
-import Sub from "../entities/Sub";
 import User from "../entities/User";
 import auth from "../middleware/auth";
 import user from "../middleware/user";

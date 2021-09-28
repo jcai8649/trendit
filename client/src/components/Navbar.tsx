@@ -9,7 +9,10 @@ import SearchBar from "./SearchBar";
 import PageDropdown from "./PageDropdown";
 
 export default function Navbar() {
+  //Global state
   const { authenticated, user, loading } = useAuthState();
+
+  //Utils
   const { width } = useWindowSize();
 
   return (
