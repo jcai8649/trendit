@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Logo from "../images/red_icon.svg";
 import { useAuthState } from "../context/auth";
@@ -8,8 +8,8 @@ import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
 import PageDropdown from "./PageDropdown";
 
-const Navbar: React.FC = () => {
-  const { authenticated, user, loading, toggleRender } = useAuthState();
+export default function Navbar() {
+  const { authenticated, user, loading } = useAuthState();
   const { width } = useWindowSize();
 
   return (
@@ -54,6 +54,4 @@ const Navbar: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Navbar;
+}

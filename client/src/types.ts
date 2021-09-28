@@ -45,6 +45,7 @@ export interface Sub {
 }
 
 export interface Comment {
+  user: User;
   identifier: string;
   body: string;
   username: string;
@@ -54,4 +55,15 @@ export interface Comment {
   // Virtuals
   userVote: number;
   voteScore: number;
+}
+
+export interface Error {
+  email?: string;
+  username?: string;
+  password?: string;
+}
+
+export interface UserFeedData {
+  user: User;
+  submissions: any[];
 }

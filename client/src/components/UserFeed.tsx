@@ -3,8 +3,14 @@ import Link from "next/link";
 import { Post, Comment } from "../types";
 import parse from "html-react-parser";
 import PostCard from "./PostCard";
+import { UserFeedData } from "../types";
 
-export default function UserFeed({ data, mutate }) {
+interface UserFeedProps {
+  data: UserFeedData;
+  mutate: (data?: any, shouldRevalidate?: boolean) => Promise<any>;
+}
+
+export default function UserFeed({ data, mutate }: UserFeedProps) {
   return (
     <div className="w-full px-4 md:w-160 md:p-0">
       {data.submissions.length > 0 ? (
@@ -49,9 +55,22 @@ export default function UserFeed({ data, mutate }) {
           }
         })
       ) : (
-        <p className="text-center">
-          hmm... u/{data.user.username} hasn't posted anything
-        </p>
+        <div className="relative">
+          {[...Array(6)].map((x, i) => (
+            <div
+              key={i}
+              className="w-full h-24 bg-gray-200 border border-gray-300"
+            >
+              <div className="flex flex-col w-10 h-full py-3 space-y-8 text-center rounded-l">
+                <i className="text-gray-400 icon-arrow-up"></i>
+                <i className="text-gray-400 icon-arrow-down"></i>
+              </div>
+            </div>
+          ))}
+          <p className="absolute text-center bottom-1/2 inset-x-2">
+            hmm... u/{data.user.username} hasn't posted anything
+          </p>
+        </div>
       )}
     </div>
   );

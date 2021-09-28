@@ -1,13 +1,17 @@
 import React, { useEffect, useState, createRef, ChangeEvent } from "react";
-import { User } from "../types";
+import { User, UserFeedData } from "../types";
 import Axios from "axios";
 import { useAuthDispatch, useAuthState } from "../context/auth";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 import Image from "next/image";
 import dayjs from "dayjs";
 
-export default function UserSidebar({ data, mutate }) {
+interface UserSidebarProps {
+  data: UserFeedData;
+  mutate: (data?: any, shouldRevalidate?: boolean) => Promise<any>;
+}
+
+export default function UserSidebar({ data, mutate }: UserSidebarProps) {
   // Local state
   const [ownUserProfile, setOwnUserProfile] = useState(false);
 
@@ -19,8 +23,6 @@ export default function UserSidebar({ data, mutate }) {
   const router = useRouter();
   const username = router.query.username;
   const fileInputRef = createRef<HTMLInputElement>();
-
-  //   const { data, mutate } = useSWR<any>(username ? `/users/${username}` : null);
 
   useEffect(() => {
     if (!user) return;

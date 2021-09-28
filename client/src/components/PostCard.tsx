@@ -36,13 +36,14 @@ export default function PostCard({
   },
   mutate,
 }: PostCardProps) {
+  // Global state
   const { authenticated } = useAuthState();
 
+  // Utils
   const router = useRouter();
-
   const isInSubPage = router.pathname === "/r/[sub]"; // /r/[sub]
 
-  const vote = async (value) => {
+  const vote = async (value: number) => {
     if (!authenticated) router.push("/login");
 
     if (value === userVote) value = 0;

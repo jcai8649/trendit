@@ -6,28 +6,28 @@ import Image from "next/image";
 import useSWR from "swr";
 import { useAuthState } from "../context/auth";
 import { Sub } from "../types";
+import useToggle from "../hooks/useToggle";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
 export default function PageDropdown() {
-  //local state
+  // Local state
   const [selectedPage, setSelectedPage] = useState("Home");
-  const [toggle, setToggle] = useState(false);
+  const [isOpen, toggleIsOpen] = useToggle();
 
-  //global state
+  // Global state
   const { authenticated, user } = useAuthState();
 
+  // Utils
   const router = useRouter();
   const subName = router.query.sub;
   const ref = useRef();
 
   useOnClickOutside(
     ref,
-    useCallback(() => setToggle(false), [toggle])
+    useCallback(() => toggleIsOpen(false), [isOpen])
   );
 
-  const { data: sub, error, mutate } = useSWR<Sub>(
-    subName ? `/subs/${subName}` : null
-  );
+  const { data: sub } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
 
   useEffect(() => {
     if (router.pathname === "/") {
@@ -48,7 +48,7 @@ export default function PageDropdown() {
   }, [router]);
 
   const handleToggleClick = (name: string) => {
-    setToggle(false);
+    toggleIsOpen();
     setSelectedPage(name);
   };
 
@@ -57,7 +57,7 @@ export default function PageDropdown() {
       {authenticated && (
         <div ref={ref} className="relative hidden sm:w-24 sm:block lg:w-60">
           <div
-            onClick={() => setToggle((toggle) => !toggle)}
+            onClick={() => toggleIsOpen((toggle: boolean) => !toggle)}
             className="px-2 py-1 ml-6 border border-white rounded sm:flex sm:space-x-0 hover:border-gray-200"
           >
             {selectedPage === "Home" ? (
@@ -93,7 +93,7 @@ export default function PageDropdown() {
           </div>
           <div
             className={classNames("absolute left-6 ", {
-              hidden: toggle === false,
+              hidden: isOpen === false,
             })}
           >
             <div className="py-4 overflow-auto bg-white rounded shadow-md w-60">

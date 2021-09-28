@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useAuthState } from "../context/auth";
 
 export default function PageIndicator() {
+  //Utils
   const router = useRouter();
 
   const pageList = {

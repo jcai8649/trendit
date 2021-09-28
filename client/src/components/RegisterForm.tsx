@@ -4,16 +4,20 @@ import Axios from "axios";
 import InputGroup from "../components/InputGroup";
 import { useRouter } from "next/router";
 import { useAuthDispatch, useAuthState } from "../context/auth";
+import { Error } from "../types";
 
 export default function RegisterForm() {
+  // Local state
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useAuthDispatch();
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Error>({});
 
+  // Global state
   const { authenticated } = useAuthState();
 
+  // Util
   const router = useRouter();
   if (authenticated) router.push("/");
 

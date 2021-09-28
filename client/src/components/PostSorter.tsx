@@ -1,7 +1,12 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import classNames from "classnames";
 
-export default function PostSorter({ sortBy, setSortBy }) {
+interface PostSorterProps {
+  sortBy: string;
+  setSortBy: Dispatch<SetStateAction<string>>;
+}
+
+export default function PostSorter({ sortBy, setSortBy }: PostSorterProps) {
   return (
     <div className="flex flex-row content-center w-full px-1 py-2 mb-4 bg-white rounded ">
       <button

@@ -6,10 +6,16 @@ import ActionButton from "./ActionButton";
 import parse from "html-react-parser";
 import LinkConverter from "./LinkConverter";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Post } from "../types";
 
 dayjs.extend(relativeTime);
 
-export default function PostInfoCard({ vote, post }) {
+interface PostInfoCardProps {
+  vote: (value: number) => void;
+  post: Post;
+}
+
+export default function PostInfoCard({ vote, post }: PostInfoCardProps) {
   return (
     <div className="flex">
       {/* Vote section */}

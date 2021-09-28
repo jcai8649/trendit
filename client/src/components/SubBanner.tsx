@@ -1,7 +1,18 @@
 import React from "react";
 import classNames from "classnames";
+import { Sub } from "../types";
 
-export default function SubBanner({ sub, ownSub, openFileInput }) {
+interface SubBannerProps {
+  sub: Sub;
+  ownSub: boolean;
+  openFileInput: (type: string) => void;
+}
+
+export default function SubBanner({
+  sub,
+  ownSub,
+  openFileInput,
+}: SubBannerProps) {
   return (
     <div
       className={classNames("bg-blue-500 relative", {

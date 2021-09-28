@@ -1,9 +1,21 @@
 import React, { useState, FormEvent } from "react";
+import { MutatorCallback } from "swr/dist/types";
 import Link from "next/link";
 import Axios from "axios";
+import { Post, Comment } from "../types";
 import { useAuthState } from "../context/auth";
+interface CommentSubmissionFormProps {
+  commentMutate: (
+    data?: Comment[] | Promise<Comment[]> | MutatorCallback<Comment[]>,
+    shouldRevalidate?: boolean
+  ) => Promise<Comment[]>;
+  post: Post;
+}
 
-export default function CommentSubmissionForm({ commentMutate, post }) {
+export default function CommentSubmissionForm({
+  commentMutate,
+  post,
+}: CommentSubmissionFormProps) {
   // Local state
   const [newComment, setNewComment] = useState("");
   // Global state

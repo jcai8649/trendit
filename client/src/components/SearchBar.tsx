@@ -5,10 +5,12 @@ import { Sub } from "../types";
 import Image from "next/image";
 
 export default function SearchBar() {
+  // Local state
   const [name, setName] = useState("");
   const [subs, setSubs] = useState<Sub[]>([]);
   const [timer, setTimer] = useState(null);
 
+  // Utils
   const router = useRouter();
 
   const searchSubs = async () => {

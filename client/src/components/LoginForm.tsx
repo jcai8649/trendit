@@ -4,15 +4,19 @@ import Axios from "axios";
 import InputGroup from "../components/InputGroup";
 import { useRouter } from "next/router";
 import { useAuthDispatch, useAuthState } from "../context/auth";
+import { Error } from "../types";
 
 export default function LoginForm() {
+  // Local state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Error>({});
 
-  const dispatch = useAuthDispatch();
+  // Global state
   const { authenticated } = useAuthState();
+  const dispatch = useAuthDispatch();
 
+  //Utils
   const router = useRouter();
   if (authenticated) router.push("/");
 
@@ -25,7 +29,7 @@ export default function LoginForm() {
       });
 
       dispatch("LOGIN", res.data);
-      dispatch("OPEN_MESSAGE", "logged In!");
+      dispatch("OPEN_MESSAGE", "Successfully logged In!");
       router.back();
     } catch (err) {
       setErrors(err.response.data);

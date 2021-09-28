@@ -6,8 +6,8 @@ import { Sub } from "../types";
 import { useAuthState } from "../context/auth";
 
 export default function TopCommunitiesSidebar() {
+  // Utils
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
-  const { authenticated } = useAuthState();
 
   return (
     <div className="bg-white rounded">

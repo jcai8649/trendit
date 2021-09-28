@@ -10,7 +10,7 @@ interface State {
   toggleRender: boolean;
   messageBox: {
     isOpen: boolean;
-    action: string;
+    message: string;
     error?: boolean;
   };
 }
@@ -28,7 +28,7 @@ const StateContext = createContext<State>({
   toggleRender: false,
   messageBox: {
     isOpen: false,
-    action: null,
+    message: null,
     error: null,
   },
 });
@@ -55,20 +55,20 @@ const reducer = (state: State, { type, payload }: Action) => {
     case "OPEN_MESSAGE":
       return {
         ...state,
-        messageBox: { isOpen: true, action: payload, error: null },
+        messageBox: { isOpen: true, message: payload, error: null },
       };
     case "CLOSE_MESSAGE":
       return {
         ...state,
-        messageBox: { isOpen: false, action: null, error: null },
+        messageBox: { isOpen: false, message: null, error: null },
       };
     case "ERROR_MESSAGE":
       return {
         ...state,
-        messageBox: { isOpen: true, action: null, error: true },
+        messageBox: { isOpen: true, message: null, error: true },
       };
     default:
-      throw new Error(`Unknown action type: ${type}`);
+      throw new Error(`Unknown message type: ${type}`);
   }
 };
 
@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     toggleRender: false,
     messageBox: {
       isOpen: false,
-      action: null,
+      message: null,
       error: null,
     },
   });

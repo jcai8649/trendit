@@ -19,6 +19,7 @@ export default function PostFeed() {
   const { authenticated, user } = useAuthState();
   const router = useRouter();
 
+  // Utils
   const { data, error, size: page, setSize: setPage, mutate } = useSWRInfinite<
     Post[]
   >((index) => `/${paramType}?page=${index}&sort=${sortBy}`);

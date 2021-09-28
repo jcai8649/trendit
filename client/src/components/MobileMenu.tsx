@@ -1,21 +1,24 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import classNames from "classnames";
 import Link from "next/link";
 import useToggle from "../hooks/useToggle";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
-export default function Mobileis() {
-  const ref = useRef();
-  const [isOpen, setIsOpen] = useState(false);
+export default function MobileMenu() {
+  // Local state
+  const [isOpen, toggleIsOpen] = useToggle();
+
+  //Utils
+  const ref = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(
     ref,
-    useCallback(() => setIsOpen(false), [isOpen])
+    useCallback(() => toggleIsOpen(false), [isOpen])
   );
   return (
     <div ref={ref} className="relative">
       <button
-        onClick={(e) => setIsOpen((isOpen) => !isOpen)}
+        onClick={() => toggleIsOpen()}
         className={classNames("border border-white rounded px-2", {
           "border-gray-200": isOpen === true,
         })}

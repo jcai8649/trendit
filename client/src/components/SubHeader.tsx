@@ -2,9 +2,19 @@ import React, { createRef, ChangeEvent } from "react";
 import SubBanner from "./SubBanner";
 import SubInfo from "./SubInfo";
 import { Sub } from "../types";
+import { MutatorCallback } from "swr/dist/types";
 import Axios from "axios";
 
-export default function SubHeader({ sub, ownSub, mutate }) {
+interface SubHeaderProps {
+  sub: Sub;
+  ownSub: boolean;
+  mutate: (
+    data?: Sub | Promise<Sub> | MutatorCallback<Sub>,
+    shouldRevalidate?: boolean
+  ) => Promise<Sub>;
+}
+
+export default function SubHeader({ sub, ownSub, mutate }: SubHeaderProps) {
   const fileInputRef = createRef<HTMLInputElement>();
 
   const openFileInput = (type: string) => {

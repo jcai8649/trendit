@@ -3,17 +3,18 @@ import Axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import PostSubmissionForm from "../components/PostSubmissionForm";
-import useSWR from "swr";
 import Image from "next/image";
 import { Sub } from "../types";
 import { GetServerSideProps } from "next";
 import SubmissionRules from "../components/SubmissionRules";
 
 export default function Submit() {
+  // Local state
   const [subToSubmit, setSubToSubmit] = useState("");
   const [subs, setSubs] = useState<Sub[]>([]);
   const [timer, setTimer] = useState(null);
 
+  // Utils
   const router = useRouter();
 
   const searchSubs = async () => {
@@ -53,18 +54,6 @@ export default function Submit() {
       <div className="flex flex-col w-full md:w-11/12 ">
         <h1 className="mb-3 text-lg">Create a post</h1>
         <hr className="border-white" />
-        {/* {sub && (
-          <div className="flex items-center px-4 py-3">
-            <Image
-              src={sub.imageUrl}
-              className="rounded-full"
-              alt="Sub Image"
-              height={(8 * 16) / 4}
-              width={(8 * 16) / 4}
-            />
-            <h2 className="m-3">/r/{subName}</h2>
-          </div>
-        )} */}
 
         <div className="relative flex items-center my-4 bg-white border rounded w-72 hover:border-blue-500 hover:bg-white">
           <i className="pl-4 pr-3 text-gray-500 fas fa-search"></i>

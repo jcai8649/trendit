@@ -2,18 +2,35 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import classNames from "classnames";
 import Axios from "axios";
-import MessageBox from "./MessageBox";
+import { Sub } from "../types";
+import { MutatorCallback } from "swr/dist/types";
 import { useAuthState } from "../context/auth";
 import { useAuthDispatch } from "../context/auth";
 import { useRouter } from "next/router";
 
-export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
+interface SubInfoProps {
+  sub: Sub;
+  ownSub: boolean;
+  mutate: (
+    data?: Sub | Promise<Sub> | MutatorCallback<Sub>,
+    shouldRevalidate?: boolean
+  ) => Promise<Sub>;
+  openFileInput: (type: string) => void;
+}
+
+export default function SubInfo({
+  sub,
+  ownSub,
+  openFileInput,
+  mutate,
+}: SubInfoProps) {
   //Local State
   const [joined, setJoined] = useState(false);
   // Global state
   const { authenticated, user } = useAuthState();
   const dispatch = useAuthDispatch();
 
+  // Utils
   const router = useRouter();
   const subName = router.query.sub;
 
@@ -30,8 +47,8 @@ export default function SubInfo({ sub, ownSub, openFileInput, mutate }) {
       dispatch("RERENDER");
 
       joined
-        ? dispatch("OPEN_MESSAGE", `left r/${subName}`)
-        : dispatch("OPEN_MESSAGE", `joined r/${subName}`);
+        ? dispatch("OPEN_MESSAGE", `Successfully left r/${subName}`)
+        : dispatch("OPEN_MESSAGE", `Successfully joined r/${subName}`);
     } catch (err) {
       dispatch("ERROR_MESSAGE");
     }

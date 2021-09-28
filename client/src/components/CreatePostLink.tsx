@@ -1,8 +1,17 @@
 import React from "react";
+import { User, Sub } from "../types";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function CreatePostLink({ user, sub = null }) {
+interface CreatePostLinkProps {
+  user: User;
+  sub?: Sub;
+}
+
+export default function CreatePostLink({
+  user,
+  sub = null,
+}: CreatePostLinkProps) {
   return (
     <div className="flex flex-row p-1 mx-4 mb-4 bg-white rounded md:mx-0">
       <Link href={`/u/${user.username}`}>

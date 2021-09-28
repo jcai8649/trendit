@@ -5,11 +5,13 @@ import { useAuthDispatch } from "../context/auth";
 import { useRouter } from "next/router";
 
 export default function CreateSubForm() {
+  // Local State
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState<Partial<any>>({});
 
+  // Utils
   const router = useRouter();
   const dispatch = useAuthDispatch();
 
@@ -17,12 +19,13 @@ export default function CreateSubForm() {
     event.preventDefault();
 
     try {
+      //Create the sub
       const res = await Axios.post("/subs", { name, title, description });
-
+      //Join the sub
+      await Axios.post(`/subs/${name}`);
       router.push(`/r/${res.data.name}`);
       dispatch("RERENDER");
     } catch (err) {
-      console.log(err);
       setErrors(err.response.data);
     }
   };

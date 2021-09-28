@@ -1,15 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Sub } from "../types";
 
-export default function ModSiderbar({ moddedSubs }) {
-  console.log(moddedSubs);
+interface ModSidebarProps {
+  moddedSubs: Array<Sub>;
+}
+
+export default function ModSidebar({ moddedSubs }: ModSidebarProps) {
   return (
-    <div className="hidden p-3 mt-3 overflow-auto bg-white rounded md:max-h-80 md:block">
-      <span className="text-md">You're a moderator of these communities</span>
-      {moddedSubs &&
-        moddedSubs.length > 0 &&
-        moddedSubs.map((sub, idx) => {
+    moddedSubs &&
+    moddedSubs.length > 0 && (
+      <div className="hidden p-3 mt-3 overflow-auto bg-white rounded md:max-h-80 md:block">
+        <span className="text-md">You're a moderator of these communities</span>
+        {moddedSubs.map((sub, idx) => {
           return (
             <Link key={idx} href={`/r/${sub.name}`}>
               <a className="flex m-2">
@@ -25,6 +29,7 @@ export default function ModSiderbar({ moddedSubs }) {
             </Link>
           );
         })}
-    </div>
+      </div>
+    )
   );
 }

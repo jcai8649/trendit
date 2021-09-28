@@ -1,11 +1,19 @@
-import React, { useState, FormEvent, useEffect } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { Post } from "../types";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import Axios from "axios";
 import Editor from "./Editor";
+import { Sub } from "../types";
 
-export default function PostSubmissionForm({ sub = null }) {
+interface PostSubmissionFormProps {
+  sub?: Sub;
+}
+
+export default function PostSubmissionForm({
+  sub = null,
+}: PostSubmissionFormProps) {
+  // Local state
   const [title, setTitle] = useState("");
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [body, setBody] = useState("");
@@ -13,6 +21,7 @@ export default function PostSubmissionForm({ sub = null }) {
   const [type, setType] = useState("post");
   const [urlError, setUrlError] = useState(false);
 
+  // Utils
   const router = useRouter();
   const handleCancel = () => {
     router.back();
@@ -69,7 +78,7 @@ export default function PostSubmissionForm({ sub = null }) {
                   "text-blue-500 border-b-4 border-blue-500": type === "post",
                 }
               )}
-              onClick={(e) => setType("post")}
+              onClick={() => setType("post")}
             >
               <i className="mr-2 fas fa-edit" />
               Post
@@ -81,7 +90,7 @@ export default function PostSubmissionForm({ sub = null }) {
                   "text-blue-500 border-b-4 border-blue-500": type === "link",
                 }
               )}
-              onClick={(e) => setType("link")}
+              onClick={() => setType("link")}
             >
               <i className="mr-2 fas fa-link" />
               Link

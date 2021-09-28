@@ -2,11 +2,18 @@ import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import classNames from "classnames";
+import { Comment } from "../types";
 import parse from "html-react-parser";
 import Link from "next/dist/client/link";
 import Image from "next/image";
 
-export default function CommentCard({ comment, vote, isOp }) {
+interface CommentCardProps {
+  comment: Comment;
+  vote: (value: number, comment: Comment) => void;
+  isOp: boolean;
+}
+
+export default function CommentCard({ comment, vote, isOp }: CommentCardProps) {
   dayjs.extend(relativeTime);
 
   return (

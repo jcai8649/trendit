@@ -1,6 +1,15 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import CommentSorter from "../components/CommentSorter";
+import { Comment } from "../types";
 import CommentCard from "./CommentCard";
+
+interface CommentFeedProps {
+  comments?: Array<Comment>;
+  vote: (value: number, comment: Comment) => void;
+  sortBy: string;
+  setSortBy: Dispatch<SetStateAction<string>>;
+  postUser: string;
+}
 
 export default function CommentFeed({
   comments,
@@ -8,7 +17,7 @@ export default function CommentFeed({
   sortBy,
   setSortBy,
   postUser,
-}) {
+}: CommentFeedProps) {
   return (
     <>
       <CommentSorter sortBy={sortBy} setSortBy={setSortBy} />

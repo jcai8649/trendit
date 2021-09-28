@@ -1,21 +1,32 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useRef, useCallback, Dispatch, SetStateAction } from "react";
+import useToggle from "../hooks/useToggle";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import classNames from "classnames";
 
-function PostSorter({ sortBy, setSortBy }) {
-  const [toggle, setToggle] = useState(false);
+interface CommentSorterProps {
+  sortBy: string;
+  setSortBy: Dispatch<SetStateAction<string>>;
+}
 
+export default function CommentSorter({
+  sortBy,
+  setSortBy,
+}: CommentSorterProps) {
+  //Local state
+  const [isOpen, toggleIsOpen] = useToggle();
+
+  //Utils
   // Create a ref that we add to the element for which we want to detect outside clicks
   const ref = useRef();
   // Call hook passing in the ref and a function to call on outside click
   useOnClickOutside(
     ref,
-    useCallback(() => setToggle(false), [toggle])
+    useCallback(() => toggleIsOpen(false), [isOpen])
   );
 
-  const handleToggle = () => setToggle(!toggle);
+  const handleToggle = () => toggleIsOpen();
 
-  const handleOnClick = (sort) => {
+  const handleOnClick = (sort: string) => {
     setSortBy(sort);
     handleToggle();
   };
@@ -32,7 +43,7 @@ function PostSorter({ sortBy, setSortBy }) {
       <div
         className={classNames(
           "block absolute w-20 z-10 p-1 ml-2 bg-white border border-gray-100 rounded shadow-md",
-          { hidden: toggle === false }
+          { hidden: isOpen === false }
         )}
       >
         <ul className="flex flex-col">
@@ -74,5 +85,3 @@ function PostSorter({ sortBy, setSortBy }) {
     </div>
   );
 }
-
-export default PostSorter;

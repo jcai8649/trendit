@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from "react";
 
-function Editor({ onChange, editorLoaded, name, value }) {
+interface EditorProps {
+  onChange: (data: React.SetStateAction<string>) => void;
+  editorLoaded: boolean;
+  name: string;
+  value: string;
+}
+
+export default function Editor({
+  onChange,
+  editorLoaded,
+  name,
+  value,
+}: EditorProps) {
   const editorRef = useRef<any>();
   const { CKEditor, DocumentEditor } = editorRef.current || {};
 
@@ -57,5 +69,3 @@ function Editor({ onChange, editorLoaded, name, value }) {
     <div className="loader">Editor loading</div>
   );
 }
-
-export default Editor;

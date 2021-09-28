@@ -6,7 +6,10 @@ import useSWR from "swr";
 import Link from "next/link";
 
 export default function SubSidebar() {
+  // Global state
   const { authenticated } = useAuthState();
+
+  // Utils
   const router = useRouter();
   const { sub: subName } = router.query;
 

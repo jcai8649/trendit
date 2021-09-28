@@ -5,17 +5,27 @@ import { useAuthDispatch } from "../context/auth";
 import Image from "next/image";
 import Axios from "axios";
 import Link from "next/link";
+import useToggle from "../hooks/useToggle";
 import classNames from "classnames";
+import { User } from "../types";
 
-export default function UserMenu({ user }) {
-  const [isOpen, setIsOpen] = useState(false);
+interface UserMenuProps {
+  user: User;
+}
+
+export default function UserMenu({ user }: UserMenuProps) {
+  // Local state
+  const [isOpen, toggleIsOpen] = useToggle();
+
+  // Global state
   const dispatch = useAuthDispatch();
+  // Utils
   const router = useRouter();
   const ref = useRef();
 
   useOnClickOutside(
     ref,
-    useCallback(() => setIsOpen(false), [isOpen])
+    useCallback(() => toggleIsOpen(false), [isOpen])
   );
 
   const logoutHandler = () => {
@@ -31,7 +41,7 @@ export default function UserMenu({ user }) {
   return (
     <div ref={ref} className="relative flex flex-row w-max">
       <div
-        onClick={() => setIsOpen((isOpen) => !isOpen)}
+        onClick={() => toggleIsOpen()}
         className="p-2 py-1 mr-2 leading-5 border border-white rounded cursor-pointer hover:border-gray-200 sm:flex sm:space-x-0"
       >
         <Image

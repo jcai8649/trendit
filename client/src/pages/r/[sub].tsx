@@ -19,7 +19,6 @@ export default function SubPage() {
   const { authenticated, user } = useAuthState();
   // Utils
   const router = useRouter();
-
   const subName = router.query.sub;
 
   const { data: sub, error, mutate } = useSWR<Sub>(

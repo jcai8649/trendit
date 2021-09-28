@@ -3,10 +3,11 @@ import { useAuthState, useAuthDispatch } from "../context/auth";
 import className from "classnames";
 
 export default function MessageBox() {
-  const dispatch = useAuthDispatch();
+  // Global state
   const {
-    messageBox: { isOpen, action, error },
+    messageBox: { isOpen, message, error },
   } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   const closeTimer = () => {
     setTimeout(() => dispatch("CLOSE_MESSAGE"), 2500);
@@ -24,7 +25,7 @@ export default function MessageBox() {
         "block fixed py-2 animate-fade-in-up px-4 text-left inset-x-8 md:inset-x-72 lg:inset-x-1/3 bottom-10 bg-white border border-l-8 rounded shadow-md",
         {
           "border-red-500": error,
-          "border-blue-500": action,
+          "border-blue-500": message,
           hidden: isOpen === false,
         }
       )}
@@ -36,8 +37,8 @@ export default function MessageBox() {
         </p>
       ) : (
         <p>
-          <i className="mr-2 text-green-500 fas fa-check"></i> Successfully{" "}
-          {action}
+          <i className="mr-2 text-green-500 fas fa-check"></i>
+          {message}
         </p>
       )}
     </div>
