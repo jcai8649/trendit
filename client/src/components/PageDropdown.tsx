@@ -61,17 +61,17 @@ export default function PageDropdown() {
             className="px-2 py-1 ml-6 border border-white rounded sm:flex sm:space-x-0 hover:border-gray-200"
           >
             {selectedPage === "Home" ? (
-              <i className="mr-2 lg:mt-1 fas fa-home"></i>
+              <i className="mr-2 text-lg lg:mt-1 fas fa-home"></i>
             ) : selectedPage === "All" ? (
-              <i className="mr-2 lg:mt-1 fas fa-globe-americas"></i>
+              <i className="mr-2 text-lg lg:mt-1 fas fa-globe-americas"></i>
             ) : selectedPage === "Create Community" ||
               selectedPage === "Create Post" ? (
-              <i className="mr-2 lg:mt-1 fas fa-plus"></i>
+              <i className="mr-2 text-lg lg:mt-1 fas fa-plus"></i>
             ) : router.pathname === "/u/[username]" ? (
               <Image
                 src={user.imageUrl}
                 className="rounded-full"
-                alt="sub name"
+                alt="user profile image"
                 height={(6 * 16) / 3}
                 width={(6 * 16) / 3}
               ></Image>
@@ -80,13 +80,23 @@ export default function PageDropdown() {
                 <Image
                   src={sub.imageUrl}
                   className="rounded-full"
-                  alt="sub name"
+                  alt="sub image"
                   height={(6 * 16) / 3}
                   width={(6 * 16) / 3}
                 ></Image>
               )
             )}
-            <p className="hidden w-full px-1 ml-2 overflow-hidden lg:block ">
+            <p
+              className={classNames(
+                "hidden w-full px-1 ml-2 overflow-hidden lg:block",
+                {
+                  "mt-2 text-sm":
+                    selectedPage === "Create Community" ||
+                    selectedPage === "All" ||
+                    selectedPage === "Home",
+                }
+              )}
+            >
               {selectedPage}
             </p>
             <i className="px-2 my-auto fas fa-angle-down"></i>
