@@ -41,7 +41,10 @@ export default function SubHeader({ sub, ownSub, mutate }: SubHeaderProps) {
       mutate();
       dispatch("OPEN_MESSAGE", "Successfully updated sub");
     } catch (err) {
-      if (err.message === "Request failed with status code 500") {
+      if (
+        err.message === "Request failed with status code 500" ||
+        err.message === "Request failed with status code 413"
+      ) {
         dispatch(
           "ERROR_MESSAGE",
           "Image must be a .jpg or .png and less than 1MB"

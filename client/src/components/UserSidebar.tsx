@@ -5,6 +5,7 @@ import { useAuthDispatch, useAuthState } from "../context/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import dayjs from "dayjs";
+import e from "express";
 
 interface UserSidebarProps {
   data: UserFeedData;
@@ -51,7 +52,10 @@ export default function UserSidebar({ data, mutate }: UserSidebarProps) {
       dispatch("RERENDER");
       dispatch("OPEN_MESSAGE", "Successfully updated profile");
     } catch (err) {
-      if (err.message === "Request failed with status code 500") {
+      if (
+        err.message === "Request failed with status code 500" ||
+        err.message === "Request failed with status code 413"
+      ) {
         dispatch(
           "ERROR_MESSAGE",
           "Image must be a .jpg or .png and less than 1MB"
