@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Axios from "axios";
 import Editor from "./Editor";
 import { Sub } from "../types";
+import { useAuthDispatch } from "../context/auth";
 
 interface PostSubmissionFormProps {
   sub?: Sub;
@@ -20,6 +21,9 @@ export default function PostSubmissionForm({
   const [url, setUrl] = useState("");
   const [type, setType] = useState("post");
   const [urlError, setUrlError] = useState(false);
+
+  // Global state
+  const dispatch = useAuthDispatch();
 
   // Utils
   const router = useRouter();
@@ -62,7 +66,7 @@ export default function PostSubmissionForm({
 
       router.push(`/r/${sub.name}/${post.identifier}/${post.slug}`);
     } catch (err) {
-      console.log(err);
+      dispatch("ERROR_MESSAGE");
     }
   };
 

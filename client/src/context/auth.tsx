@@ -65,7 +65,11 @@ const reducer = (state: State, { type, payload }: Action) => {
     case "ERROR_MESSAGE":
       return {
         ...state,
-        messageBox: { isOpen: true, message: null, error: true },
+        messageBox: {
+          isOpen: true,
+          message: payload ? payload : null,
+          error: true,
+        },
       };
     default:
       throw new Error(`Unknown message type: ${type}`);

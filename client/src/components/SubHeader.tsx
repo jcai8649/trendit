@@ -3,6 +3,7 @@ import SubBanner from "./SubBanner";
 import SubInfo from "./SubInfo";
 import { Sub } from "../types";
 import { MutatorCallback } from "swr/dist/types";
+import { useAuthDispatch } from "../context/auth";
 import Axios from "axios";
 
 interface SubHeaderProps {
@@ -15,6 +16,8 @@ interface SubHeaderProps {
 }
 
 export default function SubHeader({ sub, ownSub, mutate }: SubHeaderProps) {
+  const dispatch = useAuthDispatch();
+
   const fileInputRef = createRef<HTMLInputElement>();
 
   const openFileInput = (type: string) => {
@@ -36,8 +39,16 @@ export default function SubHeader({ sub, ownSub, mutate }: SubHeaderProps) {
       });
 
       mutate();
+      dispatch("OPEN_MESSAGE", "Successfully updated sub");
     } catch (err) {
-      console.log(err);
+      if (err.message === "Request failed with status code 500") {
+        dispatch(
+          "ERROR_MESSAGE",
+          "Image must be a .jpg or .png and less than 1MB"
+        );
+      } else {
+        dispatch("ERROR_MESSAGE");
+      }
     }
   };
   return (

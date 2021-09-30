@@ -7,12 +7,16 @@ import Image from "next/image";
 import { Sub } from "../types";
 import { GetServerSideProps } from "next";
 import SubmissionRules from "../components/SubmissionRules";
+import { useAuthDispatch } from "../context/auth";
 
 export default function Submit() {
   // Local state
   const [subToSubmit, setSubToSubmit] = useState("");
   const [subs, setSubs] = useState<Sub[]>([]);
   const [timer, setTimer] = useState(null);
+
+  // Global state
+  const dispatch = useAuthDispatch();
 
   // Utils
   const router = useRouter();
@@ -25,7 +29,7 @@ export default function Submit() {
           const { data } = await Axios.get(`/subs/search/${subToSubmit}`);
           setSubs(data);
         } catch (err) {
-          console.log(err);
+          dispatch("ERROR_MESSAGE");
         }
       }, 250)
     );

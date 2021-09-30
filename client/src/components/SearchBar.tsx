@@ -3,12 +3,16 @@ import Axios from "axios";
 import { useRouter } from "next/router";
 import { Sub } from "../types";
 import Image from "next/image";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 
 export default function SearchBar() {
   // Local state
   const [name, setName] = useState("");
   const [subs, setSubs] = useState<Sub[]>([]);
   const [timer, setTimer] = useState(null);
+
+  // Global state
+  const dispatch = useAuthDispatch();
 
   // Utils
   const router = useRouter();
@@ -21,7 +25,7 @@ export default function SearchBar() {
           const { data } = await Axios.get(`/subs/search/${name}`);
           setSubs(data);
         } catch (err) {
-          console.log(err);
+          dispatch("ERROR_MESSAGE");
         }
       }, 250)
     );

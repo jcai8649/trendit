@@ -3,7 +3,7 @@ import { MutatorCallback } from "swr/dist/types";
 import Link from "next/link";
 import Axios from "axios";
 import { Post, Comment } from "../types";
-import { useAuthState } from "../context/auth";
+import { useAuthState, useAuthDispatch } from "../context/auth";
 interface CommentSubmissionFormProps {
   commentMutate: (
     data?: Comment[] | Promise<Comment[]> | MutatorCallback<Comment[]>,
@@ -20,6 +20,7 @@ export default function CommentSubmissionForm({
   const [newComment, setNewComment] = useState("");
   // Global state
   const { authenticated, user } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   const submitComment = async (event: FormEvent) => {
     event.preventDefault();
@@ -33,7 +34,7 @@ export default function CommentSubmissionForm({
       setNewComment("");
       commentMutate();
     } catch (err) {
-      console.log(err);
+      dispatch("ERROR_MESSAGE");
     }
   };
 

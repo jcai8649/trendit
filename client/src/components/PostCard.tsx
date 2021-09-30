@@ -7,7 +7,7 @@ import { Post } from "../types";
 import classNames from "classnames";
 import ActionButton from "./ActionButton";
 import LinkConverter from "./LinkConverter";
-import { useAuthState } from "../context/auth";
+import { useAuthState, useAuthDispatch } from "../context/auth";
 import { useRouter } from "next/router";
 import parse from "html-react-parser";
 
@@ -38,6 +38,7 @@ export default function PostCard({
 }: PostCardProps) {
   // Global state
   const { authenticated } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   // Utils
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function PostCard({
 
       if (mutate) mutate();
     } catch (err) {
-      console.log(err);
+      dispatch("ERROR_MESSAGE");
     }
   };
   return (

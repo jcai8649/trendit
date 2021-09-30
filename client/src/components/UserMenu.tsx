@@ -35,7 +35,7 @@ export default function UserMenu({ user }: UserMenuProps) {
         dispatch("RERENDER");
         router.replace("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => dispatch("ERROR_MESSAGE"));
   };
 
   return (

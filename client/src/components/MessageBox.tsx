@@ -10,7 +10,7 @@ export default function MessageBox() {
   const dispatch = useAuthDispatch();
 
   const closeTimer = () => {
-    setTimeout(() => dispatch("CLOSE_MESSAGE"), 2500);
+    setTimeout(() => dispatch("CLOSE_MESSAGE"), 1500);
   };
 
   useEffect(() => {
@@ -31,10 +31,16 @@ export default function MessageBox() {
       )}
     >
       {error ? (
-        <p>
-          <i className="mr-2 text-red-600 fas fa-times"></i> Something went
-          wrong
-        </p>
+        message ? (
+          <p>
+            <i className="mr-2 text-red-600 fas fa-times"></i> {message}
+          </p>
+        ) : (
+          <p>
+            <i className="mr-2 text-red-600 fas fa-times"></i> Something went
+            wrong
+          </p>
+        )
       ) : (
         <p>
           <i className="mr-2 text-green-500 fas fa-check"></i>

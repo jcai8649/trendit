@@ -49,8 +49,16 @@ export default function UserSidebar({ data, mutate }: UserSidebarProps) {
 
       mutate();
       dispatch("RERENDER");
+      dispatch("OPEN_MESSAGE", "Successfully updated profile");
     } catch (err) {
-      console.log(err);
+      if (err.message === "Request failed with status code 500") {
+        dispatch(
+          "ERROR_MESSAGE",
+          "Image must be a .jpg or .png and less than 1MB"
+        );
+      } else {
+        dispatch("ERROR_MESSAGE");
+      }
     }
   };
   return (

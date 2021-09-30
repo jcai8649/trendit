@@ -7,7 +7,7 @@ import Image from "next/image";
 import PostInfoCard from "../../../../components/PostInfoCard";
 import { Post, Comment } from "../../../../types";
 import SubSidebar from "../../../../components/SubSidebar";
-import { useAuthState } from "../../../../context/auth";
+import { useAuthState, useAuthDispatch } from "../../../../context/auth";
 import { useEffect, useState } from "react";
 import CommentFeed from "../../../../components/CommentFeed";
 import CommentSubmissionForm from "../../../../components/CommentSubmissionForm";
@@ -18,6 +18,7 @@ export default function PostPage() {
   const [sortBy, setSortBy] = useState("top");
   // Global state
   const { authenticated } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   // Utils
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function PostPage() {
       if (comment) commentMutate();
       else postMutate();
     } catch (err) {
-      console.log(err);
+      dispatch("ERROR_MESSAGE");
     }
   };
 
