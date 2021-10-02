@@ -62,7 +62,10 @@ export default function UserMenu({ user }: UserMenuProps) {
         )}
       >
         <Link href={`/u/${user.username}`}>
-          <button className="p-2 wy-auto hover:bg-blue-400 hover:text-white">
+          <button
+            onClick={() => toggleIsOpen()}
+            className="p-2 wy-auto hover:bg-blue-400 hover:text-white"
+          >
             <i className="mr-2 far fa-user-circle" />
             Profile
           </button>

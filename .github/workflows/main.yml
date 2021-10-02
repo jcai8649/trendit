@@ -13,12 +13,14 @@ jobs:
         with:
           command: |
             cd trendit.com
+            pm2 kill
             git pull
             npm install
             npx tsc
+            pm2 start --name "server" npm -- start
             cd client
             npm run build
-            pm2 restart server client
+            pm2 start --name "client" npm -- start
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME}}
           privateKey: ${{ secrets.PRIVATE_KEY}}
