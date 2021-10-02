@@ -5,10 +5,11 @@ A typescript Reddit clone that allows users to create, join, and post about thei
 LIVE AT: https://trendit.live
 
 Main libraries/technologies used:
+
 NextJs, Nodejs, Express, TypeORM, PostgresSQL
 
-- Implemented user authentication with data hashing using Bcrypt
-- Created persistent user session with JSON Web Token
+- Implements user authentication with data hashing using Bcrypt
+- Creates persistent user session with JSON Web Token
 - Build a PostgreSQL database schema using TypeORM
 - Setup a server with RESTful API endpoints to handle client uploads
 - Handle file uploading with Multer middleware to allow users to upload images to user/sub profiles.
@@ -16,9 +17,9 @@ NextJs, Nodejs, Express, TypeORM, PostgresSQL
 
 Future directions:
 
-- Add user reply for the comment section
-- Allow user to delete and edit post and comments
-- Create a skeleton UI for data loading
+- Implement reply feature for the comment section
+- Allow user to delete and edit posts/comments
+- Create and setup skeleton loading for data fetching
 
 ### License
 
