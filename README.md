@@ -4,6 +4,8 @@ A typescript Reddit clone that allows users to create, join, and post about thei
 
 LIVE AT: https://trendit.live
 
+[![Trendit Demo](https://img.youtube.com/vi/euXDdY7Ka5w/0.jpg)](https://www.youtube.com/watch?v=euXDdY7Ka5w)
+
 Main libraries/technologies used:
 
 NextJs, Nodejs, Express, TypeORM, PostgresSQL
