@@ -1,13 +1,12 @@
 # Trendit
 
-A typescript Reddit clone that allows users to create, join, and post about their favorite subjects/topics. Connecting like-minded individuals to share and spread their knowledge to communities.
+A TypeScript Reddit clone that allows users to create, join, and post about their favorite subjects/topics. Connecting like-minded individuals to share and spread their knowledge to communities.
 
 LIVE AT: https://trendit.live
 
 [![Trendit Demo](https://i.imgur.com/XQPUyMl.gif)](https://www.youtube.com/watch?v=euXDdY7Ka5w)
 
 Main libraries/technologies used:
-
 NextJs, Nodejs, Express, TypeORM, PostgresSQL
 
 - Implements user authentication and session with data hashing using bcrypt.js and JSON Web Token.
