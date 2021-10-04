@@ -120,7 +120,7 @@ export default function SubInfo({
             /r/{sub.name}{" "}
             {ownSub ? (
               <p className="w-24 ml-2 text-xs text-center text-blue-500 border-2 border-blue-500 rounded-full">
-                sub moderator
+                moderator
               </p>
             ) : (
               ""
